@@ -1,0 +1,99 @@
+/* =========================
+   HOME PAGE
+========================== */
+
+.hero,
+.about-learning,
+.mission {
+    padding-inline: var(--mobile-page-margin);
+}
+
+
+/* HERO */
+
+.hero {
+    padding-top: 32px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.hero h1 {
+    font-family: var(--font-display);
+    font-size: var(--font-size-display);
+    font-weight: var(--font-weight-extrabold);
+    line-height: var(--line-height-display);
+}
+
+.hero-image {
+    width: 100%;
+    border-radius: var(--radius-default);
+}
+
+.hero-actions {
+    width: 100%;
+
+    display: flex;
+    gap: 16px;
+}
+
+.hero-actions .button {
+    flex: 1;
+
+    min-height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--radius-default);
+}
+
+.hero-actions .button:first-child {
+    background-color: var(--color-primary-default);
+    color: var(--color-white);
+}
+
+.hero-actions .button:last-child {
+    background-color: var(--color-secondary-default);
+    color: var(--color-text-light-bg);
+}
+
+
+/* LEARNING SECTION */
+
+.about-learning {
+    margin-top: 32px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.about-learning > div,
+.about-learning .text-card {
+    padding: 16px;
+
+    border-radius: var(--radius-default);
+    background-color: var(--color-card-background);
+}
+
+
+/* MISSION */
+
+.mission {
+    margin-top: 32px;
+    margin-bottom: 32px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.mission p {
+    padding: 16px;
+
+    border-radius: var(--radius-default);
+    background-color: var(--color-card-background);
+}
