@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Lesson | Highcharts Course Portal</title>
+</head>
+
+<body>
+
+    <header class="site-header">
+
+        <a href="student-dashboard.html" class="logo">
+            <img src="assets/images/logo.svg" alt="Highcharts Course Portal">
+        </a>
+
+        <div class="header-actions">
+            <button type="button" class="theme-toggle" aria-label="Toggle dark mode">
+                Dark mode
+            </button>
+
+            <button type="button" class="profile-menu-button" aria-label="Open profile menu">
+                <img src="assets/images/profile.jpg" alt="User profile">
+            </button>
+        </div>
+
+    </header>
+
+
+    <main class="lesson-page">
+
+        <a href="my-courses.html" class="back-link">
+            ← Back
+        </a>
+
+
+        <header class="lesson-header">
+            <p>Build Pie Charts with React</p>
+            <span>Module 1</span>
+        </header>
+
+
+        <section class="lesson-content">
+
+            <h1>Task 1 - First Steps</h1>
+
+
+            <nav class="lesson-tabs" aria-label="Lesson content">
+
+                <button
+                    type="button"
+                    class="lesson-tab active"
+                    data-tab="video"
+                >
+                    Video
+                </button>
+
+                <button
+                    type="button"
+                    class="lesson-tab"
+                    data-tab="task"
+                >
+                    Task
+                </button>
+
+                <button
+                    type="button"
+                    class="lesson-tab"
+                    data-tab="solution"
+                >
+                    Solution Example
+                </button>
+
+            </nav>
+
+
+            <!-- VIDEO -->
+
+            <section class="lesson-panel video-panel" id="video-panel">
+
+                <h2>Learn how to make a pie chart</h2>
+
+                <div class="video-player">
+
+                    <img
+                        src="assets/images/pie-chart-video.jpg"
+                        alt="Pie chart lesson preview"
+                    >
+
+                    <button
+                        type="button"
+                        class="play-button"
+                        aria-label="Play lesson video"
+                    >
+                        Play
+                    </button>
+
+                </div>
+
+                <button type="button" class="transcript-button">
+                    Transcript
+                </button>
+
+                <div class="transcript">
+
+                    <p>
+                        A pie chart shows how parts add up to a whole.
+                        Start with a few categories and a value for each.
+                    </p>
+
+                    <p>
+                        Add the values together to find the total and use
+                        them to calculate each category's share.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- TASK -->
+
+            <section
+                class="lesson-panel task-panel"
+                id="task-panel"
+                hidden
+            >
+
+                <h2>Task Explanation</h2>
+
+                <p>
+                    Build a simple pie chart in React using Highcharts.
+                    Create several categories and assign a value to each.
+                </p>
+
+                <p>
+                    Render the chart in your app and check that all
+                    categories are visible.
+                </p>
+
+
+                <section class="your-work">
+
+                    <h2>Your Work</h2>
+
+                    <div class="upload-field">
+
+                        <span aria-hidden="true">
+                            Upload
+                        </span>
+
+                        <p>
+                            Upload your file or add your answer here
+                        </p>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+
+            <!-- SOLUTION -->
+
+            <section
+                class="lesson-panel solution-panel"
+                id="solution-panel"
+                hidden
+            >
+
+                <h2>Solution Example - Pie Chart</h2>
+
+                <img
+                    src="assets/images/pie-chart-solution.jpg"
+                    alt="Example of a completed pie chart"
+                >
+
+                <p>
+                    To build a simple pie chart in React, store each
+                    category as a label and numerical value.
+                </p>
+
+                <p>
+                    Use a chart configuration to define the data and
+                    display the completed result.
+                </p>
+
+            </section>
+
+        </section>
+
+
+        <nav class="lesson-stepper" aria-label="Lesson tasks">
+
+            <button type="button" class="active">
+                1
+            </button>
+
+            <button type="button">
+                2
+            </button>
+
+            <button type="button">
+                3
+            </button>
+
+            <span>...</span>
+
+            <button type="button" aria-label="Next task">
+                →
+            </button>
+
+        </nav>
+
+    </main>
+
+
+    <button type="button" class="ask-ai-button">
+        Ask AI
+    </button>
+
+
+    <nav class="bottom-navigation" aria-label="Student navigation">
+
+        <a href="student-dashboard.html">
+            Home
+        </a>
+
+        <a href="my-courses.html" class="active">
+            My Courses
+        </a>
+
+        <a href="inbox.html">
+            Inbox
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+    </nav>
+
+
+    <footer class="site-footer">
+
+        <div class="social-links">
+            <p>Find us on</p>
+
+            <a href="#" aria-label="Facebook">Facebook</a>
+            <a href="#" aria-label="Twitter">Twitter</a>
+            <a href="#" aria-label="Instagram">Instagram</a>
+            <a href="#" aria-label="Snapchat">Snapchat</a>
+        </div>
+
+        <nav class="footer-navigation" aria-label="Footer navigation">
+            <a href="#" data-modal="terms">Terms</a>
+            <a href="#" data-modal="support">Support</a>
+            <a href="#" data-modal="about">About</a>
+        </nav>
+
+        <p class="copyright">
+            © 2026 All Rights Reserved
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

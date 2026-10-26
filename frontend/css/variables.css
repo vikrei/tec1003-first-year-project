@@ -1,0 +1,129 @@
+:root {
+    /* =========================
+       COLORS — LIGHT MODE
+    ========================== */
+
+    --color-background-main: #ffffff;
+    --color-card-background: #fafafa;
+
+    --color-text-light-bg: #040000;
+    --color-text-dark-bg: #ffffff;
+
+    --color-primary-default: #75738c;
+    --color-primary-hover: #69687e;
+    --color-primary-focus: #8791ff;
+    --color-primary-active: #8791ff;
+    --color-primary-disabled: #c2c7ff;
+
+    --color-secondary-default: #e1e3ff;
+    --color-secondary-hover: #c7caed;
+    --color-secondary-focus: #4a55c9;
+    --color-secondary-active: #4a55c9;
+    --color-secondary-disabled: #a4aae4;
+
+    --color-text-primary-disabled: #4e5066;
+    --color-text-secondary-disabled: #525572;
+
+    --color-ghost-default: #f3f4f6;
+    --color-ghost-hover: #e7e7e7;
+    --color-ghost-focus: #8791ff;
+    --color-ghost-disabled: #e7e7e7;
+    --color-ghost-stroke: #4e5066;
+
+    --color-disabled-default: #f3f4f6;
+    --color-disabled-stroke: #525572;
+
+    --color-danger: #ef4444;
+    --color-attention: #f59e0b;
+    --color-success: #10b981;
+
+    --color-sub-caption: #757575;
+    --color-divider: #c4c4c4;
+    --color-card-stroke: #e7e7e7;
+
+    --color-icon-stroke: #75738c;
+    --color-icon-active: #1a1a1a;
+    --color-icon-background: #e7e7e7;
+
+    --color-black: #000000;
+    --color-white: #ffffff;
+
+    /* Logo */
+    --color-logo-grey: #383836;
+    --color-logo-teal: #6699a1;
+    --color-logo-light-purple: #8087e8;
+    --color-logo-blue: #30426b;
+    --color-logo-dark-purple: #78758c;
+    --color-logo-light-green: #a3edba;
+
+    /* Social */
+    --color-snapchat: #fffa37;
+    --color-twitter: #47acdf;
+
+    /* Dark mode toggle */
+    --color-toggle-background: #242a34;
+    --color-toggle-stroke: #434e66;
+    --color-toggle-inner-stroke: #444a56;
+
+    /* Ask AI */
+    --color-ai-purple: #c71dff;
+    --color-ai-blue: #000cfe;
+    --color-ai-background: #fffbfb;
+
+
+    /* =========================
+       TYPOGRAPHY
+    ========================== */
+
+    --font-display: "Vollkorn SC", serif;
+    --font-body: "IBM Plex Sans", sans-serif;
+
+    --font-size-display: 40px;
+    --font-size-heading-1: 32px;
+    --font-size-heading-2: 24px;
+    --font-size-heading-3: 20px;
+    --font-size-body: 16px;
+    --font-size-caption: 13px;
+
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600;
+    --font-weight-extrabold: 800;
+
+    --line-height-display: 48px;
+    --line-height-heading-1: 40px;
+    --line-height-heading-2: 32px;
+    --line-height-heading-3: 28px;
+    --line-height-body: 24px;
+    --line-height-caption: 18px;
+
+
+    /* =========================
+       SPACING
+    ========================== */
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 40px;
+    --space-8: 48px;
+    --space-9: 64px;
+
+
+    /* =========================
+       LAYOUT
+    ========================== */
+
+    --mobile-page-margin: 24px;
+    --mobile-grid-gap: 16px;
+    --mobile-columns: 4;
+
+
+    /* =========================
+       BORDER RADIUS
+    ========================== */
+
+    --radius-default: 8px;
+}
