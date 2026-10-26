@@ -71,9 +71,12 @@
     gap: 24px;
 }
 
-.about-learning > div,
 .about-learning .text-card {
     padding: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 
     border-radius: var(--radius-default);
     background-color: var(--color-card-background);
