@@ -1,0 +1,15 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Flask / lokale Daten
+instance/
+*.db
+*.sqlite3
+.env
+
+# Editor / System
+.vscode/
+.idea/
+.DS_Store
