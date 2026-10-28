@@ -113,3 +113,70 @@
 .login-section {
     width: 100%;
 }
+
+/* LOGIN TABS */
+
+.login-tabs {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+}
+
+.login-tab {
+    flex: 1;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--radius-default);
+
+    background-color: var(--color-secondary-default);
+    color: var(--color-text-secondary-disabled);
+}
+
+.login-tab.active {
+    background-color: var(--color-primary-default);
+    color: var(--color-white);
+}
+
+
+/* LOGIN BUTTON */
+
+.login-button {
+    width: 100%;
+    height: 44px;
+}
+
+
+/* SOCIAL LOGIN */
+
+.social-login {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.social-login button {
+    width: 100%;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--radius-default);
+    background-color: var(--color-card-background);
+    color: var(--color-text-light-bg);
+}
+
+.login-form {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}

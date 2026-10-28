@@ -34,17 +34,28 @@
             <h1>Log In &amp; Let’s Get You Started</h1>
 
             <div class="login-tabs">
-                <button type="button" class="login-tab active">
-                    Student Log in
+
+                <button
+                    type="button"
+                    class="login-tab active"
+                    data-role="student"
+                    aria-pressed="true"
+                >
+                    Student Login
                 </button>
 
-                <button type="button" class="login-tab">
+                <button
+                    type="button"
+                    class="login-tab"
+                    data-role="admin"
+                    aria-pressed="false"
+                >
                     Admin Login
                 </button>
+
             </div>
 
-
-            <form class="login-form">
+            <form class="login-form" id="login-form">
 
                 <div class="form-group">
                     <label for="username">
@@ -136,6 +147,7 @@
 
     </footer>
 
+    <script src="../js/login.js" defer></script>
 </body>
 
 </html>
