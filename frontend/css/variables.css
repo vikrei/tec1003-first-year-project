@@ -48,6 +48,9 @@
     --color-black: #000000;
     --color-white: #ffffff;
 
+    --color-progress-tracker-start: #D1D4EE;
+   --color-progress-tracker-end: #7E8094;
+
     /* Logo */
     --color-logo-grey: #383836;
     --color-logo-teal: #6699a1;

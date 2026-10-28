@@ -19,19 +19,17 @@
 
 <body>
 
-    <header class="site-header">
+    <header class="site-header courses-header">
 
         <a href="student-dashboard.html" class="logo">
             <img src="../assets/icons/logo.png" alt="Highcharts Course Portal">
         </a>
 
         <div class="header-actions">
-            <button type="button" class="theme-toggle" aria-label="Toggle dark mode">
-                Dark mode
-            </button>
-
+            <button type="button" class="theme-toggle" aria-label="Toggle dark mode">◉</button>
             <button type="button" class="profile-menu-button" aria-label="Open profile menu">
-                <img src="assets/images/profile.jpg" alt="User profile">
+                <span class="profile-avatar">S</span>
+                <span>Menu</span>
             </button>
         </div>
 
@@ -46,6 +44,7 @@
 
         <section class="page-intro">
             <h1>My Courses</h1>
+            <a class="browse-courses" href="courses.html">Browse more Courses! <span aria-hidden="true">➜</span></a>
         </section>
 
 
@@ -53,7 +52,7 @@
 
             <h2>Active Courses</h2>
 
-            <p>
+            <p class="section-description">
                 Resume where you left off and keep your learning on track.
             </p>
 
@@ -61,16 +60,18 @@
             <article class="course-progress-card">
 
                 <div class="course-card-header">
+                    <span class="course-icon" aria-hidden="true">◫</span>
+                    <div>
                     <h3>Build Pie Charts with React</h3>
                     <p>Resume Learning</p>
+                    </div>
                 </div>
 
                 <div class="course-progress">
-                    <p>Progress</p>
-                    <p>15%</p>
+                    <div class="progress-label"><p>Progress</p><strong>1%</strong></div>
 
                     <div class="progress-bar">
-                        <div class="progress-bar-fill"></div>
+                        <div class="progress-bar-fill" style="width: 1%"></div>
                     </div>
                 </div>
 
@@ -78,18 +79,18 @@
 
                     <div>
                         <h4>Current chapter</h4>
-                        <p>Chapter 1 - First Steps</p>
+                        <p>Ch. 1 - Pie Charts</p>
                     </div>
 
                     <div>
                         <h4>Quiz results</h4>
-                        <p>Not done yet</p>
+                        <p>Next Quiz coming up</p>
                     </div>
 
                 </div>
 
                 <a href="lesson.html" class="course-button">
-                    Continue Course
+                    <span aria-hidden="true">⊙</span> Continue Course
                 </a>
 
             </article>
@@ -98,16 +99,18 @@
             <article class="course-progress-card">
 
                 <div class="course-card-header">
+                    <span class="course-icon" aria-hidden="true">⌁</span>
+                    <div>
                     <h3>Charts in UI Foundations</h3>
                     <p>Resume Learning</p>
+                    </div>
                 </div>
 
                 <div class="course-progress">
-                    <p>Progress</p>
-                    <p>72%</p>
+                    <div class="progress-label"><p>Progress</p><strong>42%</strong></div>
 
                     <div class="progress-bar">
-                        <div class="progress-bar-fill"></div>
+                        <div class="progress-bar-fill" style="width: 42%"></div>
                     </div>
                 </div>
 
@@ -115,18 +118,18 @@
 
                     <div>
                         <h4>Current chapter</h4>
-                        <p>Chapter 4</p>
+                        <p>Chapter 3 - Color, spacing, and hierarchies</p>
                     </div>
 
                     <div>
                         <h4>Quiz results</h4>
-                        <p>Passed</p>
+                        <p>Passed with 88% - Foundations review</p>
                     </div>
 
                 </div>
 
                 <a href="lesson.html" class="course-button">
-                    Continue
+                    <span aria-hidden="true">⊙</span> Continue Course
                 </a>
 
             </article>
@@ -139,39 +142,33 @@
             <h2>Study Group</h2>
 
             <article class="study-group-card">
-                <h3>UI Foundations Group</h3>
-                <p>2 Members</p>
+                <span class="mini-icon" aria-hidden="true">♟</span>
+                <div><h3>UI Foundations Group</h3><p>2 Members</p></div>
             </article>
 
             <button type="button" class="create-group-button">
-                Create your next Group
+                <span class="mini-icon" aria-hidden="true">＋</span>
+                <span><strong>Create your next Group</strong><small>with fellow students</small></span>
             </button>
 
         </section>
 
 
         <section class="passed-courses">
-
-            <h2>Passed Courses</h2>
-
-            <p>
-                A quick overview of the courses you already completed.
-            </p>
-
             <article class="passed-course-card">
-
-                <div>
-                    <h3>Course summary</h3>
-                    <p>Completed all lessons and modules</p>
+                <div class="passed-intro">
+                    <h3>Passed Courses</h3>
+                    <p>A quick overview of the courses you've already completed.</p>
+                    <p>Feeling like you need to revise? Just start the course over!</p>
                 </div>
 
-                <div>
-                    <h3>Repeat what you learned</h3>
-                    <p>Review completed lessons</p>
+                <div class="resource-grid">
+                    <div><span class="mini-icon" aria-hidden="true">▤</span><h3>Course summary</h3><p>Completed all lessons and modules</p></div>
+                    <div><span class="mini-icon" aria-hidden="true">▣</span><h3>Repeat what you learned</h3><p>Review completed lessons</p></div>
                 </div>
 
-                <button type="button">
-                    Revise
+                <button type="button" class="revise-button">
+                    ⟳ Revise
                 </button>
 
             </article>
@@ -183,18 +180,12 @@
 
             <h2>Earned Certificates</h2>
 
-            <p>
-                Keep track of the certificates you've earned after completing a course.
-            </p>
-
             <article class="certificate-card">
-
-                <h3>Certificate Title</h3>
-
-                <p>
-                    Awarded for completing Introduction to Design Systems
-                </p>
-
+                <p class="certificate-description">Keep track of the certificates you've earned after completing a course.</p>
+                <div class="resource-grid">
+                    <div><span class="mini-icon" aria-hidden="true">▧</span><h3>Introduction to Design Systems</h3></div>
+                    <div><span class="mini-icon" aria-hidden="true">✓</span><h3>Certificate details</h3><p>Awarded for completing Introduction to Design Systems</p></div>
+                </div>
             </article>
 
         </section>
@@ -206,26 +197,6 @@
         Ask AI
     </button>
 
-
-    <nav class="bottom-navigation" aria-label="Student navigation">
-
-        <a href="student-dashboard.html">
-            Home
-        </a>
-
-        <a href="my-courses.html" class="active">
-            My Courses
-        </a>
-
-        <a href="inbox.html">
-            Inbox
-        </a>
-
-        <a href="profile.html">
-            Profile
-        </a>
-
-    </nav>
 
     <footer class="site-footer">
 
