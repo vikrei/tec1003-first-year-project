@@ -100,3 +100,16 @@
     border-radius: var(--radius-default);
     background-color: var(--color-card-background);
 }
+
+/* =========================
+   LOGIN PAGE
+========================== */
+
+.login-page {
+    width: 100%;
+    padding-inline: var(--mobile-page-margin);
+}
+
+.login-section {
+    width: 100%;
+}
