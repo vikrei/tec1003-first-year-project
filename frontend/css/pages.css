@@ -765,8 +765,7 @@ main h1 {
     background-color: var(--color-card-background);
 }
 
-.video-player img,
-.solution-panel > img {
+.video-player img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -880,7 +879,11 @@ main h1 {
 }
 
 .solution-panel > img {
-    aspect-ratio: 16 / 9;
+    width: calc(100% - var(--space-5));
+    height: auto;
+    aspect-ratio: 364 / 221;
+    margin-inline: auto;
+    object-fit: contain;
     border: 1px solid var(--color-icon-stroke);
     border-radius: var(--radius-default);
 }
