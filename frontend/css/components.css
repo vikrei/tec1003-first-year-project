@@ -155,43 +155,6 @@
 
 
 /* =========================
-   BOTTOM NAVIGATION
-========================== */
-
-.bottom-navigation {
-    position: fixed;
-
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    z-index: 20;
-
-    min-height: 64px;
-    padding: 8px 16px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-
-    background-color: var(--color-background-main);
-    border-top: 1px solid var(--color-divider);
-}
-
-.bottom-navigation a {
-    padding: 8px;
-
-    font-size: var(--font-size-caption);
-    color: var(--color-sub-caption);
-}
-
-.bottom-navigation a.active {
-    color: var(--color-primary-default);
-    font-weight: var(--font-weight-semibold);
-}
-
-
-/* =========================
    FOOTER
 ========================== */
 

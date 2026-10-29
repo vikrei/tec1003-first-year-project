@@ -19,17 +19,18 @@
 
 <body>
 
-    <header class="site-header courses-header">
+    <header class="site-header">
 
         <a href="student-dashboard.html" class="logo">
             <img src="../assets/icons/logo.png" alt="Highcharts Course Portal">
         </a>
 
         <div class="header-actions">
-            <button type="button" class="theme-toggle" aria-label="Toggle dark mode">◉</button>
+            <button type="button" class="theme-toggle" aria-label="Toggle dark mode">
+                Dark mode
+            </button>
             <button type="button" class="profile-menu-button" aria-label="Open profile menu">
-                <span class="profile-avatar">S</span>
-                <span>Menu</span>
+                <span class="profile-avatar" aria-hidden="true">A</span>
             </button>
         </div>
 
@@ -196,6 +197,13 @@
     <button type="button" class="ask-ai-button">
         Ask AI
     </button>
+
+    <nav class="bottom-navigation" aria-label="Student navigation">
+        <a href="student-dashboard.html">Home</a>
+        <a href="my-courses.html" class="active">My Courses</a>
+        <a href="inbox.html">Inbox</a>
+        <a href="profile.html">Profile</a>
+    </nav>
 
 
     <footer class="site-footer">
