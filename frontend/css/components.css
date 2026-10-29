@@ -46,7 +46,29 @@
     object-fit: cover;
 }
 
-.student-profile-menu {
+.admin-page .site-header {
+    background-color: var(--color-primary-hover);
+}
+
+.admin-page .theme-toggle {
+    width: calc(var(--space-7) + var(--space-3));
+    height: var(--space-4);
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 999px;
+    background-color: var(--color-secondary-default);
+    color: var(--color-primary-default);
+    font-size: 0;
+}
+
+.admin-page .theme-toggle::before {
+    content: "☼";
+    font-size: var(--font-size-body);
+}
+
+.account-profile-menu {
     position: fixed;
     top: calc(var(--space-9) + var(--space-2));
     right: var(--mobile-page-margin);
@@ -60,11 +82,11 @@
     box-shadow: 0 4px 16px color-mix(in srgb, var(--color-black) 16%, transparent);
 }
 
-.student-profile-menu[hidden] {
+.account-profile-menu[hidden] {
     display: none;
 }
 
-.student-profile-menu-header {
+.account-profile-menu-header {
     min-height: calc(var(--space-9) + var(--space-8));
     padding: var(--space-4);
     display: flex;
@@ -74,17 +96,17 @@
     border-bottom: 1px solid var(--color-divider);
 }
 
-.student-profile-menu-header h2 {
+.account-profile-menu-header h2 {
     font-size: var(--font-size-heading-1);
     line-height: var(--line-height-heading-1);
 }
 
-.student-profile-menu-header p {
+.account-profile-menu-header p {
     color: var(--color-sub-caption);
     font-size: var(--font-size-heading-3);
 }
 
-.student-profile-menu-header img {
+.account-profile-menu-header img {
     width: calc(var(--space-9) + var(--space-4));
     height: calc(var(--space-9) + var(--space-4));
     flex: 0 0 auto;
@@ -93,13 +115,13 @@
     object-fit: cover;
 }
 
-.student-profile-menu-links {
+.account-profile-menu-links {
     padding: var(--space-2) 0;
     display: flex;
     flex-direction: column;
 }
 
-.student-profile-menu-links a {
+.account-profile-menu-links a {
     min-height: var(--space-9);
     padding: var(--space-2) var(--space-4);
     display: flex;
@@ -109,13 +131,13 @@
     font-size: var(--font-size-heading-3);
 }
 
-.student-profile-menu-links a:hover,
-.student-profile-menu-links a:focus-visible {
+.account-profile-menu-links a:hover,
+.account-profile-menu-links a:focus-visible {
     background-color: var(--color-secondary-default);
     outline: none;
 }
 
-.student-profile-menu-links svg {
+.account-profile-menu-links svg {
     width: var(--space-6);
     height: var(--space-6);
     flex: 0 0 auto;

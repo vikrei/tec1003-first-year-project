@@ -651,6 +651,18 @@ main h1 {
     font-weight: var(--font-weight-semibold);
 }
 
+.admin-page .bottom-navigation {
+    background-color: var(--color-primary-hover);
+}
+
+.admin-page .bottom-navigation a {
+    color: var(--color-secondary-default);
+}
+
+.admin-page .bottom-navigation a.active {
+    color: var(--color-text-dark-bg);
+}
+
 .home-navigation {
     justify-content: center;
 }
@@ -961,5 +973,174 @@ main h1 {
 @media (min-width: 700px) {
     .lesson-page {
         padding-inline: var(--space-6);
+    }
+}
+
+/* =========================
+   ADMIN DASHBOARD
+========================== */
+
+.admin-dashboard-page {
+    width: min(100%, 400px);
+    margin-inline: auto;
+    padding: calc(var(--space-9) + var(--space-4)) var(--mobile-page-margin) var(--space-7);
+}
+
+.admin-dashboard-page .page-intro {
+    margin-bottom: var(--space-7);
+}
+
+.admin-dashboard-page .page-intro h1 {
+    margin: 0;
+    text-align: left;
+}
+
+.admin-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+}
+
+.admin-dashboard-card {
+    min-height: 164px;
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border: 0;
+    border-radius: var(--radius-default);
+    background-color: var(--color-secondary-default);
+    text-align: center;
+}
+
+.dashboard-card-icon {
+    width: var(--space-8);
+    height: var(--space-8);
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-default);
+    background-color: var(--color-primary-default);
+    color: var(--color-text-dark-bg);
+}
+
+.dashboard-card-icon svg {
+    width: var(--space-6);
+    height: var(--space-6);
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.25;
+}
+
+.admin-dashboard-card h2 {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
+}
+
+.dashboard-card-stats {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: var(--space-2);
+}
+
+.dashboard-card-stats strong {
+    font-family: var(--font-display);
+    font-size: var(--font-size-heading-2);
+    line-height: var(--line-height-heading-2);
+}
+
+.dashboard-card-stats span {
+    color: var(--color-success);
+    font-weight: var(--font-weight-semibold);
+}
+
+.admin-dashboard-page .recent-activity {
+    margin-top: var(--space-6);
+    gap: var(--space-4);
+}
+
+.admin-dashboard-page .section-header {
+    min-height: var(--space-7);
+    padding: var(--space-2) var(--space-3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    border-radius: var(--radius-default);
+    background-color: var(--color-card-background);
+}
+
+.admin-dashboard-page .section-header h2 {
+    font-size: var(--font-size-heading-3);
+    line-height: var(--line-height-heading-3);
+}
+
+.activity-view-all {
+    min-height: var(--control-height);
+    padding-inline: var(--space-3);
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--radius-default);
+    background-color: var(--color-secondary-disabled);
+}
+
+.admin-dashboard-page .activity-item {
+    min-width: 0;
+    min-height: var(--space-8);
+    height: auto;
+    padding: var(--space-1) var(--space-2);
+    display: grid;
+    grid-template-columns: var(--space-7) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-2);
+    border: 0;
+    border-radius: var(--radius-default);
+    background-color: var(--color-card-background);
+}
+
+.activity-dot {
+    width: var(--space-7);
+    height: var(--space-7);
+    border-radius: 50%;
+    background-color: var(--color-secondary-default);
+}
+
+.admin-dashboard-page .activity-item h3 {
+    overflow: hidden;
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-dashboard-page .activity-item p,
+.admin-dashboard-page .activity-item time {
+    overflow: hidden;
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-dashboard-page .activity-item p {
+    color: var(--color-text-light-bg);
+}
+
+.admin-dashboard-page .activity-item time {
+    color: var(--color-text-light-bg);
+}
+
+@media (max-width: 360px) {
+    .admin-dashboard-page .activity-item {
+        grid-template-columns: var(--space-7) minmax(0, 1fr);
+    }
+
+    .admin-dashboard-page .activity-item time {
+        grid-column: 2;
     }
 }

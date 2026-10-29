@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../css/pages.css">
 </head>
 
-<body>
+<body class="admin-page">
 
     <header class="site-header">
 
@@ -31,8 +31,8 @@
                 Dark mode
             </button>
 
-            <button type="button" class="profile-menu-button" aria-label="Open admin profile menu">
-                <span class="profile-avatar" aria-hidden="true">A</span>
+            <button type="button" class="profile-menu-button" aria-label="Open admin profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="admin">
+                <img src="../assets/images/profile-image-admin.png" alt="">
             </button>
 
         </div>
@@ -46,10 +46,6 @@
 
             <h1>Admin Dashboard</h1>
 
-            <p>
-                Overview of the learning platform.
-            </p>
-
         </section>
 
 
@@ -57,9 +53,7 @@
 
             <article class="admin-dashboard-card">
 
-                <div class="dashboard-card-icon">
-                    Users
-                </div>
+                <div class="dashboard-card-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M12 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm9-9a4 4 0 0 1 0 8m-17 13v-2a8 8 0 0 1 8-8h1a8 8 0 0 1 8 8v2Zm19 0v-2a8 8 0 0 0-5-7" /></svg></div>
 
                 <h2>Total Users</h2>
 
@@ -73,9 +67,7 @@
 
             <article class="admin-dashboard-card">
 
-                <div class="dashboard-card-icon">
-                    Courses
-                </div>
+                <div class="dashboard-card-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 6a3 3 0 0 1 3-3h5a4 4 0 0 1 4 4v22a4 4 0 0 0-4-4H7a3 3 0 0 0-3 3Zm24 0a3 3 0 0 0-3-3h-5a4 4 0 0 0-4 4v22a4 4 0 0 1 4-4h5a3 3 0 0 1 3 3Z" /></svg></div>
 
                 <h2>Active Courses</h2>
 
@@ -89,15 +81,13 @@
 
             <article class="admin-dashboard-card">
 
-                <div class="dashboard-card-icon">
-                    Sign-ups
-                </div>
+                <div class="dashboard-card-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="12" cy="10" r="5"/><path d="M3 28v-2a9 9 0 0 1 18 0v2Zm21-12v10m-5-5h10" /></svg></div>
 
                 <h2>New Sign-ups</h2>
 
                 <div class="dashboard-card-stats">
-                    <strong>24</strong>
-                    <span>+8%</span>
+                    <strong>23</strong>
+                    <span>+33%</span>
                 </div>
 
             </article>
@@ -105,15 +95,13 @@
 
             <article class="admin-dashboard-card">
 
-                <div class="dashboard-card-icon">
-                    Completed
-                </div>
+                <div class="dashboard-card-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="m3 7 8 7 5-9 5 9 8-7v19H3z" /></svg></div>
 
                 <h2>Course Completions</h2>
 
                 <div class="dashboard-card-stats">
-                    <strong>61</strong>
-                    <span>+6%</span>
+                    <strong>15</strong>
+                    <span>+4%</span>
                 </div>
 
             </article>
@@ -126,69 +114,40 @@
             <div class="section-header">
                 <h2>Recent Activity</h2>
 
-                <button type="button">
+                <a href="admin-inbox.html" class="activity-view-all">
                     View All
-                </button>
+                </a>
             </div>
 
 
             <article class="activity-item">
-
-                <div>
-                    <h3>New student registered</h3>
-                    <p>Alex Morgan joined the platform</p>
-                </div>
-
-                <time datetime="2026-10-26">
-                    Today
-                </time>
-
+                <span class="activity-dot" aria-hidden="true"></span>
+                <div><h3>New User Registered</h3><p>sarah@highcharts.com</p></div>
+                <time datetime="PT2M">2 min ago</time>
             </article>
 
 
             <article class="activity-item">
-
-                <div>
-                    <h3>Course completed</h3>
-                    <p>Build Pie Charts with React</p>
-                </div>
-
-                <time datetime="2026-10-26">
-                    Today
-                </time>
-
+                <span class="activity-dot" aria-hidden="true"></span>
+                <div><h3>Course Completed</h3><p>UI for Charts</p></div>
+                <time datetime="PT12M">12 min ago</time>
             </article>
 
 
             <article class="activity-item">
+                <span class="activity-dot" aria-hidden="true"></span>
+                <div><h3>New Message in Inbox</h3><p>from: john@highcharts.com</p></div>
+                <time datetime="PT27M">27 min ago</time>
+            </article>
 
-                <div>
-                    <h3>New course published</h3>
-                    <p>Introduction to Design Systems</p>
-                </div>
-
-                <time datetime="2026-10-25">
-                    Yesterday
-                </time>
-
+            <article class="activity-item">
+                <span class="activity-dot" aria-hidden="true"></span>
+                <div><h3>New User Registered</h3><p>sarah@highcharts.com</p></div>
+                <time datetime="PT46M">46 min ago</time>
             </article>
 
         </section>
 
-
-        <section class="admin-actions">
-
-            <h2>Quick Actions</h2>
-
-            <button type="button">
-                Add New Course
-            </button>
-
-            <button type="button">
-                Manage Users
-            </button>
-
-        </section>
 
     </main>
 
@@ -197,10 +156,6 @@
 
         <a href="admin-dashboard.html" class="active">
             Home
-        </a>
-
-        <a href="courses.html">
-            Courses
         </a>
 
         <a href="admin-inbox.html">
@@ -237,6 +192,7 @@
 
     </footer>
 
+    <script src="../js/profile-menu.js" defer></script>
 </body>
 
 </html>

@@ -1,36 +1,63 @@
-const profileMenuButton = document.querySelector(".profile-menu-button[aria-controls='student-profile-menu']");
+const profileMenuButton = document.querySelector(".profile-menu-button[data-profile-role]");
 
 if (profileMenuButton) {
+    const isAdmin = profileMenuButton.dataset.profileRole === "admin";
+    const profile = isAdmin
+        ? {
+              name: "Per Håland",
+              role: "Admin & Tutor",
+              image: "../assets/images/profile-image-admin.png",
+          }
+        : {
+              name: "Alex Liland",
+              role: "Student",
+              image: "../assets/images/profile-image-student.png",
+          };
+
+    const icons = {
+        home: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" /></svg>',
+        book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3H12v18H5.5A2.5 2.5 0 0 0 3 23zM21 5.5A2.5 2.5 0 0 0 18.5 3H12v18h6.5a2.5 2.5 0 0 1 2.5 2z" /></svg>',
+        inbox: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg>',
+        courses: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" /><path d="M8 7h8M8 11h8M8 15h8" /></svg>',
+        settings: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2A1.7 1.7 0 0 0 5.4 5.8l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9z" /></svg>',
+        logout: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6" /></svg>',
+    };
+
+    const links = isAdmin
+        ? [
+              { href: "admin-dashboard.html", label: "Home", icon: icons.home },
+              { href: "admin-inbox.html", label: "Admin Inbox", icon: icons.inbox },
+              { href: "admin-profile.html", label: "Profile & Settings", icon: icons.settings },
+              { href: "index.html", label: "Log out", icon: icons.logout },
+          ]
+        : [
+              { href: "student-dashboard.html", label: "Home", icon: icons.home },
+              { href: "my-courses.html", label: "My Courses", icon: icons.book },
+              { href: "courses.html", label: "All Courses", icon: icons.courses },
+              { href: "profile.html", label: "Profile & Settings", icon: icons.settings },
+              { href: "index.html", label: "Log out", icon: icons.logout },
+          ];
+
     const menuMarkup = `
-        <section class="student-profile-menu" id="student-profile-menu" aria-label="Student profile menu" hidden>
-            <header class="student-profile-menu-header">
+        <section class="account-profile-menu" id="account-profile-menu" aria-label="${profile.role} profile menu" hidden>
+            <header class="account-profile-menu-header">
                 <div>
-                    <h2>Alex Liland</h2>
-                    <p>Student</p>
+                    <h2>${profile.name}</h2>
+                    <p>${profile.role}</p>
                 </div>
-                <img src="../assets/images/profile-image-student.png" alt="">
+                <img src="${profile.image}" alt="">
             </header>
-            <nav class="student-profile-menu-links" role="menu" aria-label="Profile navigation">
-                <a href="student-dashboard.html" role="menuitem">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" /></svg>
-                    <span>Home</span>
-                </a>
-                <a href="my-courses.html" role="menuitem">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3H12v18H5.5A2.5 2.5 0 0 0 3 23zM21 5.5A2.5 2.5 0 0 0 18.5 3H12v18h6.5a2.5 2.5 0 0 1 2.5 2z" /></svg>
-                    <span>My Courses</span>
-                </a>
-                <a href="courses.html" role="menuitem">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" /><path d="M8 7h8M8 11h8M8 15h8" /></svg>
-                    <span>All Courses</span>
-                </a>
-                <a href="profile.html" role="menuitem">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2A1.7 1.7 0 0 0 5.4 5.8l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9z" /></svg>
-                    <span>Profile &amp; Settings</span>
-                </a>
-                <a href="index.html" role="menuitem">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6" /></svg>
-                    <span>Log out</span>
-                </a>
+            <nav class="account-profile-menu-links" role="menu" aria-label="Profile navigation">
+                ${links
+                    .map(
+                        (link) => `
+                            <a href="${link.href}" role="menuitem">
+                                ${link.icon}
+                                <span>${link.label}</span>
+                            </a>
+                        `
+                    )
+                    .join("")}
             </nav>
         </section>
     `;
@@ -39,7 +66,7 @@ if (profileMenuButton) {
     menuWrapper.innerHTML = menuMarkup;
     document.body.append(menuWrapper.firstElementChild);
 
-    const profileMenu = document.querySelector("#student-profile-menu");
+    const profileMenu = document.querySelector("#account-profile-menu");
     const menuItems = Array.from(profileMenu.querySelectorAll("[role='menuitem']"));
 
     function closeMenu(restoreFocus = false) {

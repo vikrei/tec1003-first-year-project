@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../css/pages.css">
 </head>
 
-<body>
+<body class="admin-page">
 
     <header class="site-header">
 
@@ -30,8 +30,9 @@
                 Dark mode
             </button>
 
-            <button type="button" class="profile-menu-button" aria-label="Open admin profile menu">
-                <span class="profile-avatar" aria-hidden="true">A</span>
+            <button type="button" class="profile-menu-button" aria-label="Open admin profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="admin">
+                <img src="../assets/images/profile-image-admin.png" alt="">
+                <span>Menu</span>
             </button>
         </div>
 
@@ -48,8 +49,8 @@
         <section class="profile-header">
 
             <img
-                src="assets/images/admin-profile.jpg"
-                alt="Admin profile"
+                src="../assets/images/profile-image-admin.png"
+                alt="Per Håland"
                 class="profile-image"
             >
 
@@ -57,9 +58,9 @@
                 Change Image
             </button>
 
-            <h1>Admin Profile</h1>
+            <h1>Per Håland</h1>
 
-            <p>Administrator</p>
+            <p>Admin &amp; Tutor</p>
 
         </section>
 
@@ -140,10 +141,6 @@
             Home
         </a>
 
-        <a href="courses.html">
-            Courses
-        </a>
-
         <a href="admin-inbox.html">
             Inbox
         </a>
@@ -178,6 +175,7 @@
 
     </footer>
 
+    <script src="../js/profile-menu.js" defer></script>
 </body>
 
 </html>
