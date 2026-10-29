@@ -46,6 +46,86 @@
     object-fit: cover;
 }
 
+.student-profile-menu {
+    position: fixed;
+    top: calc(var(--space-9) + var(--space-2));
+    right: var(--mobile-page-margin);
+    z-index: 120;
+    width: min(var(--profile-menu-width), calc(100vw - 2 * var(--mobile-page-margin)));
+    max-height: calc(100vh - var(--space-9) - var(--space-4));
+    overflow-y: auto;
+    border: 1px solid var(--color-card-stroke);
+    border-radius: var(--radius-default);
+    background-color: var(--color-background-main);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--color-black) 16%, transparent);
+}
+
+.student-profile-menu[hidden] {
+    display: none;
+}
+
+.student-profile-menu-header {
+    min-height: calc(var(--space-9) + var(--space-8));
+    padding: var(--space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    border-bottom: 1px solid var(--color-divider);
+}
+
+.student-profile-menu-header h2 {
+    font-size: var(--font-size-heading-1);
+    line-height: var(--line-height-heading-1);
+}
+
+.student-profile-menu-header p {
+    color: var(--color-sub-caption);
+    font-size: var(--font-size-heading-3);
+}
+
+.student-profile-menu-header img {
+    width: calc(var(--space-9) + var(--space-4));
+    height: calc(var(--space-9) + var(--space-4));
+    flex: 0 0 auto;
+    border: 1px solid var(--color-primary-default);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.student-profile-menu-links {
+    padding: var(--space-2) 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.student-profile-menu-links a {
+    min-height: var(--space-9);
+    padding: var(--space-2) var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text-light-bg);
+    font-size: var(--font-size-heading-3);
+}
+
+.student-profile-menu-links a:hover,
+.student-profile-menu-links a:focus-visible {
+    background-color: var(--color-secondary-default);
+    outline: none;
+}
+
+.student-profile-menu-links svg {
+    width: var(--space-6);
+    height: var(--space-6);
+    flex: 0 0 auto;
+    fill: none;
+    stroke: var(--color-primary-default);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+}
+
 
 /* =========================
    BUTTONS
