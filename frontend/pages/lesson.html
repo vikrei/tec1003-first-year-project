@@ -51,12 +51,16 @@
             <h1>Task 1 - First Steps</h1>
 
 
-            <nav class="lesson-tabs" aria-label="Lesson content">
+            <nav class="lesson-tabs" role="tablist" aria-label="Lesson content">
 
                 <button
                     type="button"
                     class="lesson-tab active"
                     data-tab="video"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="video-panel"
+                    id="video-tab"
                 >
                     Video
                 </button>
@@ -65,6 +69,11 @@
                     type="button"
                     class="lesson-tab"
                     data-tab="task"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="task-panel"
+                    id="task-tab"
+                    tabindex="-1"
                 >
                     Task
                 </button>
@@ -73,6 +82,11 @@
                     type="button"
                     class="lesson-tab"
                     data-tab="solution"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="solution-panel"
+                    id="solution-tab"
+                    tabindex="-1"
                 >
                     Solution Example
                 </button>
@@ -82,41 +96,41 @@
 
             <!-- VIDEO -->
 
-            <section class="lesson-panel video-panel" id="video-panel">
+            <section class="lesson-panel video-panel" id="video-panel" role="tabpanel" aria-labelledby="video-tab">
 
                 <h2>Learn how to make a pie chart</h2>
 
                 <div class="video-player">
 
                     <img
-                        src="assets/images/pie-chart-video.jpg"
+                        src="../assets/images/learning-flow-1-chart.png"
                         alt="Pie chart lesson preview"
                     >
 
                     <button
                         type="button"
                         class="play-button"
-                        aria-label="Play lesson video"
+                        aria-label="Show video availability"
+                        aria-pressed="false"
                     >
-                        Play
+                        <span aria-hidden="true">▶</span>
                     </button>
+                    <p class="video-status" role="status" hidden>Video playback is coming soon.</p>
 
                 </div>
 
-                <button type="button" class="transcript-button">
+                <button type="button" class="transcript-button" aria-expanded="true" aria-controls="lesson-transcript">
                     Transcript
                 </button>
 
-                <div class="transcript">
+                <div class="transcript" id="lesson-transcript">
 
                     <p>
-                        A pie chart shows how parts add up to a whole.
-                        Start with a few categories and a value for each.
+                        A pie chart shows how parts add up to a whole. Start with a few categories and a value for each, such as how many people chose each favorite fruit. Add the values to find the total.
                     </p>
 
                     <p>
-                        Add the values together to find the total and use
-                        them to calculate each category's share.
+                        In a spreadsheet, select your categories and values, then choose Insert → Chart → Pie. Each slice shows a category’s share of the total. Add a clear title and labels with names and percentages, which should add up to 100%.
                     </p>
 
                 </div>
@@ -129,19 +143,19 @@
             <section
                 class="lesson-panel task-panel"
                 id="task-panel"
+                role="tabpanel"
+                aria-labelledby="task-tab"
                 hidden
             >
 
                 <h2>Task Explanation</h2>
 
                 <p>
-                    Build a simple pie chart in React using Highcharts.
-                    Create several categories and assign a value to each.
+                    Your task: build a simple pie chart in React. Use a chart library such as Recharts to display this data: Apples 40%, Bananas 35%, and Oranges 25%.
                 </p>
 
                 <p>
-                    Render the chart in your app and check that all
-                    categories are visible.
+                    Create a React app, install the library, and build a PieChart component. Give each slice a different color and add a legend with the fruit names. Render the chart in your app and check that all three slices and labels are visible.
                 </p>
 
 
@@ -149,17 +163,14 @@
 
                     <h2>Your Work</h2>
 
-                    <div class="upload-field">
-
-                        <span aria-hidden="true">
-                            Upload
-                        </span>
-
-                        <p>
-                            Upload your file or add your answer here
-                        </p>
-
-                    </div>
+                    <label class="upload-field" for="lesson-upload">
+                        <svg class="upload-icon" viewBox="0 0 40 48" aria-hidden="true" focusable="false">
+                            <path d="M8 2h16l12 12v30H8z" />
+                            <path d="M24 2v12h12M20 35V20m-6 6 6-6 6 6M14 40h12" />
+                        </svg>
+                        <span>Upload your file or add your answer here</span>
+                        <input type="file" id="lesson-upload" accept="image/*,.pdf">
+                    </label>
 
                 </section>
 
@@ -171,13 +182,15 @@
             <section
                 class="lesson-panel solution-panel"
                 id="solution-panel"
+                role="tabpanel"
+                aria-labelledby="solution-tab"
                 hidden
             >
 
                 <h2>Solution Example - Pie Chart</h2>
 
                 <img
-                    src="assets/images/pie-chart-solution.jpg"
+                    src="../assets/images/learning-flow-1-chart.png"
                     alt="Example of a completed pie chart"
                 >
 
@@ -195,26 +208,18 @@
 
         </section>
 
-
         <nav class="lesson-stepper" aria-label="Lesson tasks">
 
-            <button type="button" class="active">
-                1
-            </button>
-
-            <button type="button">
-                2
-            </button>
-
-            <button type="button">
-                3
-            </button>
-
-            <span>...</span>
-
-            <button type="button" aria-label="Next task">
-                →
-            </button>
+            <span class="stepper-caption">Next Task</span>
+            <div class="lesson-stepper-controls">
+                <span class="step-number active" aria-current="step">1</span>
+                <span class="step-number" aria-disabled="true">2</span>
+                <span class="step-number" aria-disabled="true">3</span>
+                <span aria-hidden="true">...</span>
+                <button type="button" class="next-flow-button" aria-label="Next task (coming soon)" disabled>
+                    <img src="../assets/icons/caret-right.svg" alt="">
+                </button>
+            </div>
 
         </nav>
 
@@ -252,10 +257,10 @@
         <div class="social-links">
             <p>Find us on</p>
 
-            <a href="#" aria-label="Facebook">Facebook</a>
-            <a href="#" aria-label="Twitter">Twitter</a>
-            <a href="#" aria-label="Instagram">Instagram</a>
-            <a href="#" aria-label="Snapchat">Snapchat</a>
+            <a href="#" aria-label="Facebook"><img src="../assets/icons/Facebook.svg" alt=""></a>
+            <a href="#" aria-label="Twitter"><img src="../assets/icons/twitter.svg" alt=""></a>
+            <a href="#" aria-label="Instagram"><img src="../assets/icons/instagram.svg" alt=""></a>
+            <a href="#" aria-label="YouTube"><img src="../assets/icons/youtube.png" alt=""></a>
         </div>
 
         <nav class="footer-navigation" aria-label="Footer navigation">
@@ -269,6 +274,8 @@
         </p>
 
     </footer>
+
+    <script src="../js/lesson.js" defer></script>
 
 </body>
 

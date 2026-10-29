@@ -183,8 +183,31 @@
     gap: var(--space-4);
 }
 
+.social-links {
+    align-items: center;
+    justify-content: center;
+}
+
 .social-links p {
     width: 100%;
+    text-align: center;
+}
+
+.social-links a {
+    width: var(--space-6);
+    height: var(--space-6);
+    display: grid;
+    place-items: center;
+}
+
+.social-links img {
+    width: var(--space-6);
+    height: var(--space-6);
+    object-fit: contain;
+}
+
+.footer-navigation {
+    justify-content: center;
 }
 
 .footer-navigation a {
@@ -194,6 +217,7 @@
 .copyright {
     color: var(--color-sub-caption);
     font-size: var(--font-size-caption);
+    text-align: center;
 }
 
 
