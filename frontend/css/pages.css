@@ -240,8 +240,121 @@
 ========================== */
 
 .dashboard-page {
-    width: 100%;
+    width: min(100%, var(--mobile-content-max-width));
+    margin-inline: auto;
     padding-inline: var(--mobile-page-margin);
+    padding-block: var(--space-4) calc(var(--space-9) + var(--space-9));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.tutorial-card {
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    border-radius: var(--radius-default);
+}
+
+.tutorial-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+
+.tutorial-card h2 {
+    font-size: var(--font-size-heading-3);
+}
+
+.tutorial-dismiss {
+    width: var(--space-6);
+    height: var(--space-6);
+    flex: 0 0 var(--space-6);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-icon-background);
+    color: var(--color-icon-stroke);
+    font-size: var(--font-size-heading-2);
+    line-height: 1;
+}
+
+.tutorial-dismiss:hover {
+    background: var(--color-secondary-hover);
+}
+
+.tutorial-dismiss:focus-visible {
+    outline: 2px solid var(--color-primary-focus);
+    outline-offset: 2px;
+}
+
+.tutorial-card-content {
+    min-height: calc(var(--space-9) + var(--space-7));
+    padding: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    border-radius: var(--radius-default);
+    background: var(--color-card-background);
+}
+
+.tutorial-icon {
+    width: calc(var(--space-7) + var(--space-2));
+    height: calc(var(--space-7) + var(--space-2));
+    flex: 0 0 calc(var(--space-7) + var(--space-2));
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-icon-background);
+}
+
+.tutorial-icon img {
+    width: var(--space-5);
+    height: var(--space-5);
+}
+
+.tutorial-card-lead {
+    margin-bottom: var(--space-1);
+    font-weight: var(--font-weight-semibold);
+}
+
+.tutorial-card-description {
+    color: var(--color-sub-caption);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+}
+
+.tutorial-card[hidden] {
+    display: none;
+}
+
+.tutorial-show {
+    align-self: flex-start;
+    color: var(--color-primary-default);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: underline;
+    text-underline-offset: var(--space-1);
+}
+
+.tutorial-show:hover {
+    color: var(--color-primary-hover);
+}
+
+.tutorial-show:focus-visible {
+    outline: 2px solid var(--color-primary-focus);
+    outline-offset: var(--space-1);
+}
+
+.tutorial-show[hidden] {
+    display: none;
+}
+
+.dashboard-intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
 }
 
 
@@ -249,18 +362,16 @@
 
 .dashboard-grid {
     width: 100%;
-    height: 332px;
 
     padding: var(--space-2);
 
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(calc(var(--space-9) + var(--space-8)), auto);
 
-    column-gap: var(--space-2);
-    row-gap: var(--space-2);
+    gap: var(--space-2);
 
-    border-radius: 12px;
+    border-radius: var(--radius-default);
     background: linear-gradient(
         to bottom,
         var(--color-progress-tracker-start),
@@ -270,6 +381,7 @@
 
 .dashboard-card {
     min-width: 0;
+    min-height: 0;
 
     display: flex;
     flex-direction: column;
@@ -322,7 +434,7 @@
     gap: var(--space-1);
 
     background-color: var(--color-card-background);
-    border-radius: 8px;
+    border-radius: var(--radius-default);
 }
 
 .dashboard-card h2 {
@@ -342,7 +454,7 @@
 /* Recent Activity */
 
 .recent-activity {
-    margin-top: var(--space-6);
+    margin-top: 0;
 
     display: flex;
     flex-direction: column;
@@ -358,14 +470,14 @@
 
 .activity-item {
     width: 100%;
-    height: 74px;
+    min-height: calc(var(--space-9) + var(--space-5));
     padding: var(--space-3) var(--space-4);
 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 2px;
+    gap: var(--space-1);
 
     background-color: var(--color-card-background);
     border-radius: var(--radius-default);
@@ -388,7 +500,7 @@
 /* Bookmarked Courses */
 
 .bookmarked-courses {
-    margin-top: var(--space-6);
+    margin-top: 0;
 
     display: flex;
     flex-direction: column;
@@ -404,14 +516,14 @@
 
 .course-item {
     width: 100%;
-    min-height: 74px;
+    min-height: calc(var(--space-9) + var(--space-5));
     padding: var(--space-3) var(--space-4);
 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 2px;
+    gap: var(--space-1);
 
     background-color: var(--color-card-background);
     border-radius: var(--radius-default);

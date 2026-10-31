@@ -38,13 +38,23 @@
 
     <main class="dashboard-page">
 
-        <section class="tutorial-card">
-            <h2>New User?</h2>
+        <button type="button" class="tutorial-show" hidden>Need a tutorial? Show quick guide</button>
 
-            <p>
-                Click this card for a quick tutorial and learn how to
-                navigate your dashboard and features.
-            </p>
+        <section class="tutorial-card">
+            <div class="tutorial-card-header">
+                <h2>New User?</h2>
+                <button type="button" class="tutorial-dismiss" aria-label="Hide tutorial">&times;</button>
+            </div>
+
+            <div class="tutorial-card-content">
+                <span class="tutorial-icon" aria-hidden="true">
+                    <img src="../assets/icons/open-book.svg" alt="">
+                </span>
+                <div>
+                    <p class="tutorial-card-lead">Click this card for a quick tutorial</p>
+                    <p class="tutorial-card-description">Learn how to navigate your dashboard and features. You can find more details under Profile Settings.</p>
+                </div>
+            </div>
         </section>
 
 
@@ -166,6 +176,7 @@
     <script src="../js/profile-menu.js" defer></script>
     <script src="../js/theme-toggle.js" defer></script>
     <script src="../js/footer-modals.js" defer></script>
+    <script src="../js/dashboard-tutorial.js" defer></script>
 </body>
 
 </html>
