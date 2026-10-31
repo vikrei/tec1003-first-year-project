@@ -148,6 +148,14 @@
     color: var(--color-text-dark-bg);
 }
 
+.login-tab:not(.active):hover {
+    background-color: var(--color-secondary-hover);
+}
+
+.login-tab.active:hover {
+    background-color: var(--color-primary-hover);
+}
+
 
 /* LOGIN BUTTON */
 
@@ -167,17 +175,35 @@
     gap: var(--space-3);
 }
 
-.social-login button {
+.social-login-button {
     width: 100%;
     height: var(--control-height);
+    padding-inline: var(--space-4);
 
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: var(--space-3);
 
     border-radius: var(--radius-default);
     background-color: var(--color-card-background);
     color: var(--color-text-light-bg);
+    transition: background-color 160ms ease;
+}
+
+.social-login-button img {
+    width: var(--space-5);
+    height: var(--space-5);
+    object-fit: contain;
+}
+
+.social-login-button:hover {
+    background-color: var(--color-secondary-hover);
+}
+
+.social-login-button:focus-visible {
+    outline: 2px solid var(--color-primary-focus);
+    outline-offset: 2px;
 }
 
 .login-form {
