@@ -52,7 +52,7 @@
 
 .hero-actions .button:first-child {
     background-color: var(--color-primary-default);
-    color: var(--color-white);
+    color: var(--color-text-dark-bg);
 }
 
 .hero-actions .button:last-child {
@@ -138,7 +138,7 @@
 
 .login-tab.active {
     background-color: var(--color-primary-default);
-    color: var(--color-white);
+    color: var(--color-text-dark-bg);
 }
 
 

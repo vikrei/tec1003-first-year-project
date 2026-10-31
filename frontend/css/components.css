@@ -26,10 +26,42 @@
 }
 
 .theme-toggle {
-    padding: var(--space-2) var(--space-3);
+    position: relative;
+    width: 64px;
+    height: 22px;
+    flex: 0 0 64px;
+    border: 2px solid var(--color-toggle-stroke);
+    border-radius: 999px;
+    background: var(--color-toggle-background);
+    transition: background-color 160ms ease, border-color 160ms ease;
+}
 
-    border: 1px solid var(--color-divider);
-    border-radius: var(--radius-default);
+.theme-toggle::before {
+    content: "☀";
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-white);
+    color: var(--color-text-dark-bg);
+    font-size: 13px;
+    line-height: 1;
+    transform: translateY(-50%);
+    transition: left 160ms ease, background-color 160ms ease;
+}
+
+.theme-toggle[aria-checked="true"]::before {
+    content: "☾";
+    left: 40px;
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--color-primary-focus);
+    outline-offset: 2px;
 }
 
 .profile-menu-button {
@@ -51,8 +83,7 @@
 }
 
 .admin-page .theme-toggle {
-    border-color: var(--color-secondary-default);
-    color: var(--color-text-dark-bg);
+    border-color: var(--color-toggle-stroke);
 }
 
 .account-profile-menu {
@@ -156,7 +187,7 @@
     border-radius: var(--radius-default);
 
     background-color: var(--color-primary-default);
-    color: var(--color-white);
+    color: var(--color-text-dark-bg);
 
     font-weight: var(--font-weight-semibold);
 }
