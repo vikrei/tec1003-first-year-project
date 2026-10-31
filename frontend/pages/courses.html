@@ -51,91 +51,94 @@
         </section>
 
 
-        <section class="course-filters">
-
-            <div class="level-filters">
-                <button type="button">Beginner</button>
-                <button type="button">Intermediate</button>
-                <button type="button">Advanced</button>
+        <section class="course-filters" aria-label="Course filters">
+            <p class="filter-label">Quick Filter</p>
+            <div class="level-filters" aria-label="Filter by level">
+                <button type="button" data-level-filter="beginner" aria-pressed="false">Beginner</button>
+                <button type="button" data-level-filter="intermediate" aria-pressed="false">Intermediate</button>
+                <button type="button" data-level-filter="advanced" aria-pressed="false">Advanced</button>
             </div>
 
-            <label for="course-category">Filter:</label>
-
+            <label class="filter-label" for="course-category">Filter</label>
             <select id="course-category" name="course-category">
                 <option value="all">All</option>
-                <option value="ai">AI</option>
+                <option value="react">React</option>
+                <option value="python">Python</option>
                 <option value="design">Design Systems</option>
                 <option value="uiux">UI/UX</option>
+                <option value="data">Data</option>
+                <option value="ai">AI</option>
             </select>
-
         </section>
 
-
-        <section class="course-list">
-
-            <article class="course-card">
-                <h2>Build Pie Charts with React</h2>
-                <p>Intermediate · 12 Modules</p>
-                <p>
-                    Learn how to create interactive charts using React and Highcharts.
-                </p>
-                <a href="lesson.html">Start Learning</a>
+        <section class="course-list" aria-label="Available courses">
+            <article class="course-card" data-level="intermediate" data-category="react">
+                <div class="course-card-heading">
+                    <span class="course-art" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span>
+                    <div class="course-card-title"><h3>Build Pie Charts with React</h3><p>Intermediate · 12 Modules</p></div>
+                    <button class="bookmark-button" type="button" data-bookmark="react-pie" aria-label="Bookmark Build Pie Charts with React" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button>
+                </div>
+                <p class="course-description">Master complex state management, hooks, and optimization techniques for large scale applications.</p>
+                <div class="course-card-footer"><a href="lesson.html">Start Learning</a><span>Free</span></div>
             </article>
 
-
-            <article class="course-card">
-                <h2>Start Your UX Journey</h2>
-                <p>Beginner · 8 Modules</p>
-                <p>
-                    Learn the basics of user experience and user-centred design.
-                </p>
-                <a href="lesson.html">Start Learning</a>
+            <article class="course-card" data-level="beginner" data-category="uiux">
+                <div class="course-card-heading">
+                    <span class="course-art" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span>
+                    <div class="course-card-title"><h3>Start Your UX Journey</h3><p>Beginner · 8 Modules</p></div>
+                    <button class="bookmark-button" type="button" data-bookmark="ux-journey" aria-label="Bookmark Start Your UX Journey" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button>
+                </div>
+                <p class="course-description">What is user-centered design? Learn the principles behind useful, accessible experiences.</p>
+                <div class="course-card-footer"><a href="lesson.html">Start Learning</a><span>Free</span></div>
             </article>
 
-
-            <article class="course-card">
-                <h2>Python Core</h2>
-                <p>Beginner · 14 Modules</p>
-                <p>
-                    Learn Python fundamentals and core programming concepts.
-                </p>
-                <a href="lesson.html">Start Learning</a>
+            <article class="course-card" data-level="beginner" data-category="data">
+                <div class="course-card-heading">
+                    <span class="course-art" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span>
+                    <div class="course-card-title"><h3>Data Analysis with Line Charts</h3><p>Beginner · 11 Modules</p></div>
+                    <button class="bookmark-button" type="button" data-bookmark="line-charts" aria-label="Bookmark Data Analysis with Line Charts" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button>
+                </div>
+                <p class="course-description">Learn to track trends over time and present findings clearly with data visualizations.</p>
+                <div class="course-card-footer"><a href="lesson.html">Start Learning</a><span>Free</span></div>
             </article>
 
+            <article class="course-card" data-level="beginner" data-category="python" data-extra hidden>
+                <div class="course-card-heading"><span class="course-art" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span><div class="course-card-title"><h3>Python Core</h3><p>Beginner · 14 Modules</p></div><button class="bookmark-button" type="button" data-bookmark="python-core" aria-label="Bookmark Python Core" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button></div>
+                <p class="course-description">Build a strong foundation in Python syntax, data types, and programming concepts.</p>
+                <div class="course-card-footer"><a href="lesson.html">Start Learning</a><span>Free</span></div>
+            </article>
+            <article class="course-card" data-level="intermediate" data-category="ai" data-extra hidden>
+                <div class="course-card-heading"><span class="course-art" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span><div class="course-card-title"><h3>AI Fundamentals</h3><p>Intermediate · 9 Modules</p></div><button class="bookmark-button" type="button" data-bookmark="ai-fundamentals" aria-label="Bookmark AI Fundamentals" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button></div>
+                <p class="course-description">Explore the core ideas behind machine learning and responsible AI.</p>
+                <div class="course-card-footer"><a href="lesson.html">Start Learning</a><span>Free</span></div>
+            </article>
+            <article class="course-card" data-level="advanced" data-category="react" data-extra hidden>
+                <div class="course-card-heading"><span class="course-art" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span><div class="course-card-title"><h3>Advanced React Programming</h3><p>Advanced · 16 Modules</p></div><button class="bookmark-button" type="button" data-bookmark="advanced-react" aria-label="Bookmark Advanced React Programming" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button></div>
+                <p class="course-description">Build scalable interfaces with advanced patterns, performance tools, and chart integrations.</p>
+                <div class="course-card-footer"><a href="lesson.html">Start Learning</a><span>Free</span></div>
+            </article>
         </section>
 
+        <button type="button" class="course-more" aria-expanded="false">3 more results <span aria-hidden="true">⌄</span></button>
 
-        <section class="suggested-courses">
-
+        <section class="suggested-courses" aria-label="Suggested courses">
             <h2>Suggested for you</h2>
             <p>Based on topics you're interested in.</p>
-
-            <div class="interest-tags">
-                <span>AI</span>
-                <span>Design Systems</span>
-                <span>UI/UX</span>
+            <div class="interest-tags"><span>AI</span><span>Design Systems</span><span>UI/UX</span></div>
+            <div class="suggested-course-list">
+                <article class="suggested-course-card">
+                    <div class="suggested-course-image"><img src="../assets/images/line-chart-course.png" alt="A rising line chart illustration"><button class="bookmark-button" type="button" data-bookmark="suggested-line" aria-label="Bookmark Introduction to Line Charts" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button></div>
+                    <a href="lesson.html" class="suggested-read-more">Read More</a><h3>Introduction to Line Charts</h3>
+                </article>
+                <article class="suggested-course-card">
+                    <div class="suggested-course-image"><img src="../assets/images/ai-fundamentals-course.png" alt="Abstract digital brain illustration for AI fundamentals"><button class="bookmark-button" type="button" data-bookmark="suggested-ai" aria-label="Bookmark AI Fundamentals" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button></div>
+                    <a href="lesson.html" class="suggested-read-more">Read More</a><h3>AI Fundamentals</h3>
+                </article>
+                <article class="suggested-course-card">
+                    <div class="suggested-course-image"><img src="../assets/images/advanced-react-course.png" alt="Colorful abstract code visualization for advanced React"><button class="bookmark-button" type="button" data-bookmark="suggested-react" aria-label="Bookmark Advanced React Programming" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button></div>
+                    <a href="lesson.html" class="suggested-read-more">Read More</a><h3>Advanced React Programming</h3>
+                </article>
             </div>
-
-
-            <article class="suggested-course-card">
-
-                <img
-                    src="assets/images/course-placeholder.jpg"
-                    alt="Introduction to Design Systems course"
-                >
-
-                <h3>Introduction to Design Systems</h3>
-
-                <a href="lesson.html">
-                    Read More
-                </a>
-
-                <button type="button" aria-label="Bookmark course">
-                    Bookmark
-                </button>
-
-            </article>
-
         </section>
 
     </main>
@@ -190,6 +193,7 @@
     <script src="../js/profile-menu.js" defer></script>
     <script src="../js/theme-toggle.js" defer></script>
     <script src="../js/footer-modals.js" defer></script>
+    <script src="../js/courses-page.js" defer></script>
 </body>
 
 </html>

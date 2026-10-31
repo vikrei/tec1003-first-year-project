@@ -543,6 +543,185 @@
 }
 
 /* =========================
+   COURSE CATALOG
+========================== */
+
+.courses-page {
+    width: min(100%, var(--mobile-content-max-width));
+    min-height: calc(100vh - var(--space-9));
+    margin-inline: auto;
+    padding: var(--space-6) var(--mobile-page-margin) calc(var(--space-9) + var(--space-9));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.courses-page > .back-link { font-size: var(--font-size-body); }
+.courses-page .page-intro h1 { margin-bottom: var(--space-6); }
+.courses-page .page-intro h2 { margin-bottom: var(--space-2); font-size: var(--font-size-heading-3); }
+.courses-page .page-intro p,
+.suggested-courses > p { color: var(--color-sub-caption); }
+
+.course-filters { display: flex; flex-direction: column; gap: var(--space-3); }
+.filter-label { font-size: var(--font-size-body); }
+.level-filters {
+    margin-bottom: var(--space-1);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2);
+}
+.level-filters button {
+    min-height: var(--control-height);
+    padding-inline: var(--space-2);
+    border-radius: 999px;
+    background: var(--color-primary-default);
+    color: var(--color-text-dark-bg);
+    font-size: var(--font-size-caption);
+    transition: background-color 160ms ease;
+}
+.level-filters button:hover { background: var(--color-primary-hover); }
+.level-filters button[aria-pressed="true"] { background: var(--color-primary-active); }
+.level-filters button:focus-visible,
+.course-filters select:focus-visible {
+    outline: 2px solid var(--color-primary-focus);
+    outline-offset: 2px;
+}
+.course-filters select {
+    width: 100%;
+    min-height: var(--control-height);
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-primary-default);
+    border-radius: var(--radius-default);
+    background: var(--color-secondary-default);
+    color: var(--color-text-light-bg);
+    font: inherit;
+}
+.course-filters select:hover { background: var(--color-secondary-hover); }
+
+.course-list { display: flex; flex-direction: column; gap: var(--space-4); }
+.course-card {
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+.course-card[hidden] { display: none; }
+.course-card-heading { display: flex; align-items: center; gap: var(--space-3); }
+.course-art {
+    width: var(--space-8);
+    height: var(--space-8);
+    flex: 0 0 var(--space-8);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-icon-background);
+}
+.course-art img { width: var(--space-5); height: var(--space-5); }
+.course-card-title { min-width: 0; flex: 1; }
+.course-card-title h3 { font-size: var(--font-size-body); line-height: var(--line-height-body); }
+.course-card-title p,
+.course-card-footer > span { color: var(--color-sub-caption); font-size: var(--font-size-caption); }
+
+.bookmark-button {
+    width: var(--space-7);
+    height: var(--space-7);
+    flex: 0 0 var(--space-7);
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-default);
+    color: var(--color-icon-active);
+}
+.bookmark-button:hover { background: var(--color-ghost-default); }
+.bookmark-button[aria-pressed="true"] { color: var(--color-primary-active); }
+.bookmark-icon {
+    display: block;
+    width: var(--space-5);
+    height: var(--space-5);
+    background: currentColor;
+    -webkit-mask: url("../assets/icons/Bookmark.svg") center / contain no-repeat;
+    mask: url("../assets/icons/Bookmark.svg") center / contain no-repeat;
+}
+.course-description {
+    color: var(--color-sub-caption);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+}
+.course-card-footer { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.course-card-footer a {
+    min-height: var(--control-height);
+    padding: var(--space-2) var(--space-4);
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--radius-default);
+    color: var(--color-text-light-bg);
+}
+.course-card-footer a:hover { background: var(--color-secondary-hover); }
+.course-more {
+    min-height: var(--control-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    border-radius: var(--radius-default);
+    background: var(--color-secondary-default);
+    color: var(--color-text-light-bg);
+}
+.course-more:hover { background: var(--color-secondary-hover); }
+.course-more[hidden] { display: none; }
+
+.suggested-courses { display: flex; flex-direction: column; gap: var(--space-2); }
+.suggested-courses h2 { font-size: var(--font-size-heading-3); }
+.interest-tags { margin-block: var(--space-2); display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.interest-tags span {
+    min-height: var(--space-7);
+    padding-inline: var(--space-3);
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--color-card-stroke);
+    border-radius: 999px;
+    background: var(--color-background-main);
+}
+.suggested-course-list {
+    display: grid;
+    grid-auto-columns: min(var(--suggested-course-card-width), calc(100% - var(--space-8)));
+    grid-auto-flow: column;
+    gap: var(--space-4);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-bottom: var(--space-2);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+}
+.suggested-course-card {
+    min-width: 0;
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    scroll-snap-align: start;
+}
+.suggested-course-image { position: relative; overflow: hidden; border-radius: var(--radius-default); aspect-ratio: 16 / 9; }
+.suggested-course-image > img { width: 100%; height: 100%; object-fit: cover; }
+.suggested-course-image .bookmark-button {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    background: color-mix(in srgb, var(--color-black) 28%, transparent);
+    color: var(--color-white);
+}
+.suggested-course-image .bookmark-button[aria-pressed="true"] { color: var(--color-primary-active); }
+.suggested-read-more {
+    min-height: var(--control-height);
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-default);
+    background: var(--color-primary-default);
+    color: var(--color-text-dark-bg);
+}
+.suggested-read-more:hover { background: var(--color-primary-hover); }
+.suggested-course-card h3 { font-size: var(--font-size-heading-3); }
+
+/* =========================
    MY COURSES
 ========================== */
 
