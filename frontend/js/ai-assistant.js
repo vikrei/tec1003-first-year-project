@@ -68,10 +68,59 @@ if (askAiButton) {
         messages.scrollTop = messages.scrollHeight; // scrolls to the newest message
     }
 
+    // Function: Suggestions for FAQ in Ask Ai -------------------------
+
+    // ex questions a user can click instead of typing
+    const suggestedQuestions = [
+        "How do I continue my course?",
+        "Where do I find my progress?",
+        "How do I find a new course?",
+        "How do I contact a teacher?",
+    ];
+
+    let suggestionsShown = false;
+
+    // greeting with clickable example questions (only once per page visit)
+    function showSuggestions() {
+        if (suggestionsShown) return;
+        suggestionsShown = true;
+
+        const message = document.createElement("div");
+        message.className = "ai-message ai-message-assistant";
+
+        const label = document.createElement("span");
+        label.className = "ai-message-label";
+        label.textContent = "Assistant";
+
+        const body = document.createElement("p");
+        body.textContent = "Hi! I can help with common questions. Pick one or write your own:";
+
+        const list = document.createElement("div");
+        list.className = "ai-suggestions";
+
+        suggestedQuestions.forEach((question) => {
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.className = "ai-suggestion";
+            chip.textContent = question;
+            chip.addEventListener("click", () => {
+                questionField.value = question;
+                form.requestSubmit(); // runs same code as the Send button
+            });
+            list.append(chip);
+        });
+
+        message.append(label, body, list);
+        messages.append(message);
+    }
+
+    // Function: Open Modal & Function Close Modal ----------------------
+
     function openModal() {
         lastFocusedElement = document.activeElement;
         backdrop.hidden = false;
         document.body.classList.add("ai-modal-open");
+        showSuggestions(); // CS: greeting with example questions
         questionField.focus();
     }
 
@@ -83,6 +132,8 @@ if (askAiButton) {
             lastFocusedElement.focus();
         }
     }
+
+    // ---------------------------------------------------------------
 
     askAiButton.addEventListener("click", openModal);
     closeButton.addEventListener("click", closeModal);
