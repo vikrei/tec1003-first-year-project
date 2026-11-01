@@ -27,9 +27,9 @@
 
 .theme-toggle {
     position: relative;
-    width: 64px;
-    height: 22px;
-    flex: 0 0 64px;
+    width: 48px;
+    height: 24px;
+    flex: 0 0 48px;
     border: 2px solid var(--color-toggle-stroke);
     border-radius: 999px;
     background: var(--color-toggle-background);
@@ -41,8 +41,8 @@
     position: absolute;
     top: 50%;
     left: 2px;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     display: grid;
     place-items: center;
     border-radius: 50%;
@@ -56,7 +56,7 @@
 
 .theme-toggle[aria-checked="true"]::before {
     content: "☾";
-    left: 40px;
+    left: 26px;
 }
 
 .theme-toggle:focus-visible {
@@ -164,6 +164,45 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 2;
+}
+
+/* profile menu on mobile (values from the Figma mobile dropdown) */
+@media (max-width: 699px) {
+    .account-profile-menu {
+        width: 192px;
+        border-radius: 4px;
+        box-shadow: 0 8px 20px 0 color-mix(in srgb, var(--color-black) 8%, transparent);
+    }
+
+    .account-profile-menu-header {
+        min-height: calc(var(--space-9) + var(--space-2));
+        padding: var(--space-2);
+        gap: var(--space-2);
+    }
+
+    .account-profile-menu-header h2 {
+        font-size: var(--font-size-heading-3);
+        line-height: var(--line-height-heading-3);
+    }
+
+    .account-profile-menu-header p {
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-caption);
+    }
+
+    .account-profile-menu-header img {
+        width: calc(var(--space-7) + var(--space-4));
+        height: calc(var(--space-7) + var(--space-4));
+    }
+
+    .account-profile-menu-links a {
+        font-size: var(--font-size-body);
+    }
+
+    .account-profile-menu-links svg {
+        width: var(--space-4);
+        height: var(--space-4);
+    }
 }
 
 
