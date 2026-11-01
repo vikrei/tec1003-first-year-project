@@ -166,6 +166,45 @@
     stroke-width: 2;
 }
 
+/* profile menu on mobile (values from the Figma mobile dropdown) */
+@media (max-width: 699px) {
+    .account-profile-menu {
+        width: 192px;
+        border-radius: 4px;
+        box-shadow: 0 8px 20px 0 color-mix(in srgb, var(--color-black) 8%, transparent);
+    }
+
+    .account-profile-menu-header {
+        min-height: calc(var(--space-9) + var(--space-2));
+        padding: var(--space-2);
+        gap: var(--space-2);
+    }
+
+    .account-profile-menu-header h2 {
+        font-size: var(--font-size-heading-3);
+        line-height: var(--line-height-heading-3);
+    }
+
+    .account-profile-menu-header p {
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-caption);
+    }
+
+    .account-profile-menu-header img {
+        width: calc(var(--space-7) + var(--space-4));
+        height: calc(var(--space-7) + var(--space-4));
+    }
+
+    .account-profile-menu-links a {
+        font-size: var(--font-size-body);
+    }
+
+    .account-profile-menu-links svg {
+        width: var(--space-4);
+        height: var(--space-4);
+    }
+}
+
 
 /* =========================
    BUTTONS
