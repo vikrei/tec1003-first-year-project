@@ -27,9 +27,9 @@
 
 .theme-toggle {
     position: relative;
-    width: 64px;
-    height: 22px;
-    flex: 0 0 64px;
+    width: 48px;
+    height: 24px;
+    flex: 0 0 48px;
     border: 2px solid var(--color-toggle-stroke);
     border-radius: 999px;
     background: var(--color-toggle-background);
@@ -41,8 +41,8 @@
     position: absolute;
     top: 50%;
     left: 2px;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     display: grid;
     place-items: center;
     border-radius: 50%;
@@ -56,7 +56,7 @@
 
 .theme-toggle[aria-checked="true"]::before {
     content: "☾";
-    left: 40px;
+    left: 26px;
 }
 
 .theme-toggle:focus-visible {
