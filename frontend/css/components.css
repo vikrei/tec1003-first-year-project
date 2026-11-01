@@ -456,6 +456,36 @@ body.ai-modal-open {
     text-decoration: underline;
 }
 
+/* styling for suggested questions inside the first assistant message */
+.ai-suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+}
+
+.ai-suggestion {
+    min-height: var(--control-height);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-ai-purple);
+    border-radius: var(--radius-default);
+    background-color: var(--color-background-main);
+    color: var(--color-text-light-bg);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.ai-suggestion:hover {
+    background-color: color-mix(in srgb, var(--color-ai-purple) 15%, var(--color-background-main));
+}
+
+/* visible keyboard focus for everything inside the AI assistant window */
+.ai-modal :focus-visible {
+    outline: 2px solid var(--color-ai-purple);
+    outline-offset: 2px;
+}
+
 /* FOOTER INFORMATION DIALOGS */
 .footer-modal-backdrop {
     position: fixed;
