@@ -14,6 +14,7 @@ if (askAiButton) {
                     </div>
                     <button type="button" class="ai-close-button" aria-label="Close Ask AI">×</button>
                 </header>
+                <div class="ai-messages" role="log" aria-live="polite" aria-label="Conversation"></div>
                 <form class="ai-modal-form">
                     <label class="visually-hidden" for="ai-question">Your question</label>
                     <textarea id="ai-question" name="question" rows="3" placeholder="Where do I find my Profile Settings?" required></textarea>
@@ -37,7 +38,35 @@ if (askAiButton) {
     const form = document.querySelector(".ai-modal-form");
     const status = document.querySelector(".ai-modal-status");
     const helpButton = document.querySelector(".ai-help-button");
+    const messages = document.querySelector(".ai-messages");
     let lastFocusedElement;
+
+    // Adds one message to the conversation box
+    // role is "user" or "assistant"; links is an optional list of {label, url}
+    function addMessage(role, text, links = []) {
+        const message = document.createElement("div");
+        message.className = `ai-message ai-message-${role}`;
+
+        const label = document.createElement("span");
+        label.className = "ai-message-label";
+        label.textContent = role === "user" ? "You" : "Assistant";
+
+        const body = document.createElement("p");
+        body.textContent = text; // textContent shows plain text and never runs html
+
+        message.append(label, body);
+
+        links.forEach((link) => {
+            const anchor = document.createElement("a");
+            anchor.className = "ai-message-link";
+            anchor.href = link.url;
+            anchor.textContent = link.label;
+            message.append(anchor);
+        });
+
+        messages.append(message);
+        messages.scrollTop = messages.scrollHeight; // scrolls to the newest message
+    }
 
     function openModal() {
         lastFocusedElement = document.activeElement;
@@ -87,14 +116,63 @@ if (askAiButton) {
         }
     });
 
+    // Ask AI Help Button ----------------------------------------------------
+
+    const helpText = "Enter a question, then select Send.";
+
+    // first click on "?" shows the hint, a second click hides it again
     helpButton.addEventListener("click", () => {
-        status.textContent = "Enter a question about your course, then select Send.";
-        status.hidden = false;
+        const hintIsShown = !status.hidden && status.textContent === helpText;
+        status.textContent = hintIsShown ? "" : helpText;
+        status.hidden = hintIsShown;
     });
 
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        status.textContent = "The AI assistant is not connected yet.";
-        status.hidden = false;
+    // hides hint when user starts typing
+    questionField.addEventListener("input", () => {
+        if (status.textContent === helpText) status.hidden = true;
     });
+
+    // --------------------------------------------------------------------------
+
+    // Function: Message writing & receiving answer ----------------------
+
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const question = questionField.value.trim();
+        if (!question) return; // ignore empty or space-only messages
+
+        addMessage("user", question);
+        questionField.value = "";
+        status.textContent = "Thinking...";
+        status.hidden = false;
+
+        try {
+            // Send the question to the Flask endpoint as JSON
+            const response = await fetch("/api/help", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ question }),
+            });
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Request failed");
+            }
+
+            addMessage("assistant", data.answer, data.links);
+            status.hidden = true;
+        } catch (error) {
+            status.textContent = "Something went wrong. Please try again.";
+        }
+    });
+
+     // Enter sends the message, Shift+Enter starts a new line
+        questionField.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
+            event.preventDefault();
+            form.requestSubmit(); // runs the same submit code as the Send button
+            }   
+        });
 }
