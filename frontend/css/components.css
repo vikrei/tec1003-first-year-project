@@ -166,6 +166,18 @@
     stroke-width: 2;
 }
 
+/* profile dd menu: the page the user is on */
+.account-profile-menu-links a[aria-current="page"] {
+    font-weight: var(--font-weight-semibold);
+    box-shadow: inset 4px 0 0 var(--color-primary-focus);
+}
+
+/* profile dd menu: keyboard focus gets outline inside the item */
+.account-profile-menu-links a:focus-visible {
+    outline: 2px solid var(--color-primary-focus);
+    outline-offset: -2px;
+}
+
 /* profile menu on mobile (values from the Figma mobile dropdown) */
 @media (max-width: 699px) {
     .account-profile-menu {

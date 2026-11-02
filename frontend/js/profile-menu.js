@@ -36,7 +36,10 @@ if (profileMenuButton) {
               { href: "courses.html", label: "All Courses", icon: icons.courses },
               { href: "profile.html", label: "Profile & Settings", icon: icons.settings },
               { href: "index.html", label: "Log out", icon: icons.logout },
-          ];
+        ];
+    
+    // name of the current page, e.g. "courses.html"
+    const currentPage = window.location.pathname.split("/").pop();
 
     const menuMarkup = `
         <section class="account-profile-menu" id="account-profile-menu" aria-label="${profile.role} profile menu" hidden>
@@ -50,13 +53,16 @@ if (profileMenuButton) {
             <nav class="account-profile-menu-links" role="menu" aria-label="Profile navigation">
                 ${links
                     .map(
-                        (link) => `
-                            <a href="${link.href}" role="menuitem">
+                        (link) => {
+                        // Mark the link that points to the page the user is on
+                        const current = link.href === currentPage ? ' aria-current="page"' : "";
+                        return `
+                            <a href="${link.href}" role="menuitem"${current}>
                                 ${link.icon}
                                 <span>${link.label}</span>
                             </a>
-                        `
-                    )
+                        `;
+                    })
                     .join("")}
             </nav>
         </section>
