@@ -39,6 +39,8 @@ if (askAiButton) {
     const status = document.querySelector(".ai-modal-status");
     const helpButton = document.querySelector(".ai-help-button");
     const messages = document.querySelector(".ai-messages");
+    const sendButton = document.querySelector(".ai-send-button");
+    let isWaiting = false; // true while a question is waiting for its answer
     let lastFocusedElement;
 
     // Adds one message to the conversation box
@@ -66,6 +68,8 @@ if (askAiButton) {
 
         messages.append(message);
         messages.scrollTop = messages.scrollHeight; // scrolls to the newest message
+
+        return message; // lets the caller remove the message later
     }
 
     // Function: Suggestions for FAQ in Ask Ai -------------------------
@@ -192,12 +196,15 @@ if (askAiButton) {
         event.preventDefault();
 
         const question = questionField.value.trim();
-        if (!question) return; // ignore empty or space-only messages
+        if (!question || isWaiting) return; // ignore empty or space-only messages & double sends
+
+        isWaiting = true;
+        sendButton.disabled = true;
+        status.hidden = true; // hides hint if still visible
 
         addMessage("user", question);
         questionField.value = "";
-        status.textContent = "Thinking...";
-        status.hidden = false;
+        const pending = addMessage("assistant", "Thinking...");
 
         try {
             // Send the question to the Flask endpoint as JSON
@@ -213,9 +220,13 @@ if (askAiButton) {
             }
 
             addMessage("assistant", data.answer, data.links);
-            status.hidden = true;
         } catch (error) {
-            status.textContent = "Something went wrong. Please try again.";
+            addMessage("assistant", "Something went wrong. Please try again in a moment.");
+        } finally {
+            // runs after success and after an error
+            pending.remove(); //removes "Thinking.." in both cases
+            isWaiting = false;
+            sendButton.disabled = false;
         }
     });
 
