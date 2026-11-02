@@ -97,7 +97,7 @@ if (askAiButton) {
         label.textContent = "Assistant";
 
         const body = document.createElement("p");
-        body.textContent = "Hi! I can help with common questions. Pick one or write your own:";
+        body.textContent = "Hi! I give prepared answers to frequently asked questions. Please do not enter any personal data. Pick a question below or write your own:";
 
         const list = document.createElement("div");
         list.className = "ai-suggestions";
