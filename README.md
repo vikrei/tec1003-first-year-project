@@ -173,8 +173,7 @@ ai-assistant.js shows the answer and its links in the conversation
 - **The assistant gives prepared answers only.** It matches keywords to a fixed list of topics. Questions outside these topics get a fallback answer with suggested links.
 - **Login is a mock.** There is no real authentication and no user accounts.
 - **Progress is not saved yet.** The progress tracker shows hard-coded values, because the database is not built yet.
-- **Known bug:** the profile menu sometimes marks the wrong tab as active.
-- **Tested setup:** the setup instructions were tested on Linux (Ubuntu) with Python 3.12. The Windows and macOS instructions have not been tested yet.
+- **Tested setup:** the setup instructions were tested on Linux (Ubuntu) with Python 3.12, using a fresh clone of the repository on 02.11.2026. The Windows and macOS instructions have not been tested yet.
 
 ## Team, license and branding
 
