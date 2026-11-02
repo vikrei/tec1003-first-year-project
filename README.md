@@ -96,7 +96,7 @@ The `backend/venv/` folder is created during setup and is not part of the reposi
 
 | File | Purpose |
 |---|---|
-| `ai-assistant.js` | AI assistant window: sends questions to `/api/help` and shows the answers |
+| `ai-assistant.js` | AI assistant window: sends questions to `/api/help` and shows the answers, prepared answers for service |
 | `login.js` | Mock login |
 | `courses-page.js` | Filters on the course overview |
 | `profile-menu.js` | Profile dropdown menu |
