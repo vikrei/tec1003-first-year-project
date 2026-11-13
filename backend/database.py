@@ -62,7 +62,48 @@ def create_tables():
     finally:
         connection.close()
 
+USERS = [
+    ("Alex Liland", "student"),
+    ("Per Håland", "admin"),
+]
+
+COURSE = ("build-pie-charts-react", "Build Pie Charts with React")
+
+STEPS = [
+    (1, "Introduction", 1),
+    (2, "Task 1", 25),
+    (3, "Task 2", 50),
+    (4, "Task 3", 75),
+    (5, "Quiz", 90),
+]
+
+
+def seed_data():
+    """Insert the dummy users and the demo course if the database is empty."""
+    connection = get_connection()
+    try:
+        user_count = connection.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+        if user_count:
+            return
+        connection.executemany("INSERT INTO users (name, role) VALUES (?, ?)", USERS)
+        cursor = connection.execute(
+            "INSERT INTO courses (slug, title) VALUES (?, ?)", COURSE
+        )
+        course_id = cursor.lastrowid
+        connection.executemany(
+            "INSERT INTO steps (course_id, position, title, percent) "
+            "VALUES (?, ?, ?, ?)",
+            [
+                (course_id, position, title, percent)
+                for position, title, percent in STEPS
+            ],
+        )
+        connection.commit()
+    finally:
+        connection.close()
+
 
 if __name__ == "__main__":
     create_tables()
-    print(f"Tables created in {DB_PATH}")
+    seed_data()
+    print(f"Database ready in {DB_PATH}")
