@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS courses (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    slug TEXT NOT NULL UNIQUE,
     title TEXT NOT NULL
 );
 
@@ -22,6 +23,7 @@ CREATE TABLE IF NOT EXISTS steps (
     course_id INTEGER NOT NULL REFERENCES courses (id),
     position INTEGER NOT NULL,
     title TEXT NOT NULL,
+    percent INTEGER NOT NULL CHECK (percent BETWEEN 0 AND 100),
     UNIQUE (course_id, position)
 );
 
