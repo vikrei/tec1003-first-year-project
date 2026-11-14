@@ -14,9 +14,19 @@
     background-color: var(--color-background-main);
 }
 
-.logo img {
+.logo > img:first-child {
     width: auto;
     height: var(--space-7);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.desktop-wordmark {
+    display: none;
 }
 
 .header-actions {

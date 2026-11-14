@@ -1019,6 +1019,298 @@ main h1 {
 
 .home-navigation a { min-width: 25%; text-align: center; }
 
+/* CONSISTENT DESKTOP HEADER CONTROLS */
+@media (min-width: 700px) {
+    .site-header {
+        justify-content: flex-start;
+        gap: var(--space-4);
+    }
+
+    .site-header .logo {
+        margin-right: auto;
+    }
+
+    .site-header .header-actions {
+        display: contents;
+    }
+
+    .site-header .theme-toggle {
+        order: 2;
+    }
+
+    .site-header .header-navigation {
+        order: 3;
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+    }
+
+    .site-header .profile-menu-button {
+        order: 4;
+    }
+}
+
+/* HOME PAGE — DESKTOP */
+.home-page .platform-offerings { display: none; }
+
+@media (min-width: 700px) {
+    .home-page {
+        padding-top: var(--space-9);
+    }
+
+    .home-page .site-header {
+        min-height: var(--space-9);
+        padding: var(--space-3) var(--space-6);
+        background: var(--color-secondary-default);
+    }
+
+    .home-page .logo > img:first-child { height: var(--space-7); }
+
+    .home-page .header-navigation {
+        order: 3;
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+    }
+
+    .home-page .header-navigation a:last-child {
+        font-weight: var(--font-weight-semibold);
+    }
+
+    .home-page .theme-toggle { order: 2; }
+
+    .home-page main {
+        width: min(100%, var(--desktop-content-max-width));
+        margin-inline: auto;
+    }
+
+    .home-page .hero,
+    .home-page .about-mission,
+    .home-page .platform-offerings {
+        width: 100%;
+        padding-inline: var(--space-6);
+    }
+
+    .home-page .hero {
+        padding-top: var(--space-6);
+        align-items: center;
+        gap: var(--space-6);
+    }
+
+    .home-page .hero h1 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .home-page .hero-image {
+        width: 100%;
+        max-height: calc(var(--desktop-content-max-width) / 3);
+        object-fit: cover;
+    }
+
+    .home-page .hero-actions {
+        max-width: calc(var(--desktop-content-max-width) - var(--space-9) * 2);
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-3);
+    }
+
+    .home-page .hero-actions::before,
+    .home-page .hero-actions::after {
+        content: "";
+        height: 1px;
+        flex: 1;
+        background: var(--color-primary-disabled);
+    }
+
+    .home-page .hero-actions .button {
+        flex: 0 1 calc(var(--space-9) * 2 + var(--space-4));
+    }
+
+    .home-page .about-mission {
+        margin-top: var(--space-6);
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-2);
+        border: 1px solid var(--color-primary-focus);
+        border-radius: var(--radius-default);
+        background: var(--color-card-background);
+    }
+
+    .home-page .about-learning,
+    .home-page .mission {
+        min-width: 0;
+        margin: 0;
+        padding: var(--space-2);
+        gap: var(--space-4);
+    }
+
+    .home-page .about-learning h2,
+    .home-page .mission h2 {
+        text-align: center;
+        font-size: var(--font-size-heading-3);
+    }
+
+    .home-page .about-learning .text-card {
+        padding: var(--space-2);
+        gap: var(--space-3);
+        border-radius: var(--radius-default);
+        background: var(--color-background-main);
+    }
+
+    .home-page .mission p {
+        padding: var(--space-2);
+        border-radius: var(--radius-default);
+        background: var(--color-background-main);
+    }
+
+    .home-page .platform-offerings {
+        margin-top: var(--space-6);
+        display: block;
+    }
+
+    .home-page .platform-offerings > h2 {
+        margin-bottom: var(--space-5);
+        text-align: center;
+        font-size: var(--font-size-heading-3);
+    }
+
+    .home-page .platform-offering-grid {
+        padding: var(--space-2) 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-4);
+        border: 1px solid var(--color-primary-focus);
+        border-radius: var(--radius-default);
+    }
+
+    .home-page .platform-offering-grid p {
+        padding: var(--space-2);
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-caption);
+    }
+
+    .home-page .home-navigation { display: none; }
+
+    .home-page .site-footer {
+        width: min(100%, var(--profile-menu-width));
+        margin: var(--space-7) auto 0;
+        padding: var(--space-4) var(--space-3) var(--space-6);
+        gap: var(--space-3);
+        border-top: 0;
+    }
+
+    .home-page .social-links {
+        padding-bottom: var(--space-3);
+        border-bottom: 1px solid var(--color-divider);
+    }
+
+    .home-page .footer-navigation {
+        justify-content: space-between;
+    }
+}
+
+/* LOGIN PAGE — DESKTOP */
+@media (min-width: 1000px) {
+    .login-page-body {
+        padding-top: calc(var(--space-9) + var(--space-4));
+        background: var(--color-background-main);
+    }
+
+    .login-page-body .site-header {
+        min-height: calc(var(--space-9) + var(--space-4));
+        padding: var(--space-3) var(--space-6);
+        background: var(--color-secondary-default);
+    }
+
+    .login-page-body .logo > img:first-child { height: var(--space-7); }
+
+    .login-page-body .login-page {
+        position: relative;
+        isolation: isolate;
+        width: 100%;
+        margin-inline: auto;
+        padding: calc(var(--space-9) + var(--space-4)) var(--space-6) 0;
+        overflow: visible;
+    }
+
+    .login-page-body .login-page::before,
+    .login-page-body .login-page::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: calc(var(--space-9) + var(--space-9) + var(--space-9) + var(--space-6));
+        width: var(--page-decoration-width);
+        aspect-ratio: 411 / 895;
+        background: url("../assets/images/page-decoration.png") center / contain no-repeat;
+        pointer-events: none;
+    }
+
+    .login-page-body .login-page::before { left: var(--space-6); }
+    .login-page-body .login-page::after {
+        right: var(--space-6);
+        transform: scaleX(-1);
+    }
+
+    .login-page-body .login-section {
+        position: relative;
+        z-index: 1;
+        width: min(var(--login-form-max-width), 100%);
+        padding: 0;
+    }
+
+    .login-page-body .login-section > h1 {
+        width: min(calc(100vw - var(--space-6) - var(--space-6)), var(--desktop-content-max-width));
+        margin: 0 0 calc(var(--space-9) + var(--space-9) + var(--space-2));
+        margin-left: 50%;
+        transform: translateX(-50%);
+        font-size: var(--font-size-display);
+        line-height: var(--line-height-display);
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .login-page-body .login-tabs { margin-bottom: var(--space-5); }
+    .login-page-body .login-section .form-group label { font-size: var(--font-size-caption); }
+    .login-page-body .login-button { min-height: calc(var(--control-height) + var(--space-4)); }
+
+    .login-page-body .site-footer {
+        position: relative;
+        z-index: 1;
+        width: min(100%, var(--profile-menu-width));
+        margin: var(--space-6) auto 0;
+        padding: var(--space-4) var(--space-3) var(--space-6);
+        gap: var(--space-3);
+        border-top: 0;
+    }
+
+    .login-page-body .social-links {
+        padding-bottom: var(--space-3);
+        border-bottom: 1px solid var(--color-divider);
+    }
+
+    .login-page-body .footer-navigation { justify-content: space-between; }
+}
+
+/* SHARED DESKTOP HEADER — ALL PAGES */
+@media (min-width: 700px) {
+    .site-header,
+    .admin-page .site-header,
+    .login-page-body .site-header {
+        min-height: var(--space-9);
+        padding: var(--space-3) var(--space-6);
+        background: var(--color-secondary-default);
+    }
+
+    .login-page-body { padding-top: var(--space-9); }
+
+    .site-header .desktop-wordmark {
+        display: block;
+        width: auto;
+        height: auto;
+    }
+}
+
 @media (min-width: 700px) {
     .my-courses-page { width: min(100%, var(--mobile-content-max-width)); }
     .my-courses-page { padding-inline: var(--space-6); }
