@@ -64,7 +64,7 @@
             </div>
 
 
-            <article class="course-progress-card">
+            <article class="course-progress-card" data-pie-chart-course>
 
                 <img class="my-course-image" src="../assets/images/learning-flow-1-chart.png" alt="Pie chart from the course learning flow">
 
@@ -78,10 +78,10 @@
                 </div>
 
                 <div class="course-progress">
-                    <div class="progress-label"><p>Progress</p><strong>1%</strong></div>
+                    <div class="progress-label"><p>Progress</p><strong data-pie-chart-progress>1%</strong></div>
 
                     <div class="progress-bar">
-                        <div class="progress-bar-fill progress-one-percent"></div>
+                        <div class="progress-bar-fill progress-one-percent" data-pie-chart-progress-bar></div>
                     </div>
                 </div>
 
@@ -89,12 +89,12 @@
 
                     <div>
                         <h4>Current chapter</h4>
-                        <p>Ch. 1 - Pie Charts</p>
+                        <p data-pie-chart-current-chapter>Ch. 1 - Pie Charts</p>
                     </div>
 
                     <div>
                         <h4>Quiz results</h4>
-                        <p>Next Quiz coming up</p>
+                        <p data-pie-chart-quiz-result>Next Quiz coming up</p>
                     </div>
 
                 </div>
@@ -193,16 +193,17 @@
         </section>
 
 
-        <section class="certificates">
+        <section class="certificates" data-earned-course-certificate hidden>
 
             <h2>Earned Certificates</h2>
 
             <article class="certificate-card">
-                <p class="certificate-description">First explanatory text<br>Second explanatory text</p>
+                <p class="certificate-description">Build Pie Charts with React</p>
                 <div class="resource-grid">
-                    <div><span class="mini-icon" aria-hidden="true"><img src="../assets/icons/file-list.svg" alt=""></span><h3>Current chapter</h3><p>Chapter 4 · Building reusable components</p></div>
-                    <div><span class="mini-icon" aria-hidden="true"><img src="../assets/icons/check-circle.svg" alt=""></span><h3>Quiz results</h3><p>Passed with 92% · UI Foundations</p></div>
+                    <div><span class="mini-icon" aria-hidden="true"><img src="../assets/icons/file-list.svg" alt=""></span><h3>Certificate earned</h3><p data-certificate-date></p></div>
+                    <div><span class="mini-icon" aria-hidden="true"><img src="../assets/icons/check-circle.svg" alt=""></span><h3>Quiz results</h3><p>Passed with 100%</p></div>
                 </div>
+                <a class="course-button" href="course-certificate.html">View Certificate</a>
             </article>
 
         </section>
@@ -252,6 +253,7 @@
     <script src="../js/profile-menu.js" defer></script>
     <script src="../js/theme-toggle.js" defer></script>
     <script src="../js/footer-modals.js" defer></script>
+    <script src="../js/course-progress.js" defer></script>
 </body>
 
 </html>

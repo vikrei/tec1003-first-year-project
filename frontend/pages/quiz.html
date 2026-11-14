@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Recap Quiz | Highcharts Course Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Vollkorn+SC:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+</head>
+
+<body class="student-page-body">
+    <header class="site-header">
+        <a href="student-dashboard.html" class="logo">
+            <img src="../assets/icons/logo.png" alt="Highcharts Course Portal">
+            <img class="desktop-wordmark" src="../assets/images/text-highsoft-logolab.png" alt="">
+        </a>
+        <nav class="student-header-navigation" aria-label="Student navigation">
+            <a href="student-dashboard.html" aria-current="page">Home</a>
+            <a href="my-courses.html">My Courses</a>
+            <a href="courses.html">Course Catalogue</a>
+        </nav>
+        <div class="header-actions">
+            <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark mode"></button>
+            <button type="button" class="profile-menu-button" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="student">
+                <img src="../assets/images/profile-image-student.png" alt="Student profile">
+                <span class="profile-menu-label">Menu</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="course-quiz-page">
+        <a class="back-link" href="lesson.html?task=3">← Back</a>
+
+        <header class="quiz-course-header">
+            <h1>Build Pie Charts with React</h1>
+            <p>Quiz</p>
+        </header>
+
+        <section class="quiz-progress" aria-label="Course progress">
+            <div class="progress-label"><span>Progress</span><strong>90%</strong></div>
+            <div class="progress-bar"><div class="progress-bar-fill progress-ninety-percent"></div></div>
+        </section>
+
+        <section class="quiz-content">
+            <header class="quiz-intro">
+                <h2>Learning Recap - Quiz</h2>
+                <h3>Answer the following Questions to finish your Course</h3>
+            </header>
+
+            <p class="quiz-instructions">The following questions are single choice, meaning there is only one correct answer.<br>To pass the course, all answers have to be correct. You have 3 tries; if you use them all, you must start the course over.</p>
+            <a class="quiz-tasks-link" href="lesson.html?task=1">Tasks</a>
+
+            <form class="course-quiz" id="course-quiz" novalidate>
+                <fieldset class="quiz-question" data-question="platform">
+                    <legend>Question 1 - What is the name of the Platform?</legend>
+                    <label class="quiz-choice"><span>Lowhard</span><input type="radio" name="platform" value="lowhard"></label>
+                    <label class="quiz-choice"><span>Kristiania</span><input type="radio" name="platform" value="kristiania"></label>
+                    <label class="quiz-choice"><span>Highcharts</span><input type="radio" name="platform" value="highcharts"></label>
+                </fieldset>
+
+                <fieldset class="quiz-question" data-question="charts">
+                    <legend>Question 2 - Did you learn something about Charts?</legend>
+                    <label class="quiz-choice"><span>Yes</span><input type="radio" name="charts" value="yes"></label>
+                    <label class="quiz-choice"><span>No</span><input type="radio" name="charts" value="no"></label>
+                    <label class="quiz-choice"><span>Maybe</span><input type="radio" name="charts" value="maybe"></label>
+                </fieldset>
+
+                <fieldset class="quiz-question" data-question="lesson-flow">
+                    <legend>Question 3 - Did this lesson flow make sense to you?</legend>
+                    <label class="quiz-choice"><span>Yes</span><input type="radio" name="lesson-flow" value="yes"></label>
+                    <label class="quiz-choice"><span>No</span><input type="radio" name="lesson-flow" value="no"></label>
+                    <label class="quiz-choice"><span>Partially</span><input type="radio" name="lesson-flow" value="partially"></label>
+                </fieldset>
+
+                <fieldset class="quiz-question" data-question="application">
+                    <legend>Question 4 - Was the real life application useful?</legend>
+                    <label class="quiz-choice"><span>Yes</span><input type="radio" name="application" value="yes"></label>
+                    <label class="quiz-choice"><span>No</span><input type="radio" name="application" value="no"></label>
+                    <label class="quiz-choice"><span>Maybe</span><input type="radio" name="application" value="maybe"></label>
+                </fieldset>
+
+                <p class="quiz-form-error" role="alert" hidden>Please select an answer for every question.</p>
+                <button class="quiz-check-button" type="submit">Check Answers</button>
+
+                <section class="quiz-result" data-quiz-result role="status" aria-live="polite" hidden>
+                    <span class="quiz-result-mark" data-result-mark aria-hidden="true"></span>
+                    <p class="quiz-attempt" data-attempt-label></p>
+                    <h3 class="quiz-result-title" data-result-title></h3>
+                    <p data-result-score></p>
+                    <p data-result-message></p>
+                    <div class="quiz-result-actions">
+                        <button type="button" class="quiz-retry-button" data-quiz-retry hidden>Try Again</button>
+                        <a href="lesson.html?task=3" class="quiz-cancel-link" data-quiz-cancel>Cancel</a>
+                        <a href="learning-flow-introduction.html?restart=1" class="quiz-restart-link" data-quiz-restart hidden>Restart Course</a>
+                        <a href="course-certificate.html" class="quiz-certificate-link" data-view-certificate hidden>View Certificate</a>
+                    </div>
+                </section>
+            </form>
+        </section>
+
+        <nav class="quiz-stepper" aria-label="Course steps">
+            <span>Click to Finish</span>
+            <div class="quiz-stepper-controls">
+                <span aria-hidden="true">…</span>
+                <a href="lesson.html?task=3" aria-label="Go to Task 3">3</a>
+                <span class="active" aria-current="step">4</span>
+                <button type="button" aria-label="Finish the course quiz" data-finish-quiz disabled><img src="../assets/icons/caret-right.svg" alt=""></button>
+            </div>
+        </nav>
+    </main>
+
+    <button type="button" class="ask-ai-button">Ask AI</button>
+
+    <nav class="bottom-navigation" aria-label="Student navigation">
+        <a href="student-dashboard.html">Home</a>
+        <a href="my-courses.html">My Courses</a>
+        <a href="inbox.html">Inbox</a>
+    </nav>
+
+    <footer class="site-footer">
+        <div class="social-links">
+            <p>Find us on</p>
+            <a href="#" aria-label="Facebook"><img src="../assets/icons/Facebook.svg" alt=""></a>
+            <a href="#" aria-label="Twitter"><img src="../assets/icons/twitter.svg" alt=""></a>
+            <a href="#" aria-label="Instagram"><img src="../assets/icons/instagram.svg" alt=""></a>
+            <a href="#" aria-label="YouTube"><img src="../assets/icons/youtube.png" alt=""></a>
+        </div>
+        <nav class="footer-navigation" aria-label="Footer navigation">
+            <a href="#" data-modal="terms">Terms</a>
+            <a href="#" data-modal="support">Support</a>
+            <a href="#" data-modal="about">About</a>
+        </nav>
+        <p class="copyright">© 2026 All Rights Reserved</p>
+    </footer>
+
+    <script src="../js/ai-assistant.js" defer></script>
+    <script src="../js/profile-menu.js" defer></script>
+    <script src="../js/theme-toggle.js" defer></script>
+    <script src="../js/footer-modals.js" defer></script>
+    <script src="../js/course-progress.js" defer></script>
+    <script src="../js/quiz.js" defer></script>
+</body>
+
+</html>

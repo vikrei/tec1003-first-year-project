@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Certificate | Highcharts Course Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Vollkorn+SC:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+</head>
+
+<body class="student-page-body">
+    <header class="site-header">
+        <a href="student-dashboard.html" class="logo">
+            <img src="../assets/icons/logo.png" alt="Highcharts Course Portal">
+            <img class="desktop-wordmark" src="../assets/images/text-highsoft-logolab.png" alt="">
+        </a>
+        <nav class="student-header-navigation" aria-label="Student navigation">
+            <a href="student-dashboard.html">Home</a>
+            <a href="my-courses.html" aria-current="page">My Courses</a>
+            <a href="courses.html">Course Catalogue</a>
+        </nav>
+        <div class="header-actions">
+            <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark mode"></button>
+            <button type="button" class="profile-menu-button" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="student">
+                <img src="../assets/images/profile-image-student.png" alt="Student profile">
+                <span class="profile-menu-label">Menu</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="course-certificate-page">
+        <a class="back-link" href="my-courses.html">← Back to My Courses</a>
+        <article class="course-certificate" aria-labelledby="certificate-title" data-certificate-content hidden>
+            <p class="certificate-eyebrow">Certificate of Completion</p>
+            <h1 id="certificate-title">Build Pie Charts with React</h1>
+            <p>This certifies that</p>
+            <h2>Alex Liland</h2>
+            <p>has completed the course and passed the final quiz with a perfect score.</p>
+            <p class="certificate-date">Awarded <time data-certificate-date></time></p>
+        </article>
+        <button class="certificate-print-button" type="button" data-print-certificate>Print Certificate</button>
+    </main>
+
+    <button type="button" class="ask-ai-button">Ask AI</button>
+    <nav class="bottom-navigation" aria-label="Student navigation">
+        <a href="student-dashboard.html">Home</a>
+        <a href="my-courses.html" class="active">My Courses</a>
+        <a href="inbox.html">Inbox</a>
+    </nav>
+
+    <footer class="site-footer">
+        <div class="social-links">
+            <p>Find us on</p>
+            <a href="#" aria-label="Facebook"><img src="../assets/icons/Facebook.svg" alt=""></a>
+            <a href="#" aria-label="Twitter"><img src="../assets/icons/twitter.svg" alt=""></a>
+            <a href="#" aria-label="Instagram"><img src="../assets/icons/instagram.svg" alt=""></a>
+            <a href="#" aria-label="YouTube"><img src="../assets/icons/youtube.png" alt=""></a>
+        </div>
+        <nav class="footer-navigation" aria-label="Footer navigation">
+            <a href="#" data-modal="terms">Terms</a>
+            <a href="#" data-modal="support">Support</a>
+            <a href="#" data-modal="about">About</a>
+        </nav>
+        <p class="copyright">© 2026 All Rights Reserved</p>
+    </footer>
+
+    <script src="../js/ai-assistant.js" defer></script>
+    <script src="../js/profile-menu.js" defer></script>
+    <script src="../js/theme-toggle.js" defer></script>
+    <script src="../js/footer-modals.js" defer></script>
+    <script src="../js/course-certificate.js" defer></script>
+</body>
+
+</html>
