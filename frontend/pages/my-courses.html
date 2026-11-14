@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../css/pages.css">
 </head>
 
-<body>
+<body class="student-page-body">
 
     <header class="site-header">
 
@@ -26,10 +26,17 @@
             <img class="desktop-wordmark" src="../assets/images/text-highsoft-logolab.png" alt="">
         </a>
 
+        <nav class="student-header-navigation" aria-label="Student navigation">
+            <a href="student-dashboard.html">Home</a>
+            <a href="my-courses.html" aria-current="page">My Courses</a>
+            <a href="courses.html">Course Catalogue</a>
+        </nav>
+
         <div class="header-actions">
             <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark mode"></button>
             <button type="button" class="profile-menu-button" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="student">
                 <img src="../assets/images/profile-image-student.png" alt="Student profile">
+                <span class="profile-menu-label">Menu</span>
             </button>
         </div>
 

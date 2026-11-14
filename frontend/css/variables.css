@@ -77,6 +77,11 @@
     --profile-menu-width: 360px;
     --mobile-content-max-width: 520px;
     --desktop-content-max-width: 1024px;
+    --desktop-header-width: 1440px;
+    --desktop-header-height: 147px;
+    --desktop-header-avatar-size: calc(var(--space-9) + var(--space-4));
+    --desktop-header-toggle-width: calc(var(--space-8) + var(--space-2));
+    --desktop-header-logo-height: calc(var(--space-8) + var(--space-2));
     --login-form-max-width: 384px;
     --page-decoration-width: 408px;
     --suggested-course-card-width: 336px;

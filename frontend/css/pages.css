@@ -249,6 +249,25 @@
     gap: var(--space-5);
 }
 
+.student-header-navigation,
+.admin-header-navigation,
+.profile-menu-label,
+.dashboard-card-image,
+.dashboard-card-details,
+.dashboard-card-action,
+.activity-icon,
+.course-item-icon,
+.course-item .bookmark-icon,
+.dashboard-tutorial-arrow {
+    display: none;
+}
+
+.dashboard-side-panel,
+.dashboard-card-content,
+.dashboard-card-summary {
+    display: contents;
+}
+
 .tutorial-card {
     padding: var(--space-4);
     display: flex;
@@ -1027,26 +1046,30 @@ main h1 {
     }
 
     .site-header .logo {
-        margin-right: auto;
+        margin-right: 0;
     }
 
     .site-header .header-actions {
-        display: contents;
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        order: 3;
+        margin-left: auto;
     }
 
     .site-header .theme-toggle {
-        order: 2;
+        order: 0;
     }
 
     .site-header .header-navigation {
-        order: 3;
+        order: 2;
         display: flex;
         align-items: center;
         gap: var(--space-4);
     }
 
     .site-header .profile-menu-button {
-        order: 4;
+        order: 0;
     }
 }
 
@@ -1297,23 +1320,312 @@ main h1 {
     .site-header,
     .admin-page .site-header,
     .login-page-body .site-header {
-        min-height: var(--space-9);
-        padding: var(--space-3) var(--space-6);
+        width: min(100%, var(--desktop-header-width));
+        min-height: var(--desktop-header-height);
+        padding: var(--space-3) var(--space-9);
+        left: 50%;
+        transform: translateX(-50%);
         background: var(--color-secondary-default);
     }
 
-    .login-page-body { padding-top: var(--space-9); }
+    body { padding-top: var(--desktop-header-height); }
+
+    .home-page,
+    .login-page-body { padding-top: var(--desktop-header-height); }
+
+    .site-header .logo > img:first-child {
+        height: var(--desktop-header-logo-height);
+    }
 
     .site-header .desktop-wordmark {
         display: block;
         width: auto;
         height: auto;
     }
+
+    .site-header .theme-toggle {
+        width: var(--desktop-header-toggle-width);
+        flex-basis: var(--desktop-header-toggle-width);
+    }
+
+    .site-header .theme-toggle[aria-checked="true"]::before {
+        left: calc(var(--desktop-header-toggle-width) - var(--space-4) - var(--space-2) + var(--space-1));
+    }
+
+    .student-page-body .site-header .profile-menu-button,
+    .admin-page .site-header .profile-menu-button {
+        width: var(--desktop-header-avatar-size);
+        height: var(--desktop-header-avatar-size);
+    }
 }
 
 @media (min-width: 700px) {
     .my-courses-page { width: min(100%, var(--mobile-content-max-width)); }
     .my-courses-page { padding-inline: var(--space-6); }
+}
+
+/* STUDENT DASHBOARD — DESKTOP */
+@media (min-width: 700px) {
+    .student-page-body .site-header .logo,
+    .admin-page .site-header .logo { margin-right: var(--space-7); }
+
+    .student-page-body .student-header-navigation,
+    .admin-page .admin-header-navigation {
+        order: 2;
+        display: flex;
+        align-items: center;
+        gap: var(--space-5);
+    }
+
+    .student-page-body .student-header-navigation a,
+    .admin-page .admin-header-navigation a {
+        white-space: nowrap;
+    }
+
+    .student-page-body .student-header-navigation a[aria-current="page"],
+    .admin-page .admin-header-navigation a[aria-current="page"] {
+        text-decoration: underline;
+        text-underline-offset: var(--space-1);
+    }
+
+    .student-page-body .site-header .theme-toggle,
+    .admin-page .site-header .theme-toggle { order: 3; }
+
+    .student-page-body .site-header .profile-menu-button,
+    .admin-page .site-header .profile-menu-button {
+        order: 4;
+        position: relative;
+        width: var(--desktop-header-avatar-size);
+        height: var(--desktop-header-avatar-size);
+        overflow: visible;
+        border-radius: 50%;
+    }
+
+    .student-page-body .profile-menu-button img,
+    .admin-page .profile-menu-button img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+
+    .profile-menu-label {
+        position: absolute;
+        top: calc(100% + var(--space-1));
+        left: 50%;
+        display: block;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        color: var(--color-text-light-bg);
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-caption);
+    }
+
+    .student-dashboard-body .dashboard-page {
+        width: min(100%, calc(var(--desktop-content-max-width) + var(--space-9) + var(--space-9) + var(--space-9)));
+        padding: var(--space-6) 0 calc(var(--space-9) + var(--space-9));
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        align-items: start;
+        column-gap: var(--space-6);
+        row-gap: var(--space-5);
+    }
+
+    .student-dashboard-body .dashboard-intro {
+        grid-column: 1 / span 8;
+        grid-row: 1;
+        padding-top: var(--space-4);
+    }
+
+    .student-dashboard-body .dashboard-intro h1 {
+        font-size: var(--font-size-display);
+        line-height: var(--line-height-display);
+    }
+
+    .student-dashboard-body .dashboard-intro p {
+        color: var(--color-sub-caption);
+    }
+
+    .student-dashboard-body .dashboard-side-panel {
+        grid-column: 9 / -1;
+        grid-row: 1 / span 4;
+        min-width: 0;
+        margin-top: calc(var(--space-9) + var(--space-6));
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .student-dashboard-body .tutorial-card {
+        padding: 0;
+        background: transparent;
+    }
+
+    .student-dashboard-body .tutorial-card-header { padding-inline: var(--space-2); }
+    .student-dashboard-body .tutorial-card-content {
+        min-height: calc(var(--space-9) + var(--space-8));
+        border: 2px solid var(--color-primary-focus);
+        background: var(--color-card-background);
+    }
+
+    .student-dashboard-body .dashboard-tutorial-arrow {
+        display: block;
+        width: min(100%, var(--profile-menu-width));
+        height: auto;
+        align-self: center;
+        margin-top: var(--space-4);
+    }
+
+    .student-dashboard-body .dashboard-grid {
+        grid-column: 1 / span 8;
+        grid-row: 2;
+        min-width: 0;
+        padding: var(--space-6);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+
+    .student-dashboard-body .dashboard-card {
+        min-height: 0;
+        padding: var(--space-4);
+        flex-direction: row;
+        align-items: stretch;
+        gap: var(--space-3);
+        border: 1px solid var(--color-card-stroke);
+        border-radius: var(--radius-default);
+        background: var(--color-background-main);
+        color: var(--color-text-light-bg);
+    }
+
+    .student-dashboard-body .dashboard-card-image {
+        width: 38%;
+        flex: 0 0 38%;
+        display: block;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: var(--radius-default);
+    }
+
+    .student-dashboard-body .dashboard-card-content {
+        min-width: 0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-2);
+    }
+
+    .student-dashboard-body .dashboard-card-summary h2 {
+        font-size: var(--font-size-body);
+        line-height: var(--line-height-body);
+    }
+
+    .student-dashboard-body .dashboard-card-summary p,
+    .student-dashboard-body .dashboard-card-details {
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-caption);
+        color: var(--color-sub-caption);
+    }
+
+    .student-dashboard-body .dashboard-card-details {
+        margin-top: auto;
+        color: var(--color-text-light-bg);
+    }
+
+    .student-dashboard-body .dashboard-card-action {
+        min-height: var(--space-8);
+        padding: var(--space-2) var(--space-3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-default);
+        background: var(--color-secondary-default);
+        color: var(--color-text-light-bg);
+        text-align: center;
+    }
+
+    .student-dashboard-body .dashboard-card-action:hover { background: var(--color-secondary-hover); }
+
+    .student-dashboard-body .recent-activity {
+        grid-column: 1 / span 8;
+        grid-row: 3;
+        margin: 0;
+    }
+
+    .student-dashboard-body .bookmarked-courses {
+        grid-column: 1 / span 8;
+        grid-row: 4;
+        margin: 0;
+    }
+
+    .student-dashboard-body .activity-item,
+    .student-dashboard-body .course-item {
+        min-height: var(--space-9);
+        height: auto;
+        padding: var(--space-3) var(--space-4);
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        border-radius: var(--radius-default);
+        background: var(--color-card-background);
+        box-shadow: 0 2px 4px color-mix(in srgb, var(--color-black) 20%, transparent);
+    }
+
+    .student-dashboard-body .activity-icon,
+    .student-dashboard-body .course-item-icon {
+        width: var(--space-6);
+        height: var(--space-6);
+        flex: 0 0 var(--space-6);
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--color-icon-background);
+    }
+
+    .student-dashboard-body .course-item-icon { display: grid; }
+
+    .student-dashboard-body .activity-icon img,
+    .student-dashboard-body .course-item-icon img {
+        width: var(--space-4);
+        height: var(--space-4);
+    }
+
+    .student-dashboard-body .activity-item > div { min-width: 0; }
+    .student-dashboard-body .activity-item h3,
+    .student-dashboard-body .course-item h3 {
+        font-size: var(--font-size-body);
+        line-height: var(--line-height-body);
+    }
+
+    .student-dashboard-body .activity-item p,
+    .student-dashboard-body .course-item p {
+        color: var(--color-sub-caption);
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-caption);
+    }
+
+    .student-dashboard-body .course-item h3 { flex: 1; }
+    .student-dashboard-body .course-item .bookmark-icon {
+        flex: 0 0 var(--space-5);
+        color: var(--color-snapchat);
+    }
+
+    .student-dashboard-body .bottom-navigation { display: none; }
+
+    .student-dashboard-body .site-footer {
+        width: min(100%, var(--profile-menu-width));
+        margin: var(--space-7) auto 0;
+        padding: var(--space-4) var(--space-3) var(--space-6);
+        gap: var(--space-3);
+        border-top: 0;
+    }
+
+    .student-dashboard-body .social-links {
+        padding-bottom: var(--space-3);
+        border-bottom: 1px solid var(--color-divider);
+    }
+
+    .student-dashboard-body .footer-navigation { justify-content: space-between; }
 }
 
 /* =========================

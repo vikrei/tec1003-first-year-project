@@ -114,6 +114,17 @@
     display: none;
 }
 
+@media (min-width: 700px) {
+    .account-profile-menu {
+        top: calc(var(--desktop-header-height) + var(--space-2));
+        right: max(
+            var(--space-9),
+            calc((100vw - var(--desktop-header-width)) / 2 + var(--space-9))
+        );
+        max-height: calc(100vh - var(--desktop-header-height) - var(--space-4));
+    }
+}
+
 .account-profile-menu-header {
     min-height: calc(var(--space-9) + var(--space-8));
     padding: var(--space-4);
