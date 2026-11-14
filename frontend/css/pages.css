@@ -2099,6 +2099,299 @@ main h1 {
     color: var(--color-text-light-bg);
 }
 
+/* STUDENT PROFILE & SETTINGS */
+.profile-page {
+    width: min(100%, var(--mobile-content-max-width));
+    margin-inline: auto;
+    padding: var(--space-4) var(--mobile-page-margin) calc(var(--space-9) + var(--space-8));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.profile-page > .back-link {
+    align-self: flex-start;
+    margin: 0;
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    text-align: center;
+}
+
+.profile-image {
+    width: var(--desktop-header-avatar-size);
+    height: var(--desktop-header-avatar-size);
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.change-image-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-sub-caption);
+    font-size: var(--font-size-caption);
+    cursor: pointer;
+}
+
+.profile-image-upload {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.profile-header h1 {
+    margin-top: var(--space-4);
+    font-size: var(--font-size-display);
+    line-height: var(--line-height-display);
+}
+
+.profile-settings {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+}
+
+.profile-setting {
+    min-width: 0;
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    border: 0;
+    background: var(--color-card-background);
+}
+
+.profile-setting > h2 {
+    margin-bottom: var(--space-1);
+    font-size: var(--font-size-heading-3);
+    line-height: var(--line-height-heading-3);
+}
+
+.profile-setting > h3,
+.skill-level legend {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-semibold);
+}
+
+.profile-setting > p {
+    color: var(--color-sub-caption);
+}
+
+.profile-field {
+    min-height: var(--space-8);
+    padding: var(--space-2) var(--space-3);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    border-radius: var(--radius-default);
+    background: var(--color-background-main);
+}
+
+.profile-field > span:first-child {
+    grid-column: 1;
+    color: var(--color-sub-caption);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+}
+
+.profile-field input {
+    min-width: 0;
+    grid-column: 1;
+    grid-row: 2;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+}
+
+.profile-field input:focus-visible {
+    outline: 2px solid var(--color-primary-focus);
+    outline-offset: var(--space-1);
+}
+
+.profile-field-edit {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    color: var(--color-icon-stroke);
+    font-size: var(--font-size-heading-3);
+}
+
+.contract-card {
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-default);
+    background: var(--color-background-main);
+}
+
+.contract-card > span {
+    color: var(--color-sub-caption);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+}
+
+.contract-card h3 {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+}
+
+.contract-card > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+}
+
+.contract-status {
+    color: var(--color-success);
+}
+
+.profile-option {
+    min-height: var(--space-8);
+    padding: var(--space-2) var(--space-3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    border-radius: var(--radius-default);
+    background: var(--color-background-main);
+}
+
+.profile-option input[type="checkbox"] {
+    width: calc(var(--space-4) + var(--space-1));
+    height: calc(var(--space-4) + var(--space-1));
+    flex: 0 0 calc(var(--space-4) + var(--space-1));
+    margin: 0;
+    appearance: none;
+    border: 2px solid var(--color-sub-caption);
+    border-radius: 50%;
+    background: var(--color-background-main);
+    cursor: pointer;
+}
+
+.profile-option input[type="checkbox"]:checked {
+    border-color: var(--color-primary-default);
+    background: var(--color-primary-default);
+    box-shadow: inset 0 0 0 var(--space-1) var(--color-background-main);
+}
+
+.profile-option input:focus-visible,
+.skill-level input:focus-visible {
+    outline: 2px solid var(--color-primary-focus);
+    outline-offset: var(--space-1);
+}
+
+.skill-level {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2);
+    border: 0;
+}
+
+.skill-level legend {
+    width: 100%;
+    margin-bottom: var(--space-2);
+}
+
+.skill-level label {
+    min-width: 0;
+    min-height: var(--space-8);
+    padding: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    border-radius: var(--radius-default);
+    background: var(--color-background-main);
+    text-align: center;
+}
+
+.skill-level input {
+    accent-color: var(--color-primary-default);
+}
+
+.profile-page .save-profile-button {
+    width: min(100%, calc(var(--profile-menu-width) + var(--space-9) * 4));
+    align-self: center;
+    min-height: var(--space-8);
+    margin-top: var(--space-4);
+}
+
+.profile-page .logout-button {
+    align-self: center;
+}
+
+@media (min-width: 700px) {
+    .profile-page {
+        width: min(100%, calc(var(--desktop-header-width) - var(--space-9) - var(--space-9)));
+        padding: var(--space-4) 0 calc(var(--space-9) + var(--space-8));
+        gap: var(--space-6);
+    }
+
+    .profile-header {
+        margin-top: var(--space-4);
+    }
+
+    .profile-header h1 {
+        margin-top: var(--space-5);
+    }
+
+    .profile-settings {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+        column-gap: var(--space-4);
+        row-gap: var(--space-5);
+        margin-top: var(--space-4);
+    }
+
+    .profile-setting {
+        padding: var(--space-4);
+        gap: var(--space-2);
+    }
+
+    .profile-setting > h2 {
+        padding-inline: 0;
+    }
+
+    .profile-page .save-profile-button {
+        margin-top: var(--space-2);
+    }
+
+    .profile-page .logout-button {
+        margin-top: var(--space-5);
+    }
+
+    .profile-page ~ .site-footer {
+        width: min(100%, var(--profile-menu-width));
+        margin: var(--space-9) auto 0;
+        padding: var(--space-4) var(--space-3) var(--space-6);
+        gap: var(--space-3);
+        border-top: 0;
+    }
+
+    .profile-page ~ .site-footer .social-links {
+        padding-bottom: var(--space-3);
+        border-bottom: 1px solid var(--color-divider);
+    }
+
+    .profile-page ~ .site-footer .footer-navigation {
+        justify-content: space-between;
+    }
+}
+
 @media (max-width: 360px) {
     .admin-dashboard-page .activity-item {
         grid-template-columns: var(--space-7) minmax(0, 1fr);
