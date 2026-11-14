@@ -85,6 +85,8 @@
     --login-form-max-width: 384px;
     --page-decoration-width: 408px;
     --suggested-course-card-width: 336px;
+    --my-course-image-aspect-ratio: 2 / 1;
+    --study-group-image-overlay: color-mix(in srgb, var(--color-background-main) 78%, transparent);
 
 
     /* =========================

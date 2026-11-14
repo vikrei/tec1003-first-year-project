@@ -782,6 +782,12 @@
     gap: var(--space-4);
 }
 
+.active-courses-intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
 .active-courses > h2,
 .study-group > h2,
 .certificates > h2 {
@@ -1040,6 +1046,10 @@ main h1 {
 
 /* CONSISTENT DESKTOP HEADER CONTROLS */
 @media (min-width: 700px) {
+    .bottom-navigation {
+        display: none;
+    }
+
     .site-header {
         justify-content: flex-start;
         gap: var(--space-4);
@@ -2096,5 +2106,243 @@ main h1 {
 
     .admin-dashboard-page .activity-item time {
         grid-column: 2;
+    }
+}
+
+/* MY COURSES — DESKTOP */
+@media (min-width: 700px) {
+    .my-courses-page {
+        width: min(100%, calc(var(--desktop-header-width) - var(--space-9) - var(--space-9)));
+        padding: var(--space-4) 0 calc(var(--space-9) + var(--space-5));
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-8);
+    }
+
+    .my-courses-page > .back-link {
+        align-self: flex-start;
+        margin: 0;
+    }
+
+    .my-courses-page .page-intro {
+        margin-top: calc(var(--space-2) * -1);
+        text-align: center;
+    }
+
+    .my-courses-page .page-intro h1 {
+        margin: 0;
+        font-size: var(--font-size-display);
+        line-height: var(--line-height-display);
+    }
+
+    .my-courses-page .active-courses,
+    .my-courses-page .study-group,
+    .my-courses-page .passed-courses,
+    .my-courses-page .certificates {
+        width: 100%;
+        margin: 0;
+    }
+
+    .my-courses-page .active-courses {
+        gap: var(--space-8);
+    }
+
+    .my-courses-page .active-courses-intro {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-1);
+    }
+
+    .my-courses-page .active-courses-intro > h2,
+    .my-courses-page .active-courses-intro > .section-description {
+        text-align: center;
+    }
+
+    .my-courses-page .active-courses-intro > h2 {
+        font-size: var(--font-size-heading-2);
+        line-height: var(--line-height-heading-2);
+    }
+
+    .my-courses-page .course-progress-card {
+        min-width: 0;
+        padding: var(--space-3);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: stretch;
+        gap: var(--space-3);
+    }
+
+    .my-courses-page .my-course-image {
+        width: 100%;
+        height: 100%;
+        min-height: calc(var(--space-9) * 4 + var(--space-2));
+        aspect-ratio: var(--my-course-image-aspect-ratio);
+        object-fit: cover;
+        border-radius: var(--radius-default);
+    }
+
+    .my-courses-page .my-course-content {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+        padding: var(--space-1) var(--space-1) 0;
+    }
+
+    .my-courses-page .course-card-header h3 {
+        font-size: var(--font-size-heading-3);
+        line-height: var(--line-height-heading-3);
+    }
+
+    .my-courses-page .course-card-header p {
+        font-size: var(--font-size-body);
+        line-height: var(--line-height-body);
+    }
+
+    .my-courses-page .course-progress {
+        gap: var(--space-1);
+    }
+
+    .my-courses-page .progress-label,
+    .my-courses-page .progress-label strong {
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-caption);
+    }
+
+    .my-courses-page .course-details {
+        gap: var(--space-4);
+        padding-inline: var(--space-1);
+    }
+
+    .my-courses-page .course-details h4 {
+        font-size: var(--font-size-body);
+        line-height: var(--line-height-body);
+        font-weight: var(--font-weight-regular);
+    }
+
+    .my-courses-page .course-progress-card .course-button {
+        width: min(100%, calc(var(--desktop-content-max-width) / 3));
+        align-self: center;
+        margin-top: auto;
+        min-height: var(--space-8);
+        font-weight: var(--font-weight-regular);
+    }
+
+    .my-courses-page .course-progress-card .course-button img {
+        filter: brightness(0) invert(1);
+    }
+
+    .my-courses-page .study-group {
+        min-height: calc(var(--space-9) * 4 + var(--space-8));
+        padding: var(--space-4);
+        justify-content: center;
+        background-image:
+            linear-gradient(var(--study-group-image-overlay), var(--study-group-image-overlay)),
+            url("../assets/images/study-group-card-image.png");
+        background-position: center;
+        background-size: cover;
+    }
+
+    .my-courses-page .study-group > h2 {
+        font-size: var(--font-size-heading-3);
+    }
+
+    .my-courses-page .study-group-card,
+    .my-courses-page .study-group .create-group-button {
+        min-height: var(--space-8);
+        background: var(--color-card-background);
+    }
+
+    .my-courses-page .passed-course-card {
+        min-height: calc(var(--space-9) * 6 + var(--space-4) + var(--space-3));
+        padding: var(--space-4);
+        display: flex;
+        flex-direction: column;
+        border: 0;
+        border-top: 1px solid var(--color-card-stroke);
+        border-bottom: 1px solid var(--color-card-stroke);
+        border-radius: 0;
+    }
+
+    .my-courses-page .passed-intro h3,
+    .my-courses-page .certificates > h2 {
+        font-size: var(--font-size-heading-3);
+        line-height: var(--line-height-heading-3);
+    }
+
+    .my-courses-page .passed-intro p,
+    .my-courses-page .certificate-description {
+        margin-top: var(--space-2);
+        font-size: var(--font-size-body);
+        line-height: var(--line-height-body);
+    }
+
+    .my-courses-page .resource-grid {
+        margin-top: var(--space-5);
+        gap: var(--space-5);
+    }
+
+    .my-courses-page .resource-grid > div {
+        min-width: 0;
+    }
+
+    .my-courses-page .resource-grid .mini-icon {
+        margin-bottom: var(--space-2);
+    }
+
+    .my-courses-page .resource-grid h3 {
+        font-weight: var(--font-weight-regular);
+    }
+
+    .my-courses-page .resource-grid p {
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-caption);
+    }
+
+    .my-courses-page .revise-button {
+        width: min(100%, calc(var(--desktop-content-max-width) / 3));
+        align-self: center;
+        margin-top: auto;
+        min-height: var(--space-8);
+    }
+
+    .my-courses-page .certificate-card {
+        padding: 0 var(--space-4) var(--space-4);
+        border: 0;
+        border-bottom: 1px solid var(--color-card-stroke);
+        border-radius: 0;
+        background: transparent;
+    }
+
+    .my-courses-page .certificate-card .resource-grid {
+        margin-top: var(--space-5);
+    }
+
+    .my-courses-page .other-courses {
+        min-height: calc(var(--space-9) * 2);
+        padding: var(--space-5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-4);
+        background: var(--color-card-background);
+        text-align: center;
+    }
+
+    .my-courses-page .other-courses h2 {
+        font-size: var(--font-size-heading-3);
+        line-height: var(--line-height-heading-3);
+    }
+
+    .my-courses-page .other-courses a {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+    }
+
+    .my-courses-page ~ .ask-ai-button {
+        display: none;
     }
 }

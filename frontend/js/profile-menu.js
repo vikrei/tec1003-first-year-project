@@ -34,6 +34,7 @@ if (profileMenuButton) {
               { href: "student-dashboard.html", label: "Home", icon: icons.home },
               { href: "my-courses.html", label: "My Courses", icon: icons.book },
               { href: "courses.html", label: "All Courses", icon: icons.courses },
+              { href: "inbox.html", label: "Inbox", icon: icons.inbox },
               { href: "profile.html", label: "Profile & Settings", icon: icons.settings },
               { href: "index.html", label: "Log out", icon: icons.logout },
         ];
