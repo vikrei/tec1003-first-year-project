@@ -6,6 +6,7 @@
     const levelButtons = Array.from(page.querySelectorAll("[data-level-filter]"));
     const categorySelect = page.querySelector("#course-category");
     const moreButton = page.querySelector(".course-more");
+    const resultsCount = page.querySelector(".course-results-count");
     let selectedLevel = null;
     let showAll = false;
 
@@ -15,22 +16,30 @@
 
     const matchesFilters = (card) => {
         const levelMatches = !selectedLevel || card.dataset.level === selectedLevel;
-        const categoryMatches = !categorySelect || categorySelect.value === "all" || card.dataset.category === categorySelect.value;
+        const cardCategories = (card.dataset.category || "").split(/\s+/);
+        const categoryMatches = !categorySelect || categorySelect.value === "all" || cardCategories.includes(categorySelect.value);
         return levelMatches && categoryMatches;
     };
 
     const updateCourseList = () => {
+        const matchingCards = cards.filter(matchesFilters);
+        const visibleCards = matchingCards.filter((card) => !card.hasAttribute("data-extra") || showAll);
+
         cards.forEach((card) => {
             card.hidden = !matchesFilters(card) || (card.hasAttribute("data-extra") && !showAll);
         });
 
+        if (resultsCount) {
+            resultsCount.textContent = `Results ${visibleCards.length} of ${matchingCards.length}`;
+        }
+
         const hiddenExtraCount = cards.filter((card) => card.hasAttribute("data-extra") && matchesFilters(card)).length;
         if (moreButton) {
-            moreButton.hidden = hiddenExtraCount === 0;
+            moreButton.hidden = hasActiveFilter() || (!showAll && hiddenExtraCount === 0);
             moreButton.setAttribute("aria-expanded", String(showAll));
             moreButton.innerHTML = showAll
                 ? 'Show fewer results <span aria-hidden="true">⌃</span>'
-                : `${hiddenExtraCount} more results <span aria-hidden="true">⌄</span>`;
+                : `${hiddenExtraCount} more ${hiddenExtraCount === 1 ? "result" : "results"} <span aria-hidden="true">⌄</span>`;
         }
     };
 
