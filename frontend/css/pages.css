@@ -2346,3 +2346,172 @@ main h1 {
         display: none;
     }
 }
+
+/* STUDENT INBOX — DESKTOP */
+@media (min-width: 700px) {
+    .inbox-page {
+        width: min(100%, calc(var(--desktop-header-width) - var(--space-9) - var(--space-9)));
+        margin-inline: auto;
+        padding: var(--space-4) 0 0;
+    }
+
+    .inbox-page > .back-link {
+        margin-bottom: var(--space-5);
+    }
+
+    .inbox-page > .page-intro {
+        width: min(100%, var(--inbox-content-width));
+        margin-bottom: var(--space-8);
+        text-align: center;
+    }
+
+    .inbox-page > .page-intro h1 {
+        font-size: var(--font-size-display);
+        line-height: var(--line-height-display);
+    }
+
+    .inbox-page > .new-emails,
+    .inbox-page > .all-emails,
+    .inbox-page > .other-mailboxes {
+        width: min(100%, var(--inbox-content-width));
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-2);
+    }
+
+    .inbox-page .section-header {
+        min-height: var(--space-7);
+        padding-bottom: var(--space-1);
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: var(--space-3);
+        border-bottom: 1px solid var(--color-divider);
+    }
+
+    .inbox-page .section-header h2 {
+        font-size: var(--font-size-heading-2);
+        line-height: var(--line-height-heading-2);
+    }
+
+    .inbox-page .section-header span {
+        flex: 0 0 auto;
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-caption);
+    }
+
+    .inbox-page .email-item {
+        min-height: calc(var(--space-9) + var(--space-2));
+        padding: var(--space-2) var(--space-3);
+        display: grid;
+        grid-template-columns: var(--space-7) minmax(0, 1fr) auto;
+        align-items: center;
+        gap: var(--space-3);
+        border: 0;
+        border-radius: var(--radius-default);
+        background: var(--color-card-background);
+    }
+
+    .inbox-page .email-icon {
+        width: var(--space-7);
+        height: var(--space-7);
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--color-icon-background);
+        color: var(--color-icon-stroke);
+    }
+
+    .inbox-page .email-icon svg {
+        width: var(--space-5);
+        height: var(--space-5);
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.8;
+    }
+
+    .inbox-page .email-item-content {
+        min-width: 0;
+    }
+
+    .inbox-page .email-item h3 {
+        overflow: hidden;
+        font-size: var(--font-size-body);
+        line-height: var(--line-height-body);
+        font-weight: var(--font-weight-regular);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .inbox-page .email-item p,
+    .inbox-page .email-item time {
+        color: var(--color-sub-caption);
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-caption);
+    }
+
+    .inbox-page .write-email-button {
+        align-self: center;
+        min-height: var(--space-8);
+        margin: var(--space-5) 0 var(--space-8);
+        padding-inline: var(--space-5);
+        font-weight: var(--font-weight-regular);
+    }
+
+    .inbox-page > .all-emails {
+        margin-top: 0;
+    }
+
+    .inbox-page > .other-mailboxes {
+        margin-top: var(--space-8);
+    }
+
+    .inbox-page .other-mailboxes .section-header h2,
+    .inbox-page .mailbox-link > span:first-child {
+        font-size: var(--font-size-heading-3);
+        line-height: var(--line-height-heading-3);
+        font-weight: var(--font-weight-semibold);
+    }
+
+    .inbox-page .mailbox-link {
+        min-height: var(--space-7);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        border-bottom: 1px solid var(--color-divider);
+    }
+
+    .inbox-page .mailbox-link > span:last-child {
+        color: var(--color-sub-caption);
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-caption);
+    }
+
+    .inbox-page ~ .ask-ai-button {
+        right: max(
+            var(--space-9),
+            calc((100vw - var(--desktop-header-width)) / 2 + var(--space-9))
+        );
+    }
+
+    .inbox-page ~ .site-footer {
+        width: min(100%, var(--profile-menu-width));
+        margin: var(--space-9) auto 0;
+        padding: var(--space-4) var(--space-3) var(--space-6);
+        gap: var(--space-3);
+        border-top: 0;
+    }
+
+    .inbox-page ~ .site-footer .social-links {
+        padding-bottom: var(--space-3);
+        border-bottom: 1px solid var(--color-divider);
+    }
+
+    .inbox-page ~ .site-footer .footer-navigation {
+        justify-content: space-between;
+    }
+}
