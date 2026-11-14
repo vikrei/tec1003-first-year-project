@@ -3418,7 +3418,8 @@ main h1 {
 }
 
 .quiz-content {
-    width: 100%;
+    width: min(100%, var(--desktop-content-max-width));
+    margin-inline: auto;
     margin-top: var(--space-8);
 }
 
@@ -3442,9 +3443,10 @@ main h1 {
 
 .quiz-instructions {
     max-width: calc(var(--space-9) * 7);
-    margin: var(--space-8) 0 var(--space-5);
+    margin: var(--space-8) auto var(--space-5);
     font-size: var(--font-size-caption);
     line-height: var(--line-height-caption);
+    text-align: center;
 }
 
 .quiz-tasks-link {
