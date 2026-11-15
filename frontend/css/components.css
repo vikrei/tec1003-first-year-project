@@ -14,9 +14,19 @@
     background-color: var(--color-background-main);
 }
 
-.logo img {
+.logo > img:first-child {
     width: auto;
     height: var(--space-7);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.desktop-wordmark {
+    display: none;
 }
 
 .header-actions {
@@ -102,6 +112,17 @@
 
 .account-profile-menu[hidden] {
     display: none;
+}
+
+@media (min-width: 700px) {
+    .account-profile-menu {
+        top: calc(var(--desktop-header-height) + var(--space-2));
+        right: max(
+            var(--space-9),
+            calc((100vw - var(--desktop-header-width)) / 2 + var(--space-9))
+        );
+        max-height: calc(100vh - var(--desktop-header-height) - var(--space-4));
+    }
 }
 
 .account-profile-menu-header {

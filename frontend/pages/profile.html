@@ -17,19 +17,27 @@
     <link rel="stylesheet" href="../css/pages.css">
 </head>
 
-<body>
+<body class="student-page-body">
 
     <header class="site-header">
 
         <a href="student-dashboard.html" class="logo">
             <img src="../assets/icons/logo.png" alt="Highcharts Course Portal">
+            <img class="desktop-wordmark" src="../assets/images/text-highsoft-logolab.png" alt="">
         </a>
+
+        <nav class="student-header-navigation" aria-label="Student navigation">
+            <a href="student-dashboard.html">Home</a>
+            <a href="my-courses.html">My Courses</a>
+            <a href="courses.html">Course Catalogue</a>
+        </nav>
 
         <div class="header-actions">
             <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark mode"></button>
 
             <button type="button" class="profile-menu-button" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="student">
                 <img src="../assets/images/profile-image-student.png" alt="Student profile">
+                <span class="profile-menu-label">Menu</span>
             </button>
         </div>
 
@@ -43,76 +51,82 @@
         </a>
 
         <section class="profile-header">
-
-            <img
-                src="assets/images/profile.jpg"
-                alt="Alex Liland"
-                class="profile-image"
-            >
-
-            <button type="button" class="change-image-button">
-                Change Image
-            </button>
-
+            <img src="../assets/images/profile-image-student.png" alt="Alex Liland" class="profile-image">
+            <label class="change-image-button" for="profile-image-upload">Change Image <span aria-hidden="true">⇧</span></label>
+            <input class="profile-image-upload" id="profile-image-upload" type="file" accept="image/*">
             <h1>Alex Liland</h1>
-
         </section>
 
-
-        <section class="profile-settings">
-
-            <article class="profile-setting">
-                <button type="button">
-                    My Account
-                </button>
+        <section class="profile-settings" aria-label="Student profile settings">
+            <article class="profile-setting account-settings">
+                <h2>My Account</h2>
+                <label class="profile-field"><span>Name</span><input type="text" value="Alex Liland" aria-label="Name"><span class="profile-field-edit" aria-hidden="true">✎</span></label>
+                <label class="profile-field"><span>E-Mail</span><input type="email" value="liland@gmail.com" aria-label="E-Mail"><span class="profile-field-edit" aria-hidden="true">✎</span></label>
+                <label class="profile-field"><span>Mobile</span><input type="tel" value="+47 11 22 33 44" aria-label="Mobile"><span class="profile-field-edit" aria-hidden="true">✎</span></label>
+                <label class="profile-field"><span>Address</span><input type="text" value="Unicornroad 11, 2006 Fantasia" aria-label="Address"><span class="profile-field-edit" aria-hidden="true">✎</span></label>
             </article>
 
-            <article class="profile-setting">
-                <button type="button">
-                    My Contracts
-                </button>
+            <article class="profile-setting contracts-settings">
+                <h2>My Contracts</h2>
+                <div class="contract-card">
+                    <span>Course Name</span>
+                    <h3>Introduction to Design Systems</h3>
+                    <div><span class="contract-status">Signed 19.08.2026</span><span>15 sp&nbsp;&nbsp; Fall 2026</span></div>
+                </div>
+                <div class="contract-card">
+                    <span>Course Name</span>
+                    <h3>UI Foundations</h3>
+                    <div><span class="contract-status">Signed 19.08.2026</span><span>7.5 sp&nbsp;&nbsp; Fall 2026</span></div>
+                </div>
             </article>
 
-            <article class="profile-setting">
-                <button type="button">
-                    Skills &amp; Interests
-                </button>
+            <article class="profile-setting preferences-settings">
+                <h2>App Preferences</h2>
+                <h3>Notifications</h3>
+                <label class="profile-option"><span>Real-Time Alerts</span><input type="checkbox" name="real-time-alerts"></label>
+                <label class="profile-option"><span>Push Notification SMS</span><input type="checkbox" name="push-sms"></label>
+                <label class="profile-option"><span>Push Notification E-Mail</span><input type="checkbox" name="push-email"></label>
+                <label class="profile-option"><span>SMS Notifications</span><input type="checkbox" name="sms-notifications"></label>
+                <label class="profile-option"><span>System Updates</span><input type="checkbox" name="system-updates"></label>
+                <label class="profile-option"><span>Course Suggestions</span><input type="checkbox" name="course-suggestions"></label>
+                <h3>Statistics - you decide what we collect</h3>
+                <p>If you wish to delete your data, please contact us.</p>
+                <label class="profile-option"><span>Demographics (age, gender etc)</span><input type="checkbox" name="demographics"></label>
+                <label class="profile-option"><span>Progress Data</span><input type="checkbox" name="progress-data"></label>
+                <label class="profile-option"><span>Course Score</span><input type="checkbox" name="course-score"></label>
+                <label class="profile-option"><span>Conversation Data from AI Assistant</span><input type="checkbox" name="ai-conversation-data"></label>
             </article>
 
-            <article class="profile-setting">
-                <button type="button">
-                    App Preferences
-                </button>
+            <article class="profile-setting skills-settings">
+                <h2>Skills &amp; Interests</h2>
+                <p>You will get course suggestions based on your choices. You can change them any time and check-off for suggestions in App Preferences.</p>
+                <h3>Interest</h3>
+                <label class="profile-option"><span>Frontend (Html, CSS)</span><input type="checkbox" name="interest-frontend"></label>
+                <label class="profile-option"><span>Backend (Python, Php)</span><input type="checkbox" name="interest-backend"></label>
+                <label class="profile-option"><span>Databases</span><input type="checkbox" name="interest-databases"></label>
+                <label class="profile-option"><span>UI / UX</span><input type="checkbox" name="interest-uiux"></label>
+                <label class="profile-option"><span>AI</span><input type="checkbox" name="interest-ai"></label>
+                <h3>Skills</h3>
+                <fieldset class="skill-level"><legend>Programming</legend>
+                    <label><span>Beginner</span><input type="radio" name="programming-level" value="beginner"></label>
+                    <label><span>Intermediate</span><input type="radio" name="programming-level" value="intermediate"></label>
+                    <label><span>Advanced</span><input type="radio" name="programming-level" value="advanced"></label>
+                </fieldset>
+                <fieldset class="skill-level"><legend>UI / UX Knowledge</legend>
+                    <label><span>Beginner</span><input type="radio" name="uiux-level" value="beginner"></label>
+                    <label><span>Intermediate</span><input type="radio" name="uiux-level" value="intermediate"></label>
+                    <label><span>Advanced</span><input type="radio" name="uiux-level" value="advanced"></label>
+                </fieldset>
+                <fieldset class="skill-level"><legend>Databases</legend>
+                    <label><span>Beginner</span><input type="radio" name="database-level" value="beginner"></label>
+                    <label><span>Intermediate</span><input type="radio" name="database-level" value="intermediate"></label>
+                    <label><span>Advanced</span><input type="radio" name="database-level" value="advanced"></label>
+                </fieldset>
             </article>
-
-            <article class="profile-setting">
-                <button type="button">
-                    Support
-                </button>
-            </article>
-
-            <article class="profile-setting">
-                <button type="button">
-                    Terms &amp; Privacy
-                </button>
-            </article>
-
-            <article class="profile-setting">
-                <button type="button">
-                    About the App
-                </button>
-            </article>
-
         </section>
 
-
-        <button type="button" class="save-profile-button">
-            Save Changes
-        </button>
-
-        <button type="button" class="logout-button">
-            Log Out
-        </button>
+        <button type="button" class="save-profile-button">Save Changes</button>
+        <button type="button" class="logout-button">Log Out</button>
 
     </main>
 

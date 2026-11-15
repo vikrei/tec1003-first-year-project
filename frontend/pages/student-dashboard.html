@@ -17,19 +17,27 @@
     <link rel="stylesheet" href="../css/pages.css">
 </head>
 
-<body>
+<body class="student-dashboard-body student-page-body">
 
     <header class="site-header">
 
         <a href="student-dashboard.html" class="logo">
             <img src="../assets/icons/logo.png" alt="Highcharts Course Portal">
+            <img class="desktop-wordmark" src="../assets/images/text-highsoft-logolab.png" alt="">
         </a>
+
+        <nav class="student-header-navigation" aria-label="Student navigation">
+            <a href="student-dashboard.html" aria-current="page">Home</a>
+            <a href="my-courses.html">My Courses</a>
+            <a href="courses.html">Course Catalogue</a>
+        </nav>
 
         <div class="header-actions">
             <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark mode"></button>
 
             <button type="button" class="profile-menu-button" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="student">
                 <img src="../assets/images/profile-image-student.png" alt="Student profile">
+                <span class="profile-menu-label">Menu</span>
             </button>
         </div>
 
@@ -38,24 +46,27 @@
 
     <main class="dashboard-page">
 
-        <button type="button" class="tutorial-show" hidden>Need a tutorial? Show quick guide</button>
+        <div class="dashboard-side-panel">
+            <button type="button" class="tutorial-show" hidden>Need a tutorial? Show quick guide</button>
 
-        <section class="tutorial-card">
-            <div class="tutorial-card-header">
-                <h2>New User?</h2>
-                <button type="button" class="tutorial-dismiss" aria-label="Hide tutorial">&times;</button>
-            </div>
-
-            <div class="tutorial-card-content">
-                <span class="tutorial-icon" aria-hidden="true">
-                    <img src="../assets/icons/open-book.svg" alt="">
-                </span>
-                <div>
-                    <p class="tutorial-card-lead">Click this card for a quick tutorial</p>
-                    <p class="tutorial-card-description">Learn how to navigate your dashboard and features. You can find more details under Profile Settings.</p>
+            <section class="tutorial-card">
+                <div class="tutorial-card-header">
+                    <h2>New User?</h2>
+                    <button type="button" class="tutorial-dismiss" aria-label="Hide tutorial">&times;</button>
                 </div>
-            </div>
-        </section>
+
+                <div class="tutorial-card-content">
+                    <span class="tutorial-icon" aria-hidden="true">
+                        <img src="../assets/icons/open-book.svg" alt="">
+                    </span>
+                    <div>
+                        <p class="tutorial-card-lead">Click this card for a quick tutorial</p>
+                        <p class="tutorial-card-description">Learn how to navigate your dashboard and features. You can find more details under Profile Settings.</p>
+                    </div>
+                </div>
+            </section>
+            <img class="dashboard-tutorial-arrow" src="../assets/icons/blue-arrow.svg" alt="">
+        </div>
 
 
         <section class="dashboard-intro">
@@ -67,23 +78,39 @@
         <section class="dashboard-grid" aria-label="Dashboard overview">
 
             <a href="my-courses.html" class="dashboard-card">
-                <h2>My Courses</h2>
-                <p>2 started</p>
+                <img class="dashboard-card-image" src="../assets/images/my-courses-card-image.png" alt="Books stacked on a desk">
+                <div class="dashboard-card-content">
+                    <div class="dashboard-card-summary"><h2>My Courses</h2><p>2 started</p></div>
+                    <p class="dashboard-card-details">Build Pie Charts with React<br>Charts in UI Foundations</p>
+                    <span class="dashboard-card-action">See My Courses</span>
+                </div>
             </a>
 
             <article class="dashboard-card">
-                <h2>Progress</h2>
-                <p>68% complete</p>
+                <img class="dashboard-card-image" src="../assets/images/progress-card-image.png" alt="Data charts trending upward">
+                <div class="dashboard-card-content">
+                    <div class="dashboard-card-summary"><h2>Progress</h2><p>68% complete</p></div>
+                    <p class="dashboard-card-details">Build Pie Charts with React<br>Charts in UI Foundations</p>
+                    <a class="dashboard-card-action" href="my-courses.html">See My Progress</a>
+                </div>
             </article>
 
             <article class="dashboard-card">
-                <h2>Study Group</h2>
-                <p>2 members</p>
+                <img class="dashboard-card-image" src="../assets/images/study-group-card-image.png" alt="Students working together">
+                <div class="dashboard-card-content">
+                    <div class="dashboard-card-summary"><h2>My Study Group</h2><p>2 Members</p></div>
+                    <p class="dashboard-card-details">UI Foundations Group<br>＋ Create New Group</p>
+                    <a class="dashboard-card-action" href="profile.html">See Study Group</a>
+                </div>
             </article>
 
             <article class="dashboard-card">
-                <h2>Certificates</h2>
-                <p>3 earned</p>
+                <img class="dashboard-card-image" src="../assets/images/certificates-card-image.png" alt="A graduate holding a certificate">
+                <div class="dashboard-card-content">
+                    <div class="dashboard-card-summary"><h2>Certificates</h2><p>3 earned</p></div>
+                    <p class="dashboard-card-details">Charts Foundations<br>Applying Data in Charts</p>
+                    <a class="dashboard-card-action" href="my-courses.html">See My Certificates</a>
+                </div>
             </article>
 
         </section>
@@ -94,13 +121,13 @@
             <h2>Recent Activity</h2>
 
             <article class="activity-item">
-                <h3>Build Pie Charts with React</h3>
-                <p>Last opened 2 hours ago</p>
+                <span class="activity-icon" aria-hidden="true"><img src="../assets/icons/file-list.svg" alt=""></span>
+                <div><h3>Introduction to Design Systems</h3><p>Completed 2 hours ago</p></div>
             </article>
 
             <article class="activity-item">
-                <h3>Quiz: UI Foundations</h3>
-                <p>Passed with 92%</p>
+                <span class="activity-icon" aria-hidden="true"><img src="../assets/icons/check-circle.svg" alt=""></span>
+                <div><h3>Quiz: UI Foundations</h3><p>Passed with 92%</p></div>
             </article>
 
         </section>
@@ -111,13 +138,17 @@
             <h2>Bookmarked Courses</h2>
 
             <article class="course-item">
+                <span class="course-item-icon" aria-hidden="true"><img src="../assets/icons/file-list.svg" alt=""></span>
                 <h3>Information Architecture</h3>
                 <p>An introduction to IA</p>
+                <span class="bookmark-icon" aria-hidden="true"></span>
             </article>
 
             <article class="course-item">
+                <span class="course-item-icon" aria-hidden="true"><img src="../assets/icons/file-list.svg" alt=""></span>
                 <h3>REST APIs</h3>
                 <p>Learn about the mechanics that run the web</p>
+                <span class="bookmark-icon" aria-hidden="true"></span>
             </article>
 
         </section>

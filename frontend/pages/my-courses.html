@@ -17,18 +17,26 @@
     <link rel="stylesheet" href="../css/pages.css">
 </head>
 
-<body>
+<body class="student-page-body">
 
     <header class="site-header">
 
         <a href="student-dashboard.html" class="logo">
             <img src="../assets/icons/logo.png" alt="Highcharts Course Portal">
+            <img class="desktop-wordmark" src="../assets/images/text-highsoft-logolab.png" alt="">
         </a>
+
+        <nav class="student-header-navigation" aria-label="Student navigation">
+            <a href="student-dashboard.html">Home</a>
+            <a href="my-courses.html" aria-current="page">My Courses</a>
+            <a href="courses.html">Course Catalogue</a>
+        </nav>
 
         <div class="header-actions">
             <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark mode"></button>
             <button type="button" class="profile-menu-button" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="student">
                 <img src="../assets/images/profile-image-student.png" alt="Student profile">
+                <span class="profile-menu-label">Menu</span>
             </button>
         </div>
 
@@ -43,34 +51,37 @@
 
         <section class="page-intro">
             <h1>My Courses</h1>
-            <a class="browse-courses" href="courses.html">Browse more Courses! <span aria-hidden="true">➜</span></a>
         </section>
 
 
         <section class="active-courses">
 
-            <h2>Active Courses</h2>
+            <div class="active-courses-intro">
+                <h2>Active Courses</h2>
+                <p class="section-description">
+                    Resume where you left off and keep your learning on track.
+                </p>
+            </div>
 
-            <p class="section-description">
-                Resume where you left off and keep your learning on track.
-            </p>
 
+            <article class="course-progress-card" data-pie-chart-course>
 
-            <article class="course-progress-card">
+                <img class="my-course-image" src="../assets/images/learning-flow-1-chart.png" alt="Pie chart from the course learning flow">
+
+                <div class="my-course-content">
 
                 <div class="course-card-header">
-                    <span class="course-icon" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span>
                     <div>
-                    <h3>Build Pie Charts with React</h3>
-                    <p>Resume Learning</p>
+                        <h3><a href="learning-flow-introduction.html">Build Pie Charts with React</a></h3>
+                        <p>Resume Learning</p>
                     </div>
                 </div>
 
                 <div class="course-progress">
-                    <div class="progress-label"><p>Progress</p><strong>1%</strong></div>
+                    <div class="progress-label"><p>Progress</p><strong data-pie-chart-progress>1%</strong></div>
 
                     <div class="progress-bar">
-                        <div class="progress-bar-fill progress-one-percent"></div>
+                        <div class="progress-bar-fill progress-one-percent" data-pie-chart-progress-bar></div>
                     </div>
                 </div>
 
@@ -78,30 +89,35 @@
 
                     <div>
                         <h4>Current chapter</h4>
-                        <p>Ch. 1 - Pie Charts</p>
+                        <p data-pie-chart-current-chapter>Ch. 1 - Pie Charts</p>
                     </div>
 
                     <div>
                         <h4>Quiz results</h4>
-                        <p>Next Quiz coming up</p>
+                        <p data-pie-chart-quiz-result>Next Quiz coming up</p>
                     </div>
 
                 </div>
 
-                <a href="lesson.html" class="course-button">
+                <a href="learning-flow-introduction.html" class="course-button">
                     <img src="../assets/icons/caret-right.svg" alt="" aria-hidden="true"> Continue Course
                 </a>
+
+                </div>
 
             </article>
 
 
             <article class="course-progress-card">
 
+                <img class="my-course-image" src="../assets/images/design-system-instruction-card.png" alt="Design system color and component examples">
+
+                <div class="my-course-content">
+
                 <div class="course-card-header">
-                    <span class="course-icon" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span>
                     <div>
-                    <h3>Charts in UI Foundations</h3>
-                    <p>Resume Learning</p>
+                        <h3>Introduction to Design Systems</h3>
+                        <p>First explanatory text</p>
                     </div>
                 </div>
 
@@ -131,6 +147,8 @@
                     <img src="../assets/icons/caret-right.svg" alt="" aria-hidden="true"> Continue Course
                 </a>
 
+                </div>
+
             </article>
 
         </section>
@@ -157,13 +175,13 @@
             <article class="passed-course-card">
                 <div class="passed-intro">
                     <h3>Passed Courses</h3>
-                    <p>A quick overview of the courses you've already completed.</p>
-                    <p>Feeling like you need to revise? Just start the course over!</p>
+                    <p>A quick overview of the courses you’ve already completed.</p>
+                    <p>Feeling like you need to revise?<br>Just start the course over!</p>
                 </div>
 
                 <div class="resource-grid">
-                    <div><span class="mini-icon" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span><h3>Course summary</h3><p>Completed all lessons and modules</p></div>
-                    <div><span class="mini-icon" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span><h3>Repeat what you learned</h3><p>Review completed lessons</p></div>
+                    <div><span class="mini-icon" aria-hidden="true"><img src="../assets/icons/file-list.svg" alt=""></span><h3>Course Summary</h3><p>Completed all lessons and modules</p></div>
+                    <div><span class="mini-icon" aria-hidden="true"><img src="../assets/icons/check-circle.svg" alt=""></span><h3>Repeat what you learned</h3></div>
                 </div>
 
                 <button type="button" class="revise-button">
@@ -175,18 +193,24 @@
         </section>
 
 
-        <section class="certificates">
+        <section class="certificates" data-earned-course-certificate hidden>
 
             <h2>Earned Certificates</h2>
 
             <article class="certificate-card">
-                <p class="certificate-description">Keep track of the certificates you've earned after completing a course.</p>
+                <p class="certificate-description">Build Pie Charts with React</p>
                 <div class="resource-grid">
-                    <div><span class="mini-icon" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span><h3>Introduction to Design Systems</h3></div>
-                    <div><span class="mini-icon" aria-hidden="true">✓</span><h3>Certificate details</h3><p>Awarded for completing Introduction to Design Systems</p></div>
+                    <div><span class="mini-icon" aria-hidden="true"><img src="../assets/icons/file-list.svg" alt=""></span><h3>Certificate earned</h3><p data-certificate-date></p></div>
+                    <div><span class="mini-icon" aria-hidden="true"><img src="../assets/icons/check-circle.svg" alt=""></span><h3>Quiz results</h3><p>Passed with 100%</p></div>
                 </div>
+                <a class="course-button" href="course-certificate.html">View Certificate</a>
             </article>
 
+        </section>
+
+        <section class="other-courses">
+            <h2>Curious about our other Courses?</h2>
+            <a href="courses.html">Browse All Courses <span aria-hidden="true">→</span></a>
         </section>
 
     </main>
@@ -229,6 +253,7 @@
     <script src="../js/profile-menu.js" defer></script>
     <script src="../js/theme-toggle.js" defer></script>
     <script src="../js/footer-modals.js" defer></script>
+    <script src="../js/course-progress.js" defer></script>
 </body>
 
 </html>

@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Lesson | Highcharts Course Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Vollkorn+SC:wght@800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/global.css">
@@ -12,19 +15,27 @@
     <link rel="stylesheet" href="../css/pages.css">
 </head>
 
-<body>
+<body class="student-page-body">
 
     <header class="site-header">
 
         <a href="student-dashboard.html" class="logo">
             <img src="../assets/icons/logo.png" alt="Highcharts Course Portal">
+            <img class="desktop-wordmark" src="../assets/images/text-highsoft-logolab.png" alt="">
         </a>
+
+        <nav class="student-header-navigation" aria-label="Student navigation">
+            <a href="student-dashboard.html" aria-current="page">Home</a>
+            <a href="my-courses.html">My Courses</a>
+            <a href="courses.html">Course Catalogue</a>
+        </nav>
 
         <div class="header-actions">
             <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark mode"></button>
 
             <button type="button" class="profile-menu-button" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="student">
                 <img src="../assets/images/profile-image-student.png" alt="Student profile">
+                <span class="profile-menu-label">Menu</span>
             </button>
         </div>
 
@@ -33,23 +44,25 @@
 
     <main class="lesson-page">
 
-        <a href="my-courses.html" class="back-link">
+        <a href="learning-flow-introduction.html" class="back-link">
             ← Back
         </a>
 
 
         <header class="lesson-header">
             <p>Build Pie Charts with React</p>
-            <span>Module 1</span>
+            <span data-task-name>First Steps</span>
         </header>
 
 
-        <section class="lesson-content">
+        <section class="lesson-progress" aria-label="Course progress">
+            <div class="progress-label"><span>Progress</span><strong data-task-progress>25%</strong></div>
+            <div class="progress-bar"><div class="progress-bar-fill progress-twenty-five-percent" data-task-progress-bar></div></div>
+        </section>
 
-            <h1>Task 1 - First Steps</h1>
+        <h1 class="lesson-task-title" data-task-title>Task 1 - First Steps</h1>
 
-
-            <nav class="lesson-tabs" role="tablist" aria-label="Lesson content">
+        <nav class="lesson-tabs" role="tablist" aria-label="Lesson content">
 
                 <button
                     type="button"
@@ -89,18 +102,20 @@
                     Solution Example
                 </button>
 
-            </nav>
+        </nav>
 
 
+        <section class="lesson-content">
             <!-- VIDEO -->
 
             <section class="lesson-panel video-panel" id="video-panel" role="tabpanel" aria-labelledby="video-tab">
 
-                <h2>Learn how to make a pie chart</h2>
+                <h2 data-video-title>Learn how to make a pie chart</h2>
 
                 <div class="video-player">
 
                     <img
+                        class="lesson-video-image"
                         src="../assets/images/learning-flow-1-chart.png"
                         alt="Pie chart lesson preview"
                     >
@@ -111,7 +126,7 @@
                         aria-label="Show video availability"
                         aria-pressed="false"
                     >
-                        <span aria-hidden="true">▶</span>
+                        <span aria-hidden="true">▷</span>
                     </button>
                     <p class="video-status" role="status" hidden>Video playback is coming soon.</p>
 
@@ -123,11 +138,11 @@
 
                 <div class="transcript" id="lesson-transcript">
 
-                    <p>
+                    <p data-transcript-part="0">
                         A pie chart shows how parts add up to a whole. Start with a few categories and a value for each, such as how many people chose each favorite fruit. Add the values to find the total.
                     </p>
 
-                    <p>
+                    <p data-transcript-part="1">
                         In a spreadsheet, select your categories and values, then choose Insert → Chart → Pie. Each slice shows a category’s share of the total. Add a clear title and labels with names and percentages, which should add up to 100%.
                     </p>
 
@@ -146,13 +161,13 @@
                 hidden
             >
 
-                <h2>Task Explanation</h2>
+                <h2 data-task-instructions-title>Task Explanation</h2>
 
-                <p>
+                <p data-task-instructions-part="0">
                     Your task: build a simple pie chart in React. Use a chart library such as Recharts to display this data: Apples 40%, Bananas 35%, and Oranges 25%.
                 </p>
 
-                <p>
+                <p data-task-instructions-part="1">
                     Create a React app, install the library, and build a PieChart component. Give each slice a different color and add a legend with the fruit names. Render the chart in your app and check that all three slices and labels are visible.
                 </p>
 
@@ -213,11 +228,11 @@
 
             <span class="stepper-caption">Next Task</span>
             <div class="lesson-stepper-controls">
-                <span class="step-number active" aria-current="step">1</span>
-                <span class="step-number" aria-disabled="true">2</span>
-                <span class="step-number" aria-disabled="true">3</span>
+                <button type="button" class="step-number active" data-task-step="1" aria-current="step" aria-label="Go to Task 1">1</button>
+                <button type="button" class="step-number" data-task-step="2" aria-label="Go to Task 2">2</button>
+                <button type="button" class="step-number" data-task-step="3" aria-label="Go to Task 3">3</button>
                 <span aria-hidden="true">...</span>
-                <button type="button" class="next-flow-button" aria-label="Next task (coming soon)" disabled>
+                <button type="button" class="next-flow-button" data-next-task aria-label="Go to next task">
                     <img src="../assets/icons/caret-right.svg" alt="">
                 </button>
             </div>
@@ -272,12 +287,12 @@
 
     </footer>
 
-    <script src="../js/lesson.js" defer></script>
-
     <script src="../js/ai-assistant.js" defer></script>
     <script src="../js/profile-menu.js" defer></script>
     <script src="../js/theme-toggle.js" defer></script>
     <script src="../js/footer-modals.js" defer></script>
+    <script src="../js/course-progress.js" defer></script>
+    <script src="../js/lesson.js" defer></script>
 </body>
 
 </html>

@@ -76,7 +76,18 @@
     --footer-modal-max-width: 392px;
     --profile-menu-width: 360px;
     --mobile-content-max-width: 520px;
+    --desktop-content-max-width: 1024px;
+    --desktop-header-width: 1440px;
+    --desktop-header-height: 147px;
+    --desktop-header-avatar-size: calc(var(--space-9) + var(--space-4));
+    --desktop-header-toggle-width: calc(var(--space-8) + var(--space-2));
+    --desktop-header-logo-height: calc(var(--space-8) + var(--space-2));
+    --inbox-content-width: calc(var(--desktop-content-max-width) - var(--space-9) * 3 - var(--space-6));
+    --login-form-max-width: 384px;
+    --page-decoration-width: 408px;
     --suggested-course-card-width: 336px;
+    --my-course-image-aspect-ratio: 2 / 1;
+    --study-group-image-overlay: color-mix(in srgb, var(--color-background-main) 78%, transparent);
 
 
     /* =========================

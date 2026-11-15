@@ -17,19 +17,27 @@
     <link rel="stylesheet" href="../css/pages.css">
 </head>
 
-<body>
+<body class="student-page-body">
 
     <header class="site-header">
 
         <a href="student-dashboard.html" class="logo">
             <img src="../assets/icons/logo.png" alt="Highcharts Course Portal">
+            <img class="desktop-wordmark" src="../assets/images/text-highsoft-logolab.png" alt="">
         </a>
+
+        <nav class="student-header-navigation" aria-label="Student navigation">
+            <a href="student-dashboard.html">Home</a>
+            <a href="my-courses.html">My Courses</a>
+            <a href="courses.html" aria-current="page">Course Catalogue</a>
+        </nav>
 
         <div class="header-actions">
             <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark mode"></button>
 
             <button type="button" class="profile-menu-button" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="student">
                 <img src="../assets/images/profile-image-student.png" alt="Student profile">
+                <span class="profile-menu-label">Menu</span>
             </button>
         </div>
 
@@ -71,15 +79,18 @@
             </select>
         </section>
 
-        <section class="course-list" aria-label="Available courses">
+        <section class="course-results-panel" aria-label="Course results">
+            <h2 class="course-results-count" aria-live="polite">Results</h2>
+
+            <section class="course-list" aria-label="Available courses">
             <article class="course-card" data-level="intermediate" data-category="react">
                 <div class="course-card-heading">
                     <span class="course-art" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span>
-                    <div class="course-card-title"><h3>Build Pie Charts with React</h3><p>Intermediate · 12 Modules</p></div>
+                    <div class="course-card-title"><h3><a href="learning-flow-introduction.html">Build Pie Charts with React</a></h3><p>Intermediate · 12 Modules</p></div>
                     <button class="bookmark-button" type="button" data-bookmark="react-pie" aria-label="Bookmark Build Pie Charts with React" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button>
                 </div>
                 <p class="course-description">Master complex state management, hooks, and optimization techniques for large scale applications.</p>
-                <div class="course-card-footer"><a href="lesson.html">Start Learning</a><span>Free</span></div>
+                <div class="course-card-footer"><a href="learning-flow-introduction.html">Start Learning</a><span>Free</span></div>
             </article>
 
             <article class="course-card" data-level="beginner" data-category="uiux">
@@ -107,6 +118,11 @@
                 <p class="course-description">Build a strong foundation in Python syntax, data types, and programming concepts.</p>
                 <div class="course-card-footer"><a href="lesson.html">Start Learning</a><span>Free</span></div>
             </article>
+            <article class="course-card" data-level="beginner" data-category="design" data-extra hidden>
+                <div class="course-card-heading"><span class="course-art" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span><div class="course-card-title"><h3>Introduction to Design Systems</h3><p>Beginner · 8 Modules</p></div><button class="bookmark-button" type="button" data-bookmark="design-systems" aria-label="Bookmark Introduction to Design Systems" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button></div>
+                <p class="course-description">Learn to build consistent interfaces with reusable components, clear color roles, and practical design tokens.</p>
+                <div class="course-card-footer"><a href="lesson.html">Start Learning</a><span>Free</span></div>
+            </article>
             <article class="course-card" data-level="intermediate" data-category="ai" data-extra hidden>
                 <div class="course-card-heading"><span class="course-art" aria-hidden="true"><img src="../assets/icons/open-book.svg" alt=""></span><div class="course-card-title"><h3>AI Fundamentals</h3><p>Intermediate · 9 Modules</p></div><button class="bookmark-button" type="button" data-bookmark="ai-fundamentals" aria-label="Bookmark AI Fundamentals" aria-pressed="false"><span class="bookmark-icon" aria-hidden="true"></span></button></div>
                 <p class="course-description">Explore the core ideas behind machine learning and responsible AI.</p>
@@ -117,13 +133,14 @@
                 <p class="course-description">Build scalable interfaces with advanced patterns, performance tools, and chart integrations.</p>
                 <div class="course-card-footer"><a href="lesson.html">Start Learning</a><span>Free</span></div>
             </article>
-        </section>
+            </section>
 
-        <button type="button" class="course-more" aria-expanded="false">3 more results <span aria-hidden="true">⌄</span></button>
+            <button type="button" class="course-more" aria-expanded="false">3 more results <span aria-hidden="true">⌄</span></button>
+        </section>
 
         <section class="suggested-courses" aria-label="Suggested courses">
             <h2>Suggested for you</h2>
-            <p>Based on topics you're interested in.</p>
+            <p>Based on your skills and topics you're interested in.</p>
             <div class="interest-tags"><span>AI</span><span>Design Systems</span><span>UI/UX</span></div>
             <div class="suggested-course-list">
                 <article class="suggested-course-card">

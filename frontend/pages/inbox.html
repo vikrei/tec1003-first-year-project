@@ -17,19 +17,27 @@
     <link rel="stylesheet" href="../css/pages.css">
 </head>
 
-<body>
+<body class="student-page-body">
 
     <header class="site-header">
 
         <a href="student-dashboard.html" class="logo">
             <img src="../assets/icons/logo.png" alt="Highcharts Course Portal">
+            <img class="desktop-wordmark" src="../assets/images/text-highsoft-logolab.png" alt="">
         </a>
+
+        <nav class="student-header-navigation" aria-label="Student navigation">
+            <a href="student-dashboard.html">Home</a>
+            <a href="my-courses.html">My Courses</a>
+            <a href="courses.html">Course Catalogue</a>
+        </nav>
 
         <div class="header-actions">
             <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark mode"></button>
 
             <button type="button" class="profile-menu-button" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="student">
                 <img src="../assets/images/profile-image-student.png" alt="Student profile">
+                <span class="profile-menu-label">Menu</span>
             </button>
         </div>
 
@@ -55,14 +63,14 @@
             </div>
 
             <article class="email-item">
-                <h3>Work Requirement 2 Topic</h3>
-                <p>student@gmail.com</p>
+                <span class="email-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg></span>
+                <div class="email-item-content"><h3>Work Requirement 2 Topic</h3><p>student@gmail.com</p></div>
                 <time datetime="2026-10-14">14.10.2026</time>
             </article>
 
             <article class="email-item">
-                <h3>Documentation Workshop</h3>
-                <p>student@gmail.com</p>
+                <span class="email-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg></span>
+                <div class="email-item-content"><h3>Documentation Workshop</h3><p>student@gmail.com</p></div>
                 <time datetime="2026-10-14">14.10.2026</time>
             </article>
 
@@ -81,14 +89,14 @@
             </div>
 
             <article class="email-item">
-                <h3>Work Requirement 2 Topic</h3>
-                <p>student@gmail.com</p>
+                <span class="email-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 3 8v11h18V8z"></path><path d="m7 10 5 4 5-4"></path></svg></span>
+                <div class="email-item-content"><h3>Work Requirement 2 Topic</h3><p>student@gmail.com</p></div>
                 <time datetime="2026-10-14">14.10.2026</time>
             </article>
 
             <article class="email-item">
-                <h3>Documentation Workshop</h3>
-                <p>student@gmail.com</p>
+                <span class="email-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 3 8v11h18V8z"></path><path d="m7 10 5 4 5-4"></path></svg></span>
+                <div class="email-item-content"><h3>Documentation Workshop</h3><p>student@gmail.com</p></div>
                 <time datetime="2026-10-14">14.10.2026</time>
             </article>
 
@@ -97,10 +105,13 @@
 
         <section class="other-mailboxes">
 
-            <h2>Other Mailboxes</h2>
+            <div class="section-header">
+                <h2>Other Mailboxes</h2>
+                <span>20 E-Mails</span>
+            </div>
 
             <a href="#" class="mailbox-link">
-                <span>Sent</span>
+                <span>Send</span>
                 <span>11 E-Mails</span>
             </a>
 

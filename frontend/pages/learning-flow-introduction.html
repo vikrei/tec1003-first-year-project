@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Introduction | Highcharts Course Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Vollkorn+SC:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+</head>
+
+<body class="student-page-body">
+    <header class="site-header">
+        <a href="student-dashboard.html" class="logo">
+            <img src="../assets/icons/logo.png" alt="Highcharts Course Portal">
+            <img class="desktop-wordmark" src="../assets/images/text-highsoft-logolab.png" alt="">
+        </a>
+        <nav class="student-header-navigation" aria-label="Student navigation">
+            <a href="student-dashboard.html">Home</a>
+            <a href="my-courses.html">My Courses</a>
+            <a href="courses.html">Course Catalogue</a>
+        </nav>
+        <div class="header-actions">
+            <button type="button" class="theme-toggle" role="switch" aria-checked="false" aria-label="Switch to dark mode"></button>
+            <button type="button" class="profile-menu-button" aria-label="Open profile menu" aria-haspopup="menu" aria-expanded="false" aria-controls="account-profile-menu" data-profile-role="student">
+                <img src="../assets/images/profile-image-student.png" alt="Student profile">
+                <span class="profile-menu-label">Menu</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="course-introduction-page">
+        <a href="my-courses.html" class="back-link">← Back</a>
+
+        <h1>Introduction Build Pie Charts with React</h1>
+
+        <section class="learning-intro-progress" aria-label="Course progress">
+            <div class="progress-label"><span>Progress</span><strong>1%</strong></div>
+            <div class="progress-bar"><div class="progress-bar-fill progress-one-percent"></div></div>
+        </section>
+
+        <section class="course-introduction-content">
+            <h2>Course Introduction</h2>
+            <h3>What you will learn</h3>
+
+            <div class="video-player">
+                <img src="../assets/images/pie-chart-course-intro.png" alt="Instructor introducing the Build Pie Charts with React course">
+                <button type="button" class="play-button" aria-label="Show video availability" aria-pressed="false">
+                    <span aria-hidden="true">▷</span>
+                </button>
+                <p class="video-status" role="status" hidden>Introduction video playback is coming soon.</p>
+            </div>
+
+            <button type="button" class="transcript-button" aria-expanded="true" aria-controls="course-introduction-transcript">Transcript</button>
+            <div class="transcript" id="course-introduction-transcript">
+                <p>In this course, you’ll learn how to create clear, useful pie charts with React. We’ll guide you through organizing your data, choosing a chart library, and configuring your chart for clarity and impact. By the end, you’ll be able to visualize data effectively and explain what each slice represents.</p>
+            </div>
+        </section>
+
+        <p class="course-progress-status" data-course-status role="status" hidden></p>
+        <a href="lesson.html" class="course-introduction-start" data-course-start>
+            <img src="../assets/icons/caret-right.svg" alt="" aria-hidden="true">
+            <span data-course-start-label>Start Course</span>
+        </a>
+    </main>
+
+    <button type="button" class="ask-ai-button">Ask AI</button>
+
+    <nav class="bottom-navigation" aria-label="Student navigation">
+        <a href="student-dashboard.html">Home</a>
+        <a href="my-courses.html">My Courses</a>
+        <a href="inbox.html">Inbox</a>
+    </nav>
+
+    <footer class="site-footer">
+        <div class="social-links">
+            <p>Find us on</p>
+            <a href="#" aria-label="Facebook"><img src="../assets/icons/Facebook.svg" alt=""></a>
+            <a href="#" aria-label="Twitter"><img src="../assets/icons/twitter.svg" alt=""></a>
+            <a href="#" aria-label="Instagram"><img src="../assets/icons/instagram.svg" alt=""></a>
+            <a href="#" aria-label="YouTube"><img src="../assets/icons/youtube.png" alt=""></a>
+        </div>
+        <nav class="footer-navigation" aria-label="Footer navigation">
+            <a href="#" data-modal="terms">Terms</a>
+            <a href="#" data-modal="support">Support</a>
+            <a href="#" data-modal="about">About</a>
+        </nav>
+        <p class="copyright">© 2026 All Rights Reserved</p>
+    </footer>
+
+    <script src="../js/ai-assistant.js" defer></script>
+    <script src="../js/profile-menu.js" defer></script>
+    <script src="../js/theme-toggle.js" defer></script>
+    <script src="../js/footer-modals.js" defer></script>
+    <script src="../js/course-progress.js" defer></script>
+    <script src="../js/lesson.js" defer></script>
+</body>
+
+</html>
