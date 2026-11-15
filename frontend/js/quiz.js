@@ -97,19 +97,6 @@
         }
     }
 
-    function showPreviouslyEarnedCertificate() {
-        if (!hasCertificate()) return;
-
-        questionGroups.forEach((group) => {
-            const correctValue = answers.get(group.dataset.question);
-            group.querySelectorAll("input[type='radio']").forEach((input) => {
-                input.disabled = true;
-                if (input.value === correctValue) input.closest(".quiz-choice").classList.add("is-correct");
-            });
-        });
-        showResult({ score: answers.size, attempt: Math.max(1, attempts()), passed: true, locked: false });
-    }
-
     questionGroups.forEach((group) => {
         group.addEventListener("change", () => {
             if (!errorMessage.hidden) {
@@ -173,5 +160,4 @@
     finishButton?.addEventListener("click", () => {
         if (hasCertificate()) window.location.href = "course-certificate.html";
     });
-    showPreviouslyEarnedCertificate();
 })();
