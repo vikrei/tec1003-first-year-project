@@ -7,7 +7,7 @@ from flask import Flask, redirect, request, jsonify, session
 
 from database import create_tables, get_connection, seed_data
 from help_answers import find_answer  # the scripted answers live in help_answers.py
-from progress import get_status, record_step
+from progress import get_status, record_step, submit_quiz
 
 app = Flask(__name__, static_folder="../frontend", static_url_path="")
 
@@ -105,6 +105,20 @@ def progress_save(slug):
     if not saved:
         return jsonify({"error": message}), code
     return jsonify(get_status(user["id"], slug))
+
+
+@app.post("/api/quiz/<slug>")
+def quiz_submit(slug):
+    """check the quiz answers of the logged-in user and count the attempt"""
+    user = current_user()
+    if user is None:
+        return jsonify({"error": "Please log in first."}), 401
+
+    submitted = request.get_json(silent=True) or {}
+    result, message, code = submit_quiz(user["id"], slug, submitted)
+    if result is None:
+        return jsonify({"error": message}), code
+    return jsonify(result)
 
 
 @app.post("/api/help")
