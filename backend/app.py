@@ -7,6 +7,7 @@ from flask import Flask, redirect, request, jsonify, session
 
 from database import create_tables, get_connection, seed_data
 from help_answers import find_answer  # the scripted answers live in help_answers.py
+from progress import get_status, record_step
 
 app = Flask(__name__, static_folder="../frontend", static_url_path="")
 
@@ -20,7 +21,7 @@ seed_data()
 
 
 def current_user():
-    """Return the logged-in dummy user as a dict, or None if nobody is logged in."""
+    """return the logged-in dummy user as a dict, or None if nobody is logged in"""
     user_id = session.get("user_id")
     if user_id is None:
         return None
@@ -42,7 +43,7 @@ def home():
 
 @app.post("/api/login")
 def login():
-    """Mock login: choose the student or the admin dummy user (no password)."""
+    """mock login: choose the student or the admin dummy user (no password)"""
     data = request.get_json(silent=True) or {}
     role = (data.get("role") or "").strip()
 
@@ -68,16 +69,47 @@ def login():
 
 @app.get("/api/me")
 def me():
-    """Return the logged-in dummy user, or ask the visitor to log in first."""
+    """return the logged-in dummy user, or ask the visitor to log in first"""
     user = current_user()
     if user is None:
         return jsonify({"error": "Please log in first."}), 401
     return jsonify(user)
 
 
+@app.get("/api/progress/<slug>")
+def progress_status(slug):
+    """return percent, passed and attempts of the logged-in user for a course"""
+    user = current_user()
+    if user is None:
+        return jsonify({"error": "Please log in first."}), 401
+
+    status = get_status(user["id"], slug)
+    if status is None:
+        return jsonify({"error": "Course not found."}), 404
+    return jsonify(status)
+
+
+@app.post("/api/progress/<slug>")
+def progress_save(slug):
+    """save that the logged-in user reached a step of a course """
+    user = current_user()
+    if user is None:
+        return jsonify({"error": "Please log in first."}), 401
+
+    data = request.get_json(silent=True) or {}
+    position = data.get("position")
+    if not isinstance(position, int) or isinstance(position, bool):
+        return jsonify({"error": "Please send the step as a number."}), 400
+
+    saved, message, code = record_step(user["id"], slug, position)
+    if not saved:
+        return jsonify({"error": message}), code
+    return jsonify(get_status(user["id"], slug))
+
+
 @app.post("/api/help")
 def help_answer():
-    """Returns an answer to a question sent by the AI assistant window."""
+    """returns an answer to a question sent by the AI assistant window"""
     data = request.get_json(silent=True) or {}
     question = (data.get("question") or "").strip()
 
