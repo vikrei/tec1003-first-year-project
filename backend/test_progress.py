@@ -126,5 +126,72 @@ class LoginTests(unittest.TestCase):
         self.assertEqual(response.get_json()["role"], "student")
 
 
+def login(client, role):
+    """log in as the given dummy user"""
+    client.post("/api/login", json={"role": role})
+
+
+class ProgressEndpointTests(unittest.TestCase):
+    """the progress endpoints with the Flask test client"""
+
+    def setUp(self):
+        """create a fresh database and a test browser for each test"""
+        reset_database()
+        self.client = flask_app.test_client()
+        self.url = f"/api/progress/{SLUG}"
+
+    def test_status_needs_login(self):
+        """a visitor without a cookie gets a 401"""
+        self.assertEqual(self.client.get(self.url).status_code, 401)
+
+    def test_save_needs_login(self):
+        """saving a step without a cookie gets a 401"""
+        response = self.client.post(self.url, json={"position": 1})
+        self.assertEqual(response.status_code, 401)
+
+    def test_status_starts_at_zero(self):
+        """a new student has 0 percent and no attempts"""
+        login(self.client, "student")
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.get_json(), {"attempts": 0, "passed": False, "percent": 0}
+        )
+
+    def test_step_two_first_is_refused(self):
+        """step 2 without step 1 gets a 409"""
+        login(self.client, "student")
+        response = self.client.post(self.url, json={"position": 2})
+        self.assertEqual(response.status_code, 409)
+
+    def test_steps_in_order_set_percent(self):
+        """step 1 gives 1 percent and step 2 gives 25 percent"""
+        login(self.client, "student")
+        first = self.client.post(self.url, json={"position": 1})
+        second = self.client.post(self.url, json={"position": 2})
+        self.assertEqual(first.get_json()["percent"], 1)
+        self.assertEqual(second.get_json()["percent"], 25)
+
+    def test_step_must_be_a_number(self):
+        """a step sent as text gets a 400"""
+        login(self.client, "student")
+        response = self.client.post(self.url, json={"position": "2"})
+        self.assertEqual(response.status_code, 400)
+
+    def test_unknown_course(self):
+        """an unknown course gets a 404"""
+        login(self.client, "student")
+        response = self.client.get("/api/progress/no-such-course")
+        self.assertEqual(response.status_code, 404)
+
+    def test_progress_belongs_to_the_user(self):
+        """the admin does not see the progress of the student"""
+        login(self.client, "student")
+        self.client.post(self.url, json={"position": 1})
+        admin_client = flask_app.test_client()
+        login(admin_client, "admin")
+        self.assertEqual(admin_client.get(self.url).get_json()["percent"], 0)
+
+
 if __name__ == "__main__":
     unittest.main()
