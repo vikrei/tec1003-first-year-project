@@ -7,7 +7,7 @@ from flask import Flask, redirect, request, jsonify, session
 
 from database import create_tables, get_connection, seed_data
 from help_answers import find_answer  # the scripted answers live in help_answers.py
-from progress import get_status, record_step, submit_quiz
+from progress import get_status, record_step, reset_course, submit_quiz
 
 app = Flask(__name__, static_folder="../frontend", static_url_path="")
 
@@ -103,6 +103,19 @@ def progress_save(slug):
 
     saved, message, code = record_step(user["id"], slug, position)
     if not saved:
+        return jsonify({"error": message}), code
+    return jsonify(get_status(user["id"], slug))
+
+
+@app.post("/api/progress/<slug>/reset")
+def progress_reset(slug):
+    """reset progress and quiz attempts of the logged-in user for a course"""
+    user = current_user()
+    if user is None:
+        return jsonify({"error": "Please log in first."}), 401
+
+    done, message, code = reset_course(user["id"], slug)
+    if not done:
         return jsonify({"error": message}), code
     return jsonify(get_status(user["id"], slug))
 

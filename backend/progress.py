@@ -135,3 +135,26 @@ def submit_quiz(user_id, slug, submitted):
         return result, "Quiz checked.", 200
     finally:
         connection.close()
+
+
+def reset_course(user_id, slug):
+    """delete progress and quiz attempts of a user for a course, return ok, message, code"""
+    connection = get_connection()
+    try:
+        course = get_course(connection, slug)
+        if course is None:
+            return False, "Course not found.", 404
+
+        connection.execute(
+            "DELETE FROM progress WHERE user_id = ? AND step_id IN "
+            "(SELECT id FROM steps WHERE course_id = ?)",
+            (user_id, course["id"]),
+        )
+        connection.execute(
+            "DELETE FROM quiz_attempts WHERE user_id = ? AND course_id = ?",
+            (user_id, course["id"]),
+        )
+        connection.commit()
+        return True, "Course reset.", 200
+    finally:
+        connection.close()
