@@ -12,7 +12,8 @@ def get_course(connection, slug):
 
 
 def get_status(user_id, slug):
-    """return percent, passed and attempts for a user, or None if the course is unknown"""
+    """return percent, passed, attempts and the reached step for a user, or None if the course is unknown"""
+
     connection = get_connection()
     try:
         course = get_course(connection, slug)
@@ -34,14 +35,19 @@ def get_status(user_id, slug):
         )
 
         reached = connection.execute(
-            "SELECT MAX(s.percent) FROM progress p "
+            "SELECT MAX(s.percent), MAX(s.position) FROM progress p "
             "JOIN steps s ON s.id = p.step_id "
             "WHERE p.user_id = ? AND s.course_id = ?",
             (user_id, course["id"]),
-        ).fetchone()[0]
+        ).fetchone()
 
-        percent = 100 if passed else (reached or 0)
-        return {"percent": percent, "passed": passed, "attempts": attempts}
+        percent = 100 if passed else (reached[0] or 0)
+        return {
+            "percent": percent,
+            "passed": passed,
+            "attempts": attempts,
+            "step": reached[1] or 0,
+        }
     finally:
         connection.close()
 

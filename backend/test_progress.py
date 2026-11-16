@@ -39,7 +39,7 @@ class ProgressTests(unittest.TestCase):
     def test_new_user_starts_at_zero(self):
         """a user without progress has 0 percent, no pass and no attempts"""
         status = progress.get_status(1, SLUG)
-        self.assertEqual(status, {"percent": 0, "passed": False, "attempts": 0})
+        self.assertEqual(status, {"percent": 0, "passed": False, "attempts": 0, "step": 0})
 
     def test_step_two_needs_step_one(self):
         """a step is refused if an earlier step is missing"""
@@ -54,6 +54,12 @@ class ProgressTests(unittest.TestCase):
             self.assertTrue(ok)
             self.assertEqual(code, 200)
         self.assertEqual(progress.get_status(1, SLUG)["percent"], 50)
+
+    def test_status_reports_the_reached_step(self):
+        """the status names the highest step that was reached"""
+        for position in (1, 2, 3):
+            progress.record_step(1, SLUG, position)
+        self.assertEqual(progress.get_status(1, SLUG)["step"], 3)
 
     def test_same_step_twice_is_safe(self):
         """saving the same step twice does not break anything"""
@@ -85,7 +91,7 @@ class ProgressTests(unittest.TestCase):
         finally:
             connection.close()
         status = progress.get_status(1, SLUG)
-        self.assertEqual(status, {"percent": 100, "passed": True, "attempts": 1})
+        self.assertEqual(status, {"percent": 100, "passed": True, "attempts": 1, "step": 0})
 
 
 class LoginTests(unittest.TestCase):
@@ -155,7 +161,7 @@ class ProgressEndpointTests(unittest.TestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            response.get_json(), {"attempts": 0, "passed": False, "percent": 0}
+            response.get_json(), {"attempts": 0, "passed": False, "percent": 0, "step": 0}
         )
 
     def test_step_two_first_is_refused(self):
@@ -302,7 +308,7 @@ class ResetEndpointTests(unittest.TestCase):
         response = self.client.post(f"{self.url}/reset")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            response.get_json(), {"attempts": 0, "passed": False, "percent": 0}
+            response.get_json(), {"attempts": 0, "passed": False, "percent": 0, "step": 0}
         )
 
     def test_reset_does_not_touch_other_users(self):
