@@ -193,5 +193,79 @@ class ProgressEndpointTests(unittest.TestCase):
         self.assertEqual(admin_client.get(self.url).get_json()["percent"], 0)
 
 
+class QuizEndpointTests(unittest.TestCase):
+    """the quiz endpoint with the Flask test client"""
+
+    RIGHT = {
+        "platform": "highcharts",
+        "charts": "yes",
+        "lesson-flow": "yes",
+        "application": "yes",
+    }
+    WRONG = {**RIGHT, "lesson-flow": "no"}
+
+    def setUp(self):
+        """create a fresh database and a test browser for each test"""
+        reset_database()
+        self.client = flask_app.test_client()
+        self.url = f"/api/quiz/{SLUG}"
+        self.progress_url = f"/api/progress/{SLUG}"
+
+    def reach_quiz(self):
+        """log in as student and reach all five steps"""
+        login(self.client, "student")
+        for position in range(1, 6):
+            self.client.post(self.progress_url, json={"position": position})
+
+    def test_quiz_needs_login(self):
+        """a visitor without a cookie gets a 401"""
+        response = self.client.post(self.url, json=self.RIGHT)
+        self.assertEqual(response.status_code, 401)
+
+    def test_quiz_needs_the_steps_before(self):
+        """a student who has not reached the quiz gets a 409"""
+        login(self.client, "student")
+        response = self.client.post(self.url, json=self.RIGHT)
+        self.assertEqual(response.status_code, 409)
+
+    def test_incomplete_answers(self):
+        """a submission with missing answers gets a 400"""
+        self.reach_quiz()
+        response = self.client.post(self.url, json={"platform": "highcharts"})
+        self.assertEqual(response.status_code, 400)
+
+    def test_wrong_answers_count_an_attempt(self):
+        """a wrong attempt gives 3 of 4, the correct answer and 90 percent"""
+        self.reach_quiz()
+        result = self.client.post(self.url, json=self.WRONG).get_json()
+        self.assertFalse(result["passed"])
+        self.assertEqual(result["score"], 3)
+        self.assertEqual(result["attempt"], 1)
+        self.assertEqual(result["percent"], 90)
+        self.assertEqual(result["questions"]["lesson-flow"]["correct_value"], "yes")
+
+    def test_right_answers_pass_the_course(self):
+        """a right attempt passes the quiz and gives 100 percent"""
+        self.reach_quiz()
+        result = self.client.post(self.url, json=self.RIGHT).get_json()
+        self.assertTrue(result["passed"])
+        self.assertEqual(result["percent"], 100)
+
+    def test_passed_quiz_counts_no_new_attempt(self):
+        """after a pass, another submission does not count as an attempt"""
+        self.reach_quiz()
+        self.client.post(self.url, json=self.WRONG)
+        self.client.post(self.url, json=self.RIGHT)
+        result = self.client.post(self.url, json=self.RIGHT).get_json()
+        self.assertTrue(result["already_passed"])
+        self.assertEqual(result["attempt"], 2)
+
+    def test_unknown_course(self):
+        """an unknown course gets a 404"""
+        self.reach_quiz()
+        response = self.client.post("/api/quiz/no-such-course", json=self.RIGHT)
+        self.assertEqual(response.status_code, 404)
+
+
 if __name__ == "__main__":
     unittest.main()
