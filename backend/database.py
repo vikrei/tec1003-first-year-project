@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS quiz_attempts (
 
 
 def get_connection():
-    """Open a connection to the database with foreign keys enabled."""
+    """open a connection to the database with foreign keys enabled"""
     connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
     connection.execute("PRAGMA foreign_keys = ON")
@@ -54,7 +54,7 @@ def get_connection():
 
 
 def create_tables():
-    """Create all tables if they do not exist yet."""
+    """create all tables if they do not exist yet"""
     connection = get_connection()
     try:
         connection.executescript(SCHEMA)
@@ -79,7 +79,7 @@ STEPS = [
 
 
 def seed_data():
-    """Insert the dummy users and the demo course if the database is empty."""
+    """insert the dummy users and the demo course if the database is empty"""
     connection = get_connection()
     try:
         user_count = connection.execute("SELECT COUNT(*) FROM users").fetchone()[0]

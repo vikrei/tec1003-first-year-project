@@ -37,7 +37,7 @@ def current_user():
 
 @app.get("/")
 def home():
-    """Redirect the root address to the start page."""
+    """redirect the root address to the start page"""
     return redirect("/pages/index.html")
 
 

@@ -76,7 +76,7 @@ FALLBACK = {
 
 
 def find_answer(question):
-    """Return the first scripted answer with a keyword that appears as a whole word."""
+    """return the first scripted answer with a keyword that appears as a whole word"""
     text = question.lower()
     for entry in ANSWERS:
         for keyword in entry["keywords"]:
