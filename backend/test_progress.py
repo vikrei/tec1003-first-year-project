@@ -267,5 +267,54 @@ class QuizEndpointTests(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
 
+class ResetEndpointTests(unittest.TestCase):
+    """the reset endpoint with the Flask test client"""
+
+    def setUp(self):
+        """create a fresh database and a test browser for each test"""
+        reset_database()
+        self.client = flask_app.test_client()
+        self.url = f"/api/progress/{SLUG}"
+
+    def reach_steps(self, client, last_step):
+        """save the steps from 1 up to the given step"""
+        for position in range(1, last_step + 1):
+            client.post(self.url, json={"position": position})
+
+    def test_reset_needs_login(self):
+        """a visitor without a cookie gets a 401"""
+        response = self.client.post(f"{self.url}/reset")
+        self.assertEqual(response.status_code, 401)
+
+    def test_reset_clears_progress_and_attempts(self):
+        """after a reset the student is back at 0 percent and 0 attempts"""
+        login(self.client, "student")
+        self.reach_steps(self.client, 5)
+        self.client.post(
+            f"/api/quiz/{SLUG}",
+            json={
+                "platform": "highcharts",
+                "charts": "yes",
+                "lesson-flow": "no",
+                "application": "yes",
+            },
+        )
+        response = self.client.post(f"{self.url}/reset")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.get_json(), {"attempts": 0, "passed": False, "percent": 0}
+        )
+
+    def test_reset_does_not_touch_other_users(self):
+        """the reset of the student keeps the progress of the admin"""
+        login(self.client, "student")
+        self.reach_steps(self.client, 1)
+        admin_client = flask_app.test_client()
+        login(admin_client, "admin")
+        self.reach_steps(admin_client, 1)
+        self.client.post(f"{self.url}/reset")
+        self.assertEqual(admin_client.get(self.url).get_json()["percent"], 1)
+
+
 if __name__ == "__main__":
     unittest.main()
