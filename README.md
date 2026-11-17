@@ -117,7 +117,7 @@ tec1003-first-year-project/
 
 The `backend/venv/` folder and the database file `backend/course_portal.db` are created during setup and on the first start. Neither is part of the repository.
 
-**Pages** (`frontend/pages/`): `index` (home), `login`, `student-dashboard`, `my-courses`, `courses`, `lesson`, `inbox`, `profile`, `admin-dashboard`, `admin-inbox`, `admin-profile`.
+**Pages** (`frontend/pages/`): `index` (home), `login`, `student-dashboard`, `my-courses`, `courses`, `learning-flow-introduction`, `lesson`, `quiz`, `course-certificate`, `inbox`, `profile`, `admin-dashboard`, `admin-inbox`, `admin-profile`
 
 **Scripts** (`frontend/js/`):
 
@@ -130,7 +130,10 @@ The `backend/venv/` folder and the database file `backend/course_portal.db` are 
 | `theme-toggle.js` | Light and dark mode toggle |
 | `footer-modals.js` | Information pop-ups in the footer |
 | `dashboard-tutorial.js` | Tutorial on the student dashboard |
-| `lesson.js` | Lesson page |
+| `lesson.js` | Lesson page: tabs for video, transcript and instructions, switching between the three tasks with their progress, and the way to the quiz after task 3 |
+| `course-progress.js` | Course state in the browser (`localStorage`): quiz attempts, certificate, lock after three failed attempts, restart of the course, and 100 % on the course card |
+| `quiz.js` | Quiz page: checks the four answers, shows right and wrong, counts the attempts (three at most) and unlocks the certificate |
+| `course-certificate.js` | Certificate page: shows the certificate with the date if it was earned (otherwise it goes back to My Courses) and prints it |
 
 
 ## Architecture and data flow
