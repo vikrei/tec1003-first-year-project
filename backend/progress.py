@@ -164,3 +164,54 @@ def reset_course(user_id, slug):
         return True, "Course reset.", 200
     finally:
         connection.close()
+
+
+def admin_insights(slug):
+    """return the overview of all students for a course, or None if the course is unknown"""
+    connection = get_connection()
+    try:
+        course = get_course(connection, slug)
+        if course is None:
+            return None
+
+        students = connection.execute(
+            "SELECT id, name FROM users WHERE role = 'student' ORDER BY name"
+        ).fetchall()
+
+        rows = []
+        for student in students:
+            status = get_status(student["id"], slug)
+            last_attempt = connection.execute(
+                "SELECT correct_count FROM quiz_attempts "
+                "WHERE user_id = ? AND course_id = ? ORDER BY id DESC LIMIT 1",
+                (student["id"], course["id"]),
+            ).fetchone()
+            passed_attempt = connection.execute(
+                "SELECT submitted_at FROM quiz_attempts "
+                "WHERE user_id = ? AND course_id = ? AND passed = 1 ORDER BY id LIMIT 1",
+                (student["id"], course["id"]),
+            ).fetchone()
+            rows.append(
+                {
+                    "name": student["name"],
+                    "percent": status["percent"],
+                    "step": status["step"],
+                    "passed": status["passed"],
+                    "attempts": status["attempts"],
+                    "last_score": (
+                        last_attempt["correct_count"] if last_attempt else None
+                    ),
+                    "passed_at": (
+                        passed_attempt["submitted_at"] if passed_attempt else None
+                    ),
+                }
+            )
+
+        return {
+            "course": course["title"],
+            "student_count": len(rows),
+            "passed_count": sum(1 for row in rows if row["passed"]),
+            "students": rows,
+        }
+    finally:
+        connection.close()

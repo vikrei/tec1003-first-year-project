@@ -1,33 +1,9 @@
 """Tests of mock login and progress rules (temporary database only)"""
 
-import tempfile
 import unittest
-from pathlib import Path
 
 import database
-
-# Point the app to a temporary database before it is imported,
-# so that the tests never touch the real course_portal.db
-TEMP_DIR = tempfile.TemporaryDirectory()
-database.DB_PATH = Path(TEMP_DIR.name) / "test_course_portal.db"
-
-from app import app as flask_app  # pylint: disable=wrong-import-position
-import progress  # pylint: disable=wrong-import-position
-
-SLUG = "build-pie-charts-react"
-
-
-def reset_database():
-    """start every test with a fresh database that contains the dummy data"""
-    database.DB_PATH.unlink(missing_ok=True)
-    database.create_tables()
-    database.seed_data()
-
-
-def tearDownModule():
-    """remove the temporary database folder after all tests"""
-    TEMP_DIR.cleanup()
-
+from test_helpers import SLUG, flask_app, login, progress, reset_database
 
 class ProgressTests(unittest.TestCase):
     """rules for steps, percent and the quiz result"""
@@ -131,10 +107,6 @@ class LoginTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()["role"], "student")
 
-
-def login(client, role):
-    """log in as the given dummy user"""
-    client.post("/api/login", json={"role": role})
 
 
 class ProgressEndpointTests(unittest.TestCase):

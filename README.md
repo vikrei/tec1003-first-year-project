@@ -73,7 +73,7 @@ python -m unittest
 
 > **Section in Progress** Describes the planned flow and will be updated when frontend is connected to backend and the admin overview is built.
 
-**Today (backend only):** Run `python -m unittest` in the `backend` folder to run the 31 tests. The endpoints can also be tried with a tool like `curl` (see "API endpoints"). The login is a mock without a password, so no registration is needed.
+**Today (backend only):** Run `python -m unittest` in the `backend` folder to run all tests. The endpoints can also be tried with a tool like `curl` (see "API endpoints"). The login is a mock without a password, so no registration is needed.
 
 **Planned flow in the browser:**
 1. Start the server and open `http://127.0.0.1:5000` (see "Setup and run").
@@ -91,28 +91,30 @@ Pages stay reachable without a login on purpose, so that the demo can be tested 
 
 ```text
 tec1003-first-year-project/
-├── README.md
-├── licence
-├── .gitignore
 ├── backend/
 │   ├── README.md
-│   ├── app.py              Flask app: serves the frontend, login, progress, quiz and help endpoints
+│   ├── app.py              Flask app: serves the frontend, login, progress, quiz, admin insights & help endpoints
 │   ├── database.py         SQLite tables and dummy data, created on the first start
 │   ├── help_answers.py     Scripted answers and keywords for the AI assistant
-│   ├── progress.py         Rules for steps, progress in percent and the quiz result
+│   ├── progress.py         Rules for steps, progress in percent, the quiz result and the admin overview
 │   ├── quiz_answers.py     Correct answers and the answer check (kept in the backend)
 │   ├── requirements.txt    Python dependencies
-│   └── test_progress.py    Unit tests (run with python -m unittest)
-└── frontend/
-    ├── README.md
-    ├── pages/              HTML pages (student and admin screens)
-    ├── css/
-    │   ├── variables.css   Design tokens: colors (light and dark), typography, spacing
-    │   ├── global.css      Base styles
-    │   ├── components.css  Reusable components (theme toggle, profile menu, AI assistant, footer modals)
-    │   └── pages.css       Page-specific styles
-    ├── js/                 Scripts for the pages (see table below)
-    └── assets/             Icons and images
+│   ├── test_admin.py       Tests of the admin insights endpoint
+│   ├── test_helpers.py     Shared setup for the tests (temporary database)
+│   └── test_progress.py    Tests of login, progress, quiz and reset (run all tests with python -m unittest)
+├── frontend/
+│   ├── README.md
+│   ├── pages/              HTML pages (student and admin screens)
+│   ├── css/
+│   │   ├── variables.css   Design tokens: colors (light and dark), typography, spacing
+│   │   ├── global.css      Base styles
+│   │   ├── components.css  Reusable components (theme toggle, profile menu, AI assistant, footer modals)
+│   │   └── pages.css       Page-specific styles
+│   ├── js/                 Scripts for the pages (see table below)
+│   └── assets/             Icons and images
+├── .gitignore
+├── README.md
+└── licence
 ```
 
 The `backend/venv/` folder and the database file `backend/course_portal.db` are created during setup and on the first start. Neither is part of the repository.
@@ -174,6 +176,7 @@ ai-assistant.js shows the answer and its links in the conversation
 | POST | `/api/progress/<slug>` | Saves that the user reached a step, body `{ "position": 1 }` (1 to 5) | `200` with the new progress | `400` if the step is not a number, `401`, `404` for an unknown course or step, `409` if an earlier step is missing |
 | POST | `/api/progress/<slug>/reset` | Deletes progress and quiz attempts of the user for the course | `200` with the new progress | `401`, `404` for an unknown course |
 | POST | `/api/quiz/<slug>` | Checks the four answers and counts the attempt | `200` with `score`, `total`, `passed`, `attempt`, `percent`, `already_passed` and `questions` (with the correct answer for each question) | `400` if an answer is missing, `401`, `404`, `409` if the quiz was not reached yet |
+| GET | `/api/admin/insights/<slug>` | Overview of all students in a course for the admin: progress, quiz result, attempts and the time the quiz was passed (in UTC) | `200` with `course`, `student_count`, `passed_count` and `students` (each with `name`, `percent`, `step`, `passed`, `attempts`, `last_score` and `passed_at`) | `401` if nobody is logged in, `403` if the user is not an admin, `404` for an unknown course |
 
 ## Current status
 
@@ -188,6 +191,7 @@ ai-assistant.js shows the answer and its links in the conversation
 | AI assistant | Working with scripted answers from the Flask endpoint `/api/help` |
 | Database (SQLite) | Built: five tables with dummy users and one demo course, created on the first start |
 | Saving course progress and quiz attempts | Backend ready (endpoints and tests), not connected to the frontend yet |
+| Admin overview of the students | Backend ready (endpoint and tests), not connected to the admin pages yet |
 | Course Enrollments | Not built |
 
 ## Technical main decisions

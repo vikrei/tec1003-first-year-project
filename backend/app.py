@@ -7,7 +7,7 @@ from flask import Flask, redirect, request, jsonify, session
 
 from database import create_tables, get_connection, seed_data
 from help_answers import find_answer  # the scripted answers live in help_answers.py
-from progress import get_status, record_step, reset_course, submit_quiz
+from progress import get_status, record_step, reset_course, submit_quiz, admin_insights
 
 app = Flask(__name__, static_folder="../frontend", static_url_path="")
 
@@ -118,6 +118,21 @@ def progress_reset(slug):
     if not done:
         return jsonify({"error": message}), code
     return jsonify(get_status(user["id"], slug))
+
+
+@app.get("/api/admin/insights/<slug>")
+def admin_insights_overview(slug):
+    """return the overview of all students for a course, for the admin only"""
+    user = current_user()
+    if user is None:
+        return jsonify({"error": "Please log in first."}), 401
+    if user["role"] != "admin":
+        return jsonify({"error": "Admins only."}), 403
+
+    insights = admin_insights(slug)
+    if insights is None:
+        return jsonify({"error": "Course not found."}), 404
+    return jsonify(insights)
 
 
 @app.post("/api/quiz/<slug>")
