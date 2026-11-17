@@ -24,7 +24,7 @@ Their **main motivation** is to learn something new, expand their existing skil
 |---|---|
 | Frontend | HTML, CSS, JavaScript (no framework) |
 | Backend | Python with Flask |
-| Database | SQLite (planned, not built yet) |
+| Database | SQLite (`sqlite3` from the Python standard library), created automatically on first start |
 
 ## Setup and run
 
@@ -51,10 +51,16 @@ Their **main motivation** is to learn something new, expand their existing skil
    ```bash
    python app.py
    ```
-5. Open `http://127.0.0.1:5000` in your browser. Stop the server with `Ctrl+C`.
+5. OPEN `http://127.0.0.1:5000` in your browser. STOP the server with `Ctrl+C`.
 
+Open the pages through this address. The AI assistant, the login, progress and the quiz only work while the Flask server is running. Do not open the HTML files directly and do not use a tool like Live Server.
 
-Open the pages through this address. The AI assistant only works while the Flask server is running.
+On the first start, the server creates the database file `backend/course_portal.db` with two dummy users (a student and an admin) and the demo course. The file is not part of the repository. To start again from zero, stop the server, delete `course_portal.db` and start the server again.
+
+**Run the tests** (in the `backend` folder; the environment must be active, so `(venv)` is shown at the start of the line, see step 2):
+```bash
+python -m unittest
+```
 
 ### Troubleshooting
 
@@ -63,6 +69,23 @@ Open the pages through this address. The AI assistant only works while the Flask
 - **Windows, "running scripts is disabled":** use the Command Prompt and run `venv\Scripts\activate.bat` instead.
 - **macOS, "Address already in use":** the AirPlay Receiver can occupy port 5000. Switch it off in the system settings.
 
+## How to test the demo
+
+> **Section in Progress** Describes the planned flow and will be updated when frontend is connected to backend and the admin overview is built.
+
+**Today (backend only):** Run `python -m unittest` in the `backend` folder to run the 31 tests. The endpoints can also be tried with a tool like `curl` (see "API endpoints"). The login is a mock without a password, so no registration is needed.
+
+**Planned flow in the browser:**
+1. Start the server and open `http://127.0.0.1:5000` (see "Setup and run").
+2. On the login page, choose **student** (Alex Liland).
+3. Open the course overview (the Courses page) and click **Start Learning** on the course "Build Pie Charts with React". The introduction page opens. Click **Start Course** and go through the three tasks.
+4. Take the quiz. All four answers must be correct to pass, and the correct answers are shown after each attempt.
+5. When the quiz is passed, the button **View Certificate** appears (or use the arrow button at the end of the quiz page). It opens the certificate page.
+6. Go back to the login page, choose **admin** (Per Håland) and check that Alex Liland appears with his progress, the quiz result and the number of attempts (planned, available when the admin overview is built).
+
+**Start again from zero:** The progress stays saved in the database, also after the server is stopped. After a full run, the student is at 100 % and the quiz counts as passed. To test the demo again from the beginning, for example as a second reviewer, reset it: stop the server, delete `backend/course_portal.db` and start the server again. The database is created again with the dummy users and the demo course. Until the frontend is connected to the backend, the browser also keeps its own state (quiz attempts and certificate). Clear the site data for `127.0.0.1` in the browser settings to reset it as well.
+
+Pages stay reachable without a login on purpose, so that the demo can be tested easily (see "Known limitations").
 
 ## Project structure
 
@@ -73,9 +96,13 @@ tec1003-first-year-project/
 ├── .gitignore
 ├── backend/
 │   ├── README.md
-│   ├── app.py              Flask app: serves the frontend and the /api/help endpoint
+│   ├── app.py              Flask app: serves the frontend, login, progress, quiz and help endpoints
+│   ├── database.py         SQLite tables and dummy data, created on the first start
 │   ├── help_answers.py     Scripted answers and keywords for the AI assistant
-│   └── requirements.txt    Python dependencies
+│   ├── progress.py         Rules for steps, progress in percent and the quiz result
+│   ├── quiz_answers.py     Correct answers and the answer check (kept in the backend)
+│   ├── requirements.txt    Python dependencies
+│   └── test_progress.py    Unit tests (run with python -m unittest)
 └── frontend/
     ├── README.md
     ├── pages/              HTML pages (student and admin screens)
@@ -88,9 +115,9 @@ tec1003-first-year-project/
     └── assets/             Icons and images
 ```
 
-The `backend/venv/` folder is created during setup and is not part of the repository.
+The `backend/venv/` folder and the database file `backend/course_portal.db` are created during setup and on the first start. Neither is part of the repository.
 
-**Pages** (`frontend/pages/`): `index` (home), `login`, `student-dashboard`, `my-courses`, `courses`, `lesson`, `inbox`, `profile`, `admin-dashboard`, `admin-inbox`, `admin-profile`.
+**Pages** (`frontend/pages/`): `index` (home), `login`, `student-dashboard`, `my-courses`, `courses`, `learning-flow-introduction`, `lesson`, `quiz`, `course-certificate`, `inbox`, `profile`, `admin-dashboard`, `admin-inbox`, `admin-profile`
 
 **Scripts** (`frontend/js/`):
 
@@ -103,7 +130,10 @@ The `backend/venv/` folder is created during setup and is not part of the reposi
 | `theme-toggle.js` | Light and dark mode toggle |
 | `footer-modals.js` | Information pop-ups in the footer |
 | `dashboard-tutorial.js` | Tutorial on the student dashboard |
-| `lesson.js` | Lesson page |
+| `lesson.js` | Lesson page: tabs for video, transcript and instructions, switching between the three tasks with their progress, and the way to the quiz after task 3 |
+| `course-progress.js` | Course state in the browser (`localStorage`): quiz attempts, certificate, lock after three failed attempts, restart of the course, and 100 % on the course card |
+| `quiz.js` | Quiz page: checks the four answers, shows right and wrong, counts the attempts (three at most) and unlocks the certificate |
+| `course-certificate.js` | Certificate page: shows the certificate with the date if it was earned (otherwise it goes back to My Courses) and prints it |
 
 
 ## Architecture and data flow
@@ -138,6 +168,12 @@ ai-assistant.js shows the answer and its links in the conversation
 | Method | Endpoint | Purpose | Success response | Error |
 |---|---|---|---|---|
 | POST | `/api/help` | Returns a scripted answer to a question | `200` with `answer` and `links` | `400` if the question is empty |
+| POST | `/api/login` | Mock login: choose `student` or `admin` (no password), sets a session cookie | `200` with `id`, `name` and `role` | `400` if the role is not `student` or `admin` |
+| GET | `/api/me` | Returns the logged-in dummy user | `200` with `id`, `name` and `role` | `401` if nobody is logged in |
+| GET | `/api/progress/<slug>` | Returns the progress of the logged-in user in a course | `200` with `percent`, `passed`, `attempts` and `step` | `401` if nobody is logged in, `404` for an unknown course |
+| POST | `/api/progress/<slug>` | Saves that the user reached a step, body `{ "position": 1 }` (1 to 5) | `200` with the new progress | `400` if the step is not a number, `401`, `404` for an unknown course or step, `409` if an earlier step is missing |
+| POST | `/api/progress/<slug>/reset` | Deletes progress and quiz attempts of the user for the course | `200` with the new progress | `401`, `404` for an unknown course |
+| POST | `/api/quiz/<slug>` | Checks the four answers and counts the attempt | `200` with `score`, `total`, `passed`, `attempt`, `percent`, `already_passed` and `questions` (with the correct answer for each question) | `400` if an answer is missing, `401`, `404`, `409` if the quiz was not reached yet |
 
 ## Current status
 
@@ -150,8 +186,9 @@ ai-assistant.js shows the answer and its links in the conversation
 | Example lesson flow | Frontend only |
 | Login | Mock (`login.js`, no real authentication) |
 | AI assistant | Working with scripted answers from the Flask endpoint `/api/help` |
-| Database (SQLite) | Planned, not built yet |
-| Saving progress and enrollments | Planned, not built yet |
+| Database (SQLite) | Built: five tables with dummy users and one demo course, created on the first start |
+| Saving course progress and quiz attempts | Backend ready (endpoints and tests), not connected to the frontend yet |
+| Course Enrollments | Not built |
 
 ## Technical main decisions
 
@@ -162,18 +199,18 @@ ai-assistant.js shows the answer and its links in the conversation
 | Answers stored in `help_answers.py` | New topics are added by copying one entry. No other file needs to change. |
 | Keyword matching on whole words | "tutor" must not match "tutorial". The first matching topic wins, so the order of the list matters. |
 | Empty questions are checked in the frontend and in the backend | The frontend is convenient for the user. The backend protects the endpoint against direct calls. |
-| Mock login | Real authentication is out of scope for this prototype. |
-| SQLite (planned) | A file-based database needs no separate server and fits a prototype. |
-
+| Mock login with a session cookie | Real authentication is out of scope for this prototype. The signed cookie only tells the backend which dummy user (student or admin) is logged in, so that progress and quiz attempts belong to the right user. Pages stay reachable without a login on purpose, so that the product can be tested easily. The backend still protects its data: without a login, it answers with the message "Please log in first." (status 401). With a real login, the pages themselves would also ask the visitor to log in first. |
+| SQLite (`sqlite3` from the Python standard library) | A file-based database needs no separate server, comes with Python and fits a prototype and our level of knowledge. Nothing has to be installed, because the file is created on the first start. |
 
 
 ## Known limitations
 
 - **The AI assistant does not answer on the GitHub Pages preview.** The deployed pages (https://vikrei.github.io/tec1003-first-year-project/frontend/pages/index.html) shows the design and the pages, but GitHub Pages only serves static files and cannot run Flask. There, a question in the assistant window ends with an error message. Run the project locally to use the assistant (see "Setup and run").
 - **The assistant gives prepared answers only.** It matches keywords to a fixed list of topics. Questions outside these topics get a fallback answer with suggested links.
-- **Login is a mock.** There is no real authentication and no user accounts.
-- **Progress is not saved yet.** The progress tracker shows hard-coded values, because the database is not built yet.
+- **Login is a mock.** There is no real authentication, no password and no real user accounts. The login only chooses one of two dummy users (a student and an admin) from the database. The session cookie is signed with a fixed demo key that is part of the public code, so anyone who reads the code could forge it. This is fine for a demo, but it must be replaced in a real product. Pages stay reachable without a login, but the backend answers "Please log in first." (status 401) when progress or the quiz is requested without one.
+- **The frontend is not connected to the backend progress yet.** The backend saves progress and quiz attempts (see "API endpoints"), but the pages do not send or show them yet. The progress tracker and the course cards still show hard-coded values, and the quiz still checks its answers in the browser.
 - **Tested setup:** the setup instructions were tested on Linux (Ubuntu) with Python 3.12, using a fresh clone of the repository on 02.11.2026. The Windows and macOS instructions have not been tested yet.
+- **The pages follow the Figma design, but they are not identical.** Some elements exist only in the design, and some details were adapted during development. The reasons are explained in the project report.
 
 ## Team, license and branding
 
