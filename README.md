@@ -51,7 +51,7 @@ Their **main motivation** is to learn something new, expand their existing skil
    ```bash
    python app.py
    ```
-5. OPEN `http://127.0.0.1:5000` in your browser. STOP the server with `Ctrl+C`.
+5. OPEN `http://127.0.0.1:5001` in your browser. STOP the server with `Ctrl+C`.
 
 Open the pages through this address. The AI assistant, the login, progress and the quiz only work while the Flask server is running. Do not open the HTML files directly and do not use a tool like Live Server.
 
@@ -67,7 +67,7 @@ python -m unittest
 - **`python: command not found`:** The virtual environment is not active. Activate it first (step 2). Outside the environment, Ubuntu only knows `python3`.
 - **Linux, error about `ensurepip` when creating the environment:** run `sudo apt install python3-venv`.
 - **Windows, "running scripts is disabled":** use the Command Prompt and run `venv\Scripts\activate.bat` instead.
-- **macOS, "Address already in use":** the AirPlay Receiver can occupy port 5000. Switch it off in the system settings.
+- **macOS, "Address already in use":** check whether another process is using port 5001, then stop it or choose a free port in `app.py`.
 
 ## How to test the demo
 
@@ -76,7 +76,7 @@ python -m unittest
 **Today (backend only):** Run `python -m unittest` in the `backend` folder to run all tests. The endpoints can also be tried with a tool like `curl` (see "API endpoints"). The login is a mock without a password, so no registration is needed.
 
 **Planned flow in the browser:**
-1. Start the server and open `http://127.0.0.1:5000` (see "Setup and run").
+1. Start the server and open `http://127.0.0.1:5001` (see "Setup and run").
 2. On the login page, choose **student** (Alex Liland).
 3. Open the course overview (the Courses page) and click **Start Learning** on the course "Build Pie Charts with React". The introduction page opens. Click **Start Course** and go through the three tasks.
 4. Take the quiz. All four answers must be correct to pass, and the correct answers are shown after each attempt.
@@ -149,7 +149,7 @@ The project has two parts with clear responsibilities.
 | **Frontend** (`frontend/`) | Everything the user sees and uses in the browser: pages (HTML), design (CSS) and interaction (JavaScript). |
 | **Backend** (`backend/`) | A Flask server that delivers the frontend files and provides data through API endpoints. Flask does not render HTML (no Jinja templates). |
 
-Flask serves the `frontend/` folder as static files. That is why the relative paths in the pages (for example `../css/variables.css`) keep working. Opening the app through `http://127.0.0.1:5000` redirects to the start page.
+Flask serves the `frontend/` folder as static files. That is why the relative paths in the pages (for example `../css/variables.css`) keep working. Opening the app through `http://127.0.0.1:5001` redirects to the start page.
 
 ### Example: asking the AI assistant a question
 
