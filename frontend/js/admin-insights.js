@@ -19,9 +19,10 @@ if (section) {
             const list = document.createElement("ul");
             data.students.forEach((student) => {
                 const item = document.createElement("li");
-                const quizStatus = student.passed ? "Passed" : student.attempts ? `${student.attempts} attempt${student.attempts === 1 ? "" : "s"}` : "Not attempted";
+                const passedOn = student.passed_at ? ` on ${student.passed_at.slice(0, 16)} UTC` : "";
+                const quizStatus = student.passed ? `Passed${passedOn}` : student.attempts ? `${student.attempts} attempt${student.attempts === 1 ? "" : "s"}` : "Not attempted";
                 const lastScore = student.last_score === null ? "No score yet" : `Latest score: ${student.last_score}/4`;
-                item.textContent = `${student.name} — ${student.percent}% complete; ${quizStatus}; ${lastScore}`;
+                item.textContent = `${student.name}: ${student.percent}% complete (step ${student.step}); ${quizStatus}; ${lastScore}`;
                 list.append(item);
             });
             students.replaceChildren(list);
