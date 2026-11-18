@@ -126,16 +126,18 @@ The `backend/venv/` folder and the database file `backend/course_portal.db` are 
 | File | Purpose |
 |---|---|
 | `ai-assistant.js` | AI assistant window: sends questions to `/api/help` and shows the answers, prepared answers for service |
-| `login.js` | Mock login |
+| `login.js` | Sends the selected student/admin role to the Flask login endpoint |
 | `courses-page.js` | Filters on the course overview |
 | `profile-menu.js` | Profile dropdown menu |
 | `theme-toggle.js` | Light and dark mode toggle |
 | `footer-modals.js` | Information pop-ups in the footer |
 | `dashboard-tutorial.js` | Tutorial on the student dashboard |
-| `lesson.js` | Lesson page: tabs for video, transcript and instructions, switching between the three tasks with their progress, and the way to the quiz after task 3 |
-| `course-progress.js` | Course state in the browser (`localStorage`): quiz attempts, certificate, lock after three failed attempts, restart of the course, and 100 % on the course card |
-| `quiz.js` | Quiz page: checks the four answers, shows right and wrong, counts the attempts (three at most) and unlocks the certificate |
-| `course-certificate.js` | Certificate page: shows the certificate with the date if it was earned (otherwise it goes back to My Courses) and prints it |
+| `lesson.js` | Lesson tabs and task navigation; records reached tasks through the backend |
+| `course-progress.js` | Loads and resets course progress through the backend and updates the course card/dashboard |
+| `quiz.js` | Sends selected answers to the backend, shows its score and answer feedback, and uses backend attempts/pass state |
+| `course-certificate.js` | Checks the backend pass state before showing or printing the certificate |
+| `admin-insights.js` | Loads course progress and quiz results for the admin dashboard |
+| `services/` | Shared JSON transport and small API adapters for auth, progress, quiz, help and admin insights |
 
 
 ## Architecture and data flow
@@ -175,7 +177,7 @@ ai-assistant.js shows the answer and its links in the conversation
 | GET | `/api/progress/<slug>` | Returns the progress of the logged-in user in a course | `200` with `percent`, `passed`, `attempts` and `step` | `401` if nobody is logged in, `404` for an unknown course |
 | POST | `/api/progress/<slug>` | Saves that the user reached a step, body `{ "position": 1 }` (1 to 5) | `200` with the new progress | `400` if the step is not a number, `401`, `404` for an unknown course or step, `409` if an earlier step is missing |
 | POST | `/api/progress/<slug>/reset` | Deletes progress and quiz attempts of the user for the course | `200` with the new progress | `401`, `404` for an unknown course |
-| POST | `/api/quiz/<slug>` | Checks the four answers and counts the attempt | `200` with `score`, `total`, `passed`, `attempt`, `percent`, `already_passed` and `questions` (with the correct answer for each question) | `400` if an answer is missing, `401`, `404`, `409` if the quiz was not reached yet |
+| POST | `/api/quiz/<slug>` | Checks the four answers and counts the attempt | `200` with `score`, `total`, `passed`, `attempt`, `percent`, `already_passed` and `questions` (with the correct answer for each question) | `400` if an answer is missing, `401`, `404`, `409` if the quiz was not reached yet or all three attempts were used |
 | GET | `/api/admin/insights/<slug>` | Overview of all students in a course for the admin: progress, quiz result, attempts and the time the quiz was passed (in UTC) | `200` with `course`, `student_count`, `passed_count` and `students` (each with `name`, `percent`, `step`, `passed`, `attempts`, `last_score` and `passed_at`) | `401` if nobody is logged in, `403` if the user is not an admin, `404` for an unknown course |
 
 ## Current status
@@ -185,13 +187,13 @@ ai-assistant.js shows the answer and its links in the conversation
 | Student and admin pages (HTML, CSS) | Built as static pages, now with routing |
 | Light and dark mode | Working |
 | Filters on the course overview | Working (will be up for re-evaluation) |
-| Progress tracker on the dashboard | Hard-coded values |
-| Example lesson flow | Frontend only |
-| Login | Mock (`login.js`, no real authentication) |
+| Progress tracker on the dashboard | Reads the demo course progress from the backend |
+| Example lesson flow | Frontend lesson content with reached steps saved by the backend |
+| Login | Mock (`login.js`, role selection sets the backend session cookie) |
 | AI assistant | Working with scripted answers from the Flask endpoint `/api/help` |
 | Database (SQLite) | Built: five tables with dummy users and one demo course, created on the first start |
-| Saving course progress and quiz attempts | Backend ready (endpoints and tests), not connected to the frontend yet |
-| Admin overview of the students | Backend ready (endpoint and tests), not connected to the admin pages yet |
+| Saving course progress and quiz attempts | Connected to the frontend; SQLite is the source of truth |
+| Admin overview of the students | Connected to the admin dashboard insights endpoint |
 | Course Enrollments | Not built |
 
 ## Technical main decisions
@@ -212,7 +214,7 @@ ai-assistant.js shows the answer and its links in the conversation
 - **The AI assistant does not answer on the GitHub Pages preview.** The deployed pages (https://vikrei.github.io/tec1003-first-year-project/frontend/pages/index.html) shows the design and the pages, but GitHub Pages only serves static files and cannot run Flask. There, a question in the assistant window ends with an error message. Run the project locally to use the assistant (see "Setup and run").
 - **The assistant gives prepared answers only.** It matches keywords to a fixed list of topics. Questions outside these topics get a fallback answer with suggested links.
 - **Login is a mock.** There is no real authentication, no password and no real user accounts. The login only chooses one of two dummy users (a student and an admin) from the database. The session cookie is signed with a fixed demo key that is part of the public code, so anyone who reads the code could forge it. This is fine for a demo, but it must be replaced in a real product. Pages stay reachable without a login, but the backend answers "Please log in first." (status 401) when progress or the quiz is requested without one.
-- **The frontend is not connected to the backend progress yet.** The backend saves progress and quiz attempts (see "API endpoints"), but the pages do not send or show them yet. The progress tracker and the course cards still show hard-coded values, and the quiz still checks its answers in the browser.
+- **The course demo uses one seeded student and one course.** The frontend saves reached steps when their pages are opened, checks quiz answers through the backend, and allows a restart that clears course progress and attempts.
 - **Tested setup:** the setup instructions were tested on Linux (Ubuntu) with Python 3.12, using a fresh clone of the repository on 02.11.2026. The Windows and macOS instructions have not been tested yet.
 - **The pages follow the Figma design, but they are not identical.** Some elements exist only in the design, and some details were adapted during development. The reasons are explained in the project report.
 
