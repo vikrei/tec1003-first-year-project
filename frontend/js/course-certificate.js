@@ -1,34 +1,23 @@
-(() => {
-    const certificateKey = "pie-chart-react-certificate-earned";
-    const dateKey = "pie-chart-react-certificate-date";
-    const earned = (() => {
-        try {
-            return window.localStorage.getItem(certificateKey) === "true";
-        } catch (error) {
-            return false;
-        }
-    })();
+import { getProgress } from "./services/course-progress.service.js";
 
-    if (!earned) {
-        window.location.replace("my-courses.html");
-        return;
-    }
-
-    let earnedDate = null;
+(async () => {
     try {
-        earnedDate = window.localStorage.getItem(dateKey);
+        const status = await getProgress("build-pie-charts-react");
+        if (!status.passed) {
+            window.location.replace("my-courses.html");
+            return;
+        }
+
+        const certificate = document.querySelector("[data-certificate-content]");
+        if (certificate) certificate.hidden = false;
+        const dateLine = document.querySelector(".certificate-date");
+        if (dateLine) dateLine.hidden = true;
+        document.querySelector("[data-print-certificate]")?.addEventListener("click", () => window.print());
     } catch (error) {
-        earnedDate = null;
+        if (error.message === "Please log in first.") {
+            window.location.replace("login.html");
+            return;
+        }
+        window.location.replace("my-courses.html");
     }
-
-    const date = earnedDate ? new Date(earnedDate) : new Date();
-    const certificate = document.querySelector("[data-certificate-content]");
-    if (certificate) certificate.hidden = false;
-    const dateLabel = document.querySelector("[data-certificate-date]");
-    if (dateLabel) {
-        dateLabel.dateTime = date.toISOString();
-        dateLabel.textContent = new Intl.DateTimeFormat(undefined, { dateStyle: "long" }).format(date);
-    }
-
-    document.querySelector("[data-print-certificate]")?.addEventListener("click", () => window.print());
 })();

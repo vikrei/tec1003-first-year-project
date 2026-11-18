@@ -1,3 +1,5 @@
+import { askHelp } from "./services/help.service.js";
+
 const askAiButton = document.querySelector(".ask-ai-button");
 
 if (askAiButton) {
@@ -207,18 +209,7 @@ if (askAiButton) {
         const pending = addMessage("assistant", "Thinking...");
 
         try {
-            // Send the question to the Flask endpoint as JSON
-            const response = await fetch("/api/help", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ question }),
-            });
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error || "Request failed");
-            }
-
+            const data = await askHelp(question);
             addMessage("assistant", data.answer, data.links);
         } catch (error) {
             addMessage("assistant", "Something went wrong. Please try again in a moment.");

@@ -125,6 +125,9 @@ def submit_quiz(user_id, slug, submitted):
             > 0
         )
 
+        if not already_passed and attempts >= 3:
+            return None, "All three quiz attempts were used. Please restart the course.", 409
+
         result = check_answers(submitted)
         if not already_passed:
             connection.execute(

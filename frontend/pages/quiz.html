@@ -43,8 +43,8 @@
         </header>
 
         <section class="quiz-progress" aria-label="Course progress">
-            <div class="progress-label"><span>Progress</span><strong>90%</strong></div>
-            <div class="progress-bar"><div class="progress-bar-fill progress-ninety-percent"></div></div>
+            <div class="progress-label"><span>Progress</span><strong data-course-progress-value>90%</strong></div>
+            <div class="progress-bar"><div class="progress-bar-fill progress-ninety-percent" data-course-progress-bar></div></div>
         </section>
 
         <section class="quiz-content">
@@ -139,12 +139,11 @@
         <p class="copyright">© 2026 All Rights Reserved</p>
     </footer>
 
-    <script src="../js/ai-assistant.js" defer></script>
+    <script type="module" src="../js/ai-assistant.js"></script>
     <script src="../js/profile-menu.js" defer></script>
     <script src="../js/theme-toggle.js" defer></script>
     <script src="../js/footer-modals.js" defer></script>
-    <script src="../js/course-progress.js" defer></script>
-    <script src="../js/quiz.js" defer></script>
+    <script type="module" src="../js/quiz.js"></script>
 </body>
 
 </html>

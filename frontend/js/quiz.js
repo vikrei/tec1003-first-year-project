@@ -1,18 +1,10 @@
-(() => {
-    const form = document.querySelector("#course-quiz");
-    if (!form) return;
+import { getProgress, saveStep } from "./services/course-progress.service.js";
+import { submitQuiz } from "./services/quiz.service.js";
 
-    const attemptsKey = "pie-chart-react-quiz-attempts";
-    const certificateKey = "pie-chart-react-certificate-earned";
-    const certificateDateKey = "pie-chart-react-certificate-date";
-    const lockedKey = "pie-chart-react-course-locked";
+const form = document.querySelector("#course-quiz");
+if (form) {
+    const COURSE = "build-pie-charts-react";
     const maxAttempts = 3;
-    const answers = new Map([
-        ["platform", "highcharts"],
-        ["charts", "yes"],
-        ["lesson-flow", "yes"],
-        ["application", "yes"]
-    ]);
     const questionGroups = Array.from(form.querySelectorAll(".quiz-question"));
     const checkButton = form.querySelector(".quiz-check-button");
     const errorMessage = form.querySelector(".quiz-form-error");
@@ -27,39 +19,29 @@
     const restartLink = form.querySelector("[data-quiz-restart]");
     const certificateLink = form.querySelector("[data-view-certificate]");
     const finishButton = document.querySelector("[data-finish-quiz]");
-    const attempts = () => {
-        try {
-            const stored = Number(window.localStorage.getItem(attemptsKey));
-            return Number.isFinite(stored) ? Math.max(0, stored) : 0;
-        } catch (error) {
-            return 0;
+    const progressValue = document.querySelector("[data-course-progress-value]");
+    const progressBar = document.querySelector("[data-course-progress-bar]");
+    let attempts = 0;
+    let locked = false;
+
+    function setProgress(percent) {
+        if (progressValue) progressValue.textContent = `${percent}%`;
+        if (progressBar) {
+            const classes = ["progress-one-percent", "progress-twenty-five-percent", "progress-fifty-percent", "progress-seventy-five-percent", "progress-ninety-percent", "progress-complete"];
+            progressBar.classList.remove(...classes);
+            progressBar.classList.add(percent >= 100 ? "progress-complete" : percent >= 90 ? "progress-ninety-percent" : percent >= 75 ? "progress-seventy-five-percent" : percent >= 50 ? "progress-fifty-percent" : percent >= 25 ? "progress-twenty-five-percent" : "progress-one-percent");
+            progressBar.style.width = `${Math.max(percent, 1)}%`;
         }
-    };
-    const save = (key, value) => {
-        try {
-            window.localStorage.setItem(key, value);
-        } catch (error) {
-            // Quiz feedback still works if persistent storage is unavailable.
-        }
-    };
-    const hasCertificate = () => {
-        try {
-            return window.localStorage.getItem(certificateKey) === "true";
-        } catch (error) {
-            return false;
-        }
-    };
+    }
 
     function answered(group) {
         return Boolean(group.querySelector("input[type='radio']:checked"));
     }
 
-    function resetFeedback() {
+    function clearFeedback() {
         questionGroups.forEach((group) => {
             group.classList.remove("has-error", "is-incorrect");
-            group.querySelectorAll(".quiz-choice").forEach((choice) => {
-                choice.classList.remove("is-correct", "is-wrong");
-            });
+            group.querySelectorAll(".quiz-choice").forEach((choice) => choice.classList.remove("is-correct", "is-wrong"));
             group.querySelectorAll("input[type='radio']").forEach((input) => {
                 input.disabled = false;
                 input.checked = false;
@@ -70,18 +52,31 @@
         checkButton.hidden = false;
     }
 
-    function showResult({ score, attempt, passed, locked }) {
-        const total = answers.size;
-        const percent = Math.round((score / total) * 100);
+    function showResult({ score, total = questionGroups.length, attempt, passed, questions = {}, alreadyPassed = false }) {
+        locked = !passed && attempt >= maxAttempts;
+        attempts = attempt;
 
+        questionGroups.forEach((group) => {
+            const question = questions[group.dataset.question];
+            const selected = question ? group.querySelector(`input[value="${CSS.escape(question.chosen || "")}"]`) : null;
+            if (question) group.classList.toggle("is-incorrect", !question.correct);
+            group.querySelectorAll("input[type='radio']").forEach((input) => {
+                input.disabled = true;
+                const choice = input.closest(".quiz-choice");
+                if (question && input.value === question.correct_value) choice.classList.add("is-correct");
+                if (question && input === selected && !question.correct) choice.classList.add("is-wrong");
+            });
+        });
+
+        const percent = total ? Math.round((score / total) * 100) : 0;
         attemptLabel.textContent = `Attempt ${attempt} of ${maxAttempts}`;
         resultTitle.textContent = passed ? "Course quiz passed" : locked ? "Course restart required" : "Try again";
-        resultScore.textContent = `${percent}% - ${score} of ${total} answers are correct`;
+        resultScore.textContent = score === null
+            ? "No attempts remain. Restart the course to try again."
+            : `${percent}% - ${score} of ${total} answers are correct`;
         resultMessage.textContent = passed
-            ? "You passed the course quiz. Your certificate is ready."
-            : locked
-                ? "You have used all three attempts. Restart the course from the introduction to try again."
-                : "Would you like to try again? All answers must be correct to pass.";
+            ? alreadyPassed ? "You have already passed this course quiz. Your certificate is ready." : "You passed the course quiz. Your certificate is ready."
+            : locked ? "You have used all three attempts. Restart the course from the introduction to try again." : "Would you like to try again? All answers must be correct to pass.";
         resultMark.textContent = passed ? "✓" : locked ? "!" : "";
         result.classList.toggle("is-passed", passed);
         result.classList.toggle("is-failed", !passed);
@@ -95,6 +90,7 @@
             finishButton.disabled = !passed;
             finishButton.setAttribute("aria-label", passed ? "Finish and view your certificate" : "Pass the quiz to finish the course");
         }
+        setProgress(passed ? 100 : 90);
     }
 
     questionGroups.forEach((group) => {
@@ -106,58 +102,64 @@
         });
     });
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
-        const unansweredGroups = questionGroups.filter((group) => !answered(group));
-
-        questionGroups.forEach((group) => group.classList.toggle("has-error", unansweredGroups.includes(group)));
-        if (unansweredGroups.length) {
+        const unanswered = questionGroups.filter((group) => !answered(group));
+        questionGroups.forEach((group) => group.classList.toggle("has-error", unanswered.includes(group)));
+        if (unanswered.length) {
             errorMessage.hidden = false;
-            unansweredGroups[0].querySelector("input")?.focus();
+            unanswered[0].querySelector("input")?.focus();
             return;
         }
 
+        const answers = Object.fromEntries(questionGroups.map((group) => [
+            group.dataset.question,
+            group.querySelector("input[type='radio']:checked").value,
+        ]));
+        checkButton.disabled = true;
         errorMessage.hidden = true;
-        const attempt = Math.min(attempts() + 1, maxAttempts);
-        save(attemptsKey, String(attempt));
-        let score = 0;
-
-        questionGroups.forEach((group) => {
-            const correctValue = answers.get(group.dataset.question);
-            const selectedInput = group.querySelector("input[type='radio']:checked");
-            const selectedIsCorrect = selectedInput.value === correctValue;
-            if (selectedIsCorrect) score += 1;
-            group.classList.toggle("is-incorrect", !selectedIsCorrect);
-
-            group.querySelectorAll("input[type='radio']").forEach((input) => {
-                input.disabled = true;
-                const choice = input.closest(".quiz-choice");
-                if (input.value === correctValue) choice.classList.add("is-correct");
-                if (input === selectedInput && !selectedIsCorrect) choice.classList.add("is-wrong");
-            });
-        });
-
-        const passed = score === answers.size;
-        const locked = !passed && attempt >= maxAttempts;
-        if (passed) {
-            save(certificateKey, "true");
-            save(certificateDateKey, new Date().toISOString());
-            save(lockedKey, "false");
-        } else if (locked) {
-            save(lockedKey, "true");
-            save(certificateKey, "false");
-            try {
-                window.localStorage.removeItem(certificateDateKey);
-            } catch (error) {
-                // The failed result still remains visible for this page session.
-            }
+        try {
+            const data = await submitQuiz(COURSE, answers);
+            showResult(data);
+        } catch (error) {
+            errorMessage.textContent = error.message;
+            errorMessage.hidden = false;
+        } finally {
+            checkButton.disabled = false;
         }
-
-        showResult({ score, attempt, passed, locked });
     });
 
-    retryButton.addEventListener("click", resetFeedback);
+    retryButton.addEventListener("click", clearFeedback);
     finishButton?.addEventListener("click", () => {
-        if (hasCertificate()) window.location.href = "course-certificate.html";
+        if (!finishButton.disabled) window.location.href = "course-certificate.html";
     });
-})();
+
+    (async () => {
+        try {
+            const status = await getProgress(COURSE);
+            if (status.step < 4) {
+                if (status.step === 0) {
+                    window.location.replace("learning-flow-introduction.html");
+                    return;
+                }
+                window.location.replace(`lesson.html?task=${Math.max(1, Math.min(3, status.step - 1))}`);
+                return;
+            }
+            if (status.attempts >= maxAttempts && !status.passed) {
+                showResult({ score: null, total: questionGroups.length, attempt: status.attempts, passed: false });
+                return;
+            }
+            attempts = status.attempts;
+            const updated = await saveStep(COURSE, 5);
+            setProgress(updated.percent);
+            if (status.passed) {
+                showResult({ score: questionGroups.length, attempt: status.attempts, passed: true, alreadyPassed: true });
+            }
+        } catch (error) {
+            errorMessage.textContent = error.message;
+            errorMessage.hidden = false;
+            checkButton.disabled = true;
+            if (error.message === "Please log in first.") window.location.href = "login.html";
+        }
+    })();
+}

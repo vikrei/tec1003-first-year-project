@@ -25,8 +25,6 @@ if (profileMenuButton) {
 
     const links = isAdmin
         ? [
-              { href: "admin-dashboard.html", label: "Home", icon: icons.home },
-              { href: "admin-inbox.html", label: "Admin Inbox", icon: icons.inbox },
               { href: "admin-profile.html", label: "Profile & Settings", icon: icons.settings },
               { href: "index.html", label: "Log out", icon: icons.logout },
           ]

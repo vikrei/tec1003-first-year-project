@@ -1,3 +1,5 @@
+import { getProgress, saveStep } from "./services/course-progress.service.js";
+
 const lessonTabs = Array.from(document.querySelectorAll(".lesson-tab"));
 const lessonPanels = Array.from(document.querySelectorAll(".lesson-panel"));
 const transcriptButton = document.querySelector(".transcript-button");
@@ -127,9 +129,21 @@ if (taskButtons.length) {
 
     let currentTask = 1;
 
-    function setTask(taskNumber, updateHistory = true) {
+    async function setTask(taskNumber, updateHistory = true) {
         const task = taskContent[taskNumber];
         if (!task) return;
+
+        try {
+            await saveStep("build-pie-charts-react", taskNumber + 1);
+            lessonStatus.hidden = true;
+        } catch (error) {
+            lessonStatus.textContent = error.message;
+            lessonStatus.hidden = false;
+            if (error.message === "Please log in first.") {
+                window.location.href = "login.html";
+            }
+            return;
+        }
 
         currentTask = taskNumber;
         const lessonPage = document.querySelector(".lesson-page");
@@ -188,6 +202,12 @@ if (taskButtons.length) {
         }
     }
 
+    const lessonStatus = document.createElement("p");
+    lessonStatus.className = "course-progress-status";
+    lessonStatus.setAttribute("role", "status");
+    lessonStatus.hidden = true;
+    document.querySelector(".lesson-progress")?.after(lessonStatus);
+
     taskButtons.forEach((button) => {
         button.addEventListener("click", () => setTask(Number(button.dataset.taskStep)));
     });
@@ -206,6 +226,24 @@ if (taskButtons.length) {
         setTask(taskFromUrl, false);
     });
 
-    const initialTask = Number(new URLSearchParams(window.location.search).get("task")) || 1;
-    setTask(initialTask, false);
+    const requestedTask = Number(new URLSearchParams(window.location.search).get("task")) || 1;
+    (async () => {
+        try {
+            const status = await getProgress("build-pie-charts-react");
+            if (status.step === 0) {
+                window.location.replace("learning-flow-introduction.html");
+                return;
+            }
+            if (status.attempts >= 3 && !status.passed) {
+                window.location.replace("learning-flow-introduction.html?restart=required");
+                return;
+            }
+            const initialTask = Math.min(requestedTask, Math.max(status.step, 1));
+            await setTask(initialTask, false);
+        } catch (error) {
+            lessonStatus.textContent = error.message;
+            lessonStatus.hidden = false;
+            if (error.message === "Please log in first.") window.location.href = "login.html";
+        }
+    })();
 }

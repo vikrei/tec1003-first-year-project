@@ -1,5 +1,12 @@
+import { login } from "./services/auth.service.js";
+
 const loginForm = document.querySelector("#login-form");
 const loginTabs = document.querySelectorAll(".login-tab");
+const loginButton = loginForm.querySelector("[type='submit']");
+const loginStatus = document.createElement("p");
+loginStatus.setAttribute("role", "alert");
+loginStatus.hidden = true;
+loginForm.append(loginStatus);
 
 let selectedRole = "student";
 
@@ -17,14 +24,18 @@ loginTabs.forEach((tab) => {
     });
 });
 
-loginForm.addEventListener("submit", (event) => {
+loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+    loginStatus.hidden = true;
+    loginButton.disabled = true;
 
-    if (selectedRole === "student") {
-        window.location.href = "student-dashboard.html";
+    try {
+        await login(selectedRole);
+        window.location.href = selectedRole === "student" ? "student-dashboard.html" : "admin-dashboard.html";
+    } catch (error) {
+        loginStatus.textContent = error.message;
+        loginStatus.hidden = false;
+        loginButton.disabled = false;
     }
 
-    if (selectedRole === "admin") {
-        window.location.href = "admin-dashboard.html";
-    }
 });
