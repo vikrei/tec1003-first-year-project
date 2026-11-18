@@ -80,16 +80,16 @@
             <a href="my-courses.html" class="dashboard-card">
                 <img class="dashboard-card-image" src="../assets/images/my-courses-card-image.png" alt="Books stacked on a desk">
                 <div class="dashboard-card-content">
-                    <div class="dashboard-card-summary"><h2>My Courses</h2><p>2 started</p></div>
+                    <div class="dashboard-card-summary"><h2>My Courses</h2><p data-dashboard-course-count>Loading…</p></div>
                     <p class="dashboard-card-details">Build Pie Charts with React<br>Charts in UI Foundations</p>
                     <span class="dashboard-card-action">See My Courses</span>
                 </div>
             </a>
 
-            <article class="dashboard-card">
+            <article class="dashboard-card" data-dashboard-progress-card>
                 <img class="dashboard-card-image" src="../assets/images/progress-card-image.png" alt="Data charts trending upward">
                 <div class="dashboard-card-content">
-                    <div class="dashboard-card-summary"><h2>Progress</h2><p>68% complete</p></div>
+                    <div class="dashboard-card-summary"><h2>Progress</h2><p data-dashboard-progress-value>Loading…</p></div>
                     <p class="dashboard-card-details">Build Pie Charts with React<br>Charts in UI Foundations</p>
                     <a class="dashboard-card-action" href="my-courses.html">See My Progress</a>
                 </div>
@@ -199,11 +199,12 @@
         </p>
     </footer> 
     
-    <script src="../js/ai-assistant.js" defer></script>
+    <script type="module" src="../js/ai-assistant.js"></script>
     <script src="../js/profile-menu.js" defer></script>
     <script src="../js/theme-toggle.js" defer></script>
     <script src="../js/footer-modals.js" defer></script>
     <script src="../js/dashboard-tutorial.js" defer></script>
+    <script type="module" src="../js/course-progress.js"></script>
 </body>
 
 </html>

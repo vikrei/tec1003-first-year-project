@@ -1,87 +1,156 @@
-(() => {
-    const attemptsKey = "pie-chart-react-quiz-attempts";
-    const certificateKey = "pie-chart-react-certificate-earned";
-    const certificateDateKey = "pie-chart-react-certificate-date";
-    const lockedKey = "pie-chart-react-course-locked";
+import { getProgress, resetCourse, saveStep } from "./services/course-progress.service.js";
+
+const COURSE = "build-pie-charts-react";
+const progressClasses = ["progress-one-percent", "progress-twenty-five-percent", "progress-fifty-percent", "progress-seventy-five-percent", "progress-ninety-percent", "progress-complete"];
+
+function resumeUrl(status) {
+    if (status.passed) return "course-certificate.html";
+    if (status.attempts >= 3) return "learning-flow-introduction.html?restart=required";
+    if (status.step >= 5) return "quiz.html";
+    if (status.step >= 2) return `lesson.html?task=${Math.min(status.step - 1, 3)}`;
+    if (status.step === 1) return "lesson.html?task=1";
+    return "learning-flow-introduction.html";
+}
+
+function setLinkLabel(link, label) {
+    const icon = link.querySelector("img");
+    const textNode = Array.from(link.childNodes).find((node) => (
+        node.nodeType === Node.TEXT_NODE && (!icon || node.textContent.trim())
+    ));
+    if (textNode) {
+        textNode.textContent = icon ? ` ${label}` : label;
+    } else {
+        link.append(document.createTextNode(icon ? ` ${label}` : label));
+    }
+}
+
+function showProgress(status) {
+    const percent = status.percent;
+    document.querySelectorAll("[data-course-progress-value], [data-pie-chart-progress]").forEach((element) => {
+        element.textContent = `${percent}%`;
+    });
+
+    document.querySelectorAll("[data-course-progress-bar], [data-pie-chart-progress-bar]").forEach((bar) => {
+        bar.classList.remove(...progressClasses);
+        bar.classList.add(percent >= 100 ? "progress-complete" : percent >= 90 ? "progress-ninety-percent" : percent >= 75 ? "progress-seventy-five-percent" : percent >= 50 ? "progress-fifty-percent" : percent >= 25 ? "progress-twenty-five-percent" : "progress-one-percent");
+        bar.style.width = `${Math.max(percent, 1)}%`;
+    });
+
+    document.querySelectorAll("[data-pie-chart-current-chapter]").forEach((element) => {
+        element.textContent = status.passed ? "Course completed" : status.step >= 5 ? "Quiz" : status.step >= 2 ? `Task ${Math.min(status.step - 1, 3)} - Pie Charts` : "Introduction";
+    });
+
+    document.querySelectorAll("[data-pie-chart-quiz-result]").forEach((element) => {
+        element.textContent = status.passed ? "Passed" : status.attempts ? `${status.attempts} quiz attempt${status.attempts === 1 ? "" : "s"}` : "Not attempted";
+    });
+
+    document.querySelectorAll("[data-earned-course-certificate]").forEach((element) => {
+        element.hidden = !status.passed;
+    });
+
+    document.querySelectorAll("[data-dashboard-progress-value]").forEach((element) => {
+        element.textContent = `${percent}% complete`;
+    });
+
+    document.querySelectorAll("[data-dashboard-course-count]").forEach((element) => {
+        element.textContent = status.step > 0 ? "1 started" : "0 started";
+    });
+
+    document.querySelectorAll("[data-course-resume]").forEach((link) => {
+        link.href = resumeUrl(status);
+        if (status.passed) setLinkLabel(link, link.dataset.completedLabel || "View Certificate");
+        else if (status.attempts >= 3) setLinkLabel(link, link.dataset.restartLabel || "Restart Course");
+        else if (status.step > 0) setLinkLabel(link, link.dataset.continueLabel || "Continue Course");
+    });
+}
+
+async function loadProgress() {
+    try {
+        const status = await getProgress(COURSE);
+        showProgress(status);
+        return status;
+    } catch (error) {
+        const target = document.querySelector("[data-course-status]") || document.querySelector("main");
+        if (target) {
+            const message = document.createElement("p");
+            message.className = "course-progress-status";
+            message.setAttribute("role", "status");
+            message.textContent = error.message === "Please log in first." ? "Please log in to view and save your course progress." : error.message;
+            target.prepend(message);
+        }
+        return null;
+    }
+}
+
+const intro = document.querySelector(".course-introduction-page");
+if (intro) {
     const pageUrl = new URL(window.location.href);
-    const restartRequested = pageUrl.searchParams.get("restart") === "1";
+    const statusMessage = intro.querySelector("[data-course-status]");
+    const startLink = intro.querySelector("[data-course-start]");
+    const startLabel = intro.querySelector("[data-course-start-label]");
+    const restartRequired = pageUrl.searchParams.get("restart") === "required";
 
-    const read = (key) => {
+    if (restartRequired) {
+        if (startLink) startLink.href = "learning-flow-introduction.html?restart=1";
+        if (startLabel) startLabel.textContent = "Restart Course";
+        if (statusMessage) {
+            statusMessage.textContent = "All quiz attempts were used. Restart the course to try the quiz again.";
+            statusMessage.hidden = false;
+        }
+    }
+
+    (async () => {
         try {
-            return window.localStorage.getItem(key);
+            if (pageUrl.searchParams.get("restart") === "1") {
+                await resetCourse(COURSE);
+                pageUrl.searchParams.delete("restart");
+                window.history.replaceState({}, "", pageUrl);
+                if (statusMessage) {
+                    statusMessage.textContent = "Course progress has been reset. Start again from the introduction.";
+                    statusMessage.hidden = false;
+                    statusMessage.classList.add("is-reset");
+                }
+            }
+
+            const status = await saveStep(COURSE, 1);
+            showProgress(status);
+            if (startLink && !restartRequired) {
+                startLink.href = resumeUrl(status);
+                if (status.step > 1 && startLabel) startLabel.textContent = "Continue Course";
+                if (status.passed && startLabel) startLabel.textContent = "View Certificate";
+                if (status.attempts >= 3 && startLabel) startLabel.textContent = "Restart Course";
+            }
         } catch (error) {
-            return null;
+            if (error.message === "Please log in first.") {
+                if (statusMessage) {
+                    statusMessage.textContent = "Please log in before starting this course.";
+                    statusMessage.hidden = false;
+                }
+                if (startLink) startLink.href = "login.html";
+            } else if (error.message.includes("earlier steps")) {
+                if (startLabel) startLabel.textContent = "Continue Course";
+                if (startLink) startLink.href = "lesson.html?task=1";
+            } else if (statusMessage) {
+                statusMessage.textContent = error.message;
+                statusMessage.hidden = false;
+            }
+            await loadProgress();
         }
-    };
+    })();
+}
 
-    if (restartRequested) {
-        try {
-            window.localStorage.removeItem(attemptsKey);
-            window.localStorage.removeItem(certificateKey);
-            window.localStorage.removeItem(certificateDateKey);
-            window.localStorage.removeItem(lockedKey);
-        } catch (error) {
-            // A private browsing session can block persistent storage.
-        }
+if (document.querySelector("[data-pie-chart-course], [data-dashboard-progress-card], [data-earned-course-certificate], [data-course-resume]")) {
+    loadProgress();
+}
 
-        pageUrl.searchParams.delete("restart");
-        window.history.replaceState({}, "", pageUrl);
+const reviseButton = document.querySelector(".revise-button");
+reviseButton?.addEventListener("click", async () => {
+    reviseButton.disabled = true;
+    try {
+        await resetCourse(COURSE);
+        window.location.href = "learning-flow-introduction.html";
+    } catch (error) {
+        reviseButton.disabled = false;
+        window.alert(error.message);
     }
-
-    const isLocked = read(lockedKey) === "true";
-    const introduction = document.querySelector(".course-introduction-page");
-    const lessonOrQuiz = document.querySelector(".lesson-page, .course-quiz-page");
-
-    if (isLocked && lessonOrQuiz) {
-        window.location.replace("learning-flow-introduction.html?restart=required");
-        return;
-    }
-
-    if (introduction) {
-        const startLink = introduction.querySelector("[data-course-start]");
-        const startLabel = introduction.querySelector("[data-course-start-label]");
-        const status = introduction.querySelector("[data-course-status]");
-        const restartRequired = pageUrl.searchParams.get("restart") === "required" || isLocked;
-
-        if (restartRequired && startLink && startLabel) {
-            startLink.href = "learning-flow-introduction.html?restart=1";
-            startLabel.textContent = "Restart Course";
-            startLink.setAttribute("aria-label", "Restart the course from the beginning");
-        }
-
-        if (status && (restartRequired || restartRequested)) {
-            status.hidden = false;
-            status.classList.toggle("is-reset", restartRequested && !restartRequired);
-            status.textContent = restartRequired
-                ? "All quiz attempts were used. Restart the course to try the quiz again."
-                : "Course progress has been reset. Start again from the introduction.";
-        }
-    }
-
-    const earnedCertificate = read(certificateKey) === "true";
-    const earnedCertificateCard = document.querySelector("[data-earned-course-certificate]");
-    if (earnedCertificateCard) {
-        earnedCertificateCard.hidden = !earnedCertificate;
-        const dateLabel = earnedCertificateCard.querySelector("[data-certificate-date]");
-        const earnedDate = read(certificateDateKey);
-        if (dateLabel && earnedDate) {
-            dateLabel.textContent = new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(new Date(earnedDate));
-        }
-    }
-
-    const pieChartCourse = document.querySelector("[data-pie-chart-course]");
-    if (pieChartCourse && earnedCertificate) {
-        const progressValue = pieChartCourse.querySelector("[data-pie-chart-progress]");
-        const progressBar = pieChartCourse.querySelector("[data-pie-chart-progress-bar]");
-        const chapter = pieChartCourse.querySelector("[data-pie-chart-current-chapter]");
-        const quizResult = pieChartCourse.querySelector("[data-pie-chart-quiz-result]");
-
-        if (progressValue) progressValue.textContent = "100%";
-        if (progressBar) {
-            progressBar.classList.remove("progress-one-percent", "progress-twenty-five-percent", "progress-fifty-percent", "progress-seventy-five-percent");
-            progressBar.classList.add("progress-complete");
-        }
-        if (chapter) chapter.textContent = "Course completed";
-        if (quizResult) quizResult.textContent = "Passed with 100%";
-    }
-})();
+});
