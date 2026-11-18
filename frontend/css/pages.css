@@ -1105,17 +1105,22 @@ main h1 {
     .home-page .logo > img:first-child { height: var(--space-7); }
 
     .home-page .header-navigation {
-        order: 3;
+        order: 4;
         display: flex;
         align-items: center;
         gap: var(--space-4);
     }
 
-    .home-page .header-navigation a:last-child {
-        font-weight: var(--font-weight-semibold);
+    .home-page .header-navigation a[aria-current="page"],
+    .login-page-body .header-navigation a[aria-current="page"] {
+        text-decoration: underline;
+        text-underline-offset: var(--space-1);
     }
 
-    .home-page .theme-toggle { order: 2; }
+    .home-page .theme-toggle {
+        order: 3;
+        margin-left: auto;
+    }
 
     .home-page main {
         width: min(100%, var(--desktop-content-max-width));
@@ -1251,12 +1256,12 @@ main h1 {
 /* LOGIN PAGE — DESKTOP */
 @media (min-width: 1000px) {
     .login-page-body {
-        padding-top: calc(var(--space-9) + var(--space-4));
+        padding-top: var(--space-9);
         background: var(--color-background-main);
     }
 
     .login-page-body .site-header {
-        min-height: calc(var(--space-9) + var(--space-4));
+        min-height: var(--space-9);
         padding: var(--space-3) var(--space-6);
         background: var(--color-secondary-default);
     }
@@ -1333,20 +1338,33 @@ main h1 {
 /* SHARED DESKTOP HEADER — ALL PAGES */
 @media (min-width: 700px) {
     .site-header,
-    .admin-page .site-header,
-    .login-page-body .site-header {
-        width: min(100%, var(--desktop-header-width));
+    .admin-page .site-header {
+        width: 100%;
         min-height: var(--desktop-header-height);
-        padding: var(--space-3) var(--space-9);
-        left: 50%;
-        transform: translateX(-50%);
+        padding: var(--space-3) var(--space-6);
+        left: 0;
+        transform: none;
         background: var(--color-secondary-default);
+    }
+
+    .login-page-body .site-header {
+        min-height: var(--space-9);
+        padding: var(--space-3) var(--space-6);
+    }
+
+    .login-page-body .theme-toggle {
+        order: 3;
+        margin-left: auto;
+    }
+
+    .login-page-body .header-navigation {
+        order: 4;
     }
 
     body { padding-top: var(--desktop-header-height); }
 
-    .home-page,
-    .login-page-body { padding-top: var(--desktop-header-height); }
+    .home-page { padding-top: var(--desktop-header-height); }
+    .login-page-body { padding-top: var(--space-9); }
 
     .site-header .logo > img:first-child {
         height: var(--desktop-header-logo-height);
@@ -1390,6 +1408,14 @@ main h1 {
         display: flex;
         align-items: center;
         gap: var(--space-5);
+    }
+
+    .admin-page .admin-header-navigation {
+        margin-left: auto;
+    }
+
+    .admin-page .site-header .header-actions {
+        margin-left: 0;
     }
 
     .student-page-body .student-header-navigation a,
@@ -2132,8 +2158,8 @@ main h1 {
 }
 
 .profile-image {
-    width: var(--desktop-header-avatar-size);
-    height: var(--desktop-header-avatar-size);
+    width: var(--desktop-profile-image-size);
+    height: var(--desktop-profile-image-size);
     object-fit: cover;
     border-radius: 50%;
 }
@@ -2861,7 +2887,7 @@ main h1 {
     .my-courses-page .study-group {
         min-height: calc(var(--space-9) * 4 + var(--space-8));
         padding: var(--space-4);
-        justify-content: center;
+        justify-content: flex-start;
         background-image:
             linear-gradient(var(--study-group-image-overlay), var(--study-group-image-overlay)),
             url("../assets/images/study-group-card-image.png");
@@ -2877,6 +2903,11 @@ main h1 {
     .my-courses-page .study-group .create-group-button {
         min-height: var(--space-8);
         background: var(--color-card-background);
+    }
+
+    .my-courses-page .study-group .create-group-button {
+        justify-content: flex-start;
+        color: var(--color-text-light-bg);
     }
 
     .my-courses-page .passed-course-card {
