@@ -108,7 +108,6 @@ class LoginTests(unittest.TestCase):
         self.assertEqual(response.get_json()["role"], "student")
 
 
-
 class ProgressEndpointTests(unittest.TestCase):
     """the progress endpoints with the Flask test client"""
 
@@ -237,6 +236,35 @@ class QuizEndpointTests(unittest.TestCase):
         result = self.client.post(self.url, json=self.RIGHT).get_json()
         self.assertTrue(result["already_passed"])
         self.assertEqual(result["attempt"], 2)
+
+    def test_fourth_attempt_is_blocked(self):
+        """after three wrong attempts the fourth gets a 409 and does not count"""
+        self.reach_quiz()
+        for _ in range(3):
+            self.client.post(self.url, json=self.WRONG)
+        response = self.client.post(self.url, json=self.WRONG)
+        self.assertEqual(response.status_code, 409)
+        status = self.client.get(self.progress_url).get_json()
+        self.assertEqual(status["attempts"], 3)
+
+    def test_third_attempt_can_still_pass(self):
+        """two wrong attempts and a right third one pass the quiz"""
+        self.reach_quiz()
+        for _ in range(2):
+            self.client.post(self.url, json=self.WRONG)
+        result = self.client.post(self.url, json=self.RIGHT).get_json()
+        self.assertTrue(result["passed"])
+        self.assertEqual(result["attempt"], 3)
+
+    def test_reset_gives_new_attempts(self):
+        """after a reset the student can try the quiz again"""
+        self.reach_quiz()
+        for _ in range(3):
+            self.client.post(self.url, json=self.WRONG)
+        self.client.post(f"{self.progress_url}/reset")
+        self.reach_quiz()
+        result = self.client.post(self.url, json=self.WRONG).get_json()
+        self.assertEqual(result["attempt"], 1)
 
     def test_unknown_course(self):
         """an unknown course gets a 404"""
