@@ -22,6 +22,7 @@ which is the main source.
 | `test_helpers.py` | Shared test setup with a temporary database |
 | `test_progress.py` | Tests for login, progress, quiz and reset |
 | `test_admin.py` | Tests for the admin insights |
+| `test_help.py` | Tests for the help endpoint |
 
 ## Data model
 
