@@ -52,6 +52,28 @@ The 100 % of a passed course is not saved as a step. The backend calculates it w
 - **Reset:** It deletes the progress and the quiz attempts of the user for the course, so the user can start again (the "Restart Course" button in the frontend).
 - **Access:** Without a login the backend answers `401` ("Please log in first."). The admin insights are only for admins, students get `403`.
 
+## Error messages
+
+All error texts live in `error_messages.py`. Every error response is JSON with the key `error`, for example `{"error": "Please log in first."}`.
+
+| Status | Situation | Message |
+|---|---|---|
+| 400 | Log in without choosing a role | Please choose whether you want to log in as a student or an admin. |
+| 400 | Step is not sent as a number | Something went wrong while saving your progress. Please try again. |
+| 400 | Quiz submitted without all answers | Please answer all questions. |
+| 400 | Help question is empty | Please enter a question. |
+| 401 | Not logged in | Please log in first. |
+| 403 | Student opens the admin dashboard | This page is only available for admins. |
+| 404 | User not found | We could not find this account. Please check your login details and try again. |
+| 404 | Course not found | We could not find this course. Please go back to the course overview. |
+| 404 | Step not found | We could not find this step. Please go back to the course overview. |
+| 404 | Quiz not found | We could not find this quiz. Please go back to the course overview. |
+| 409 | Step saved before the earlier steps | Please finish the earlier steps first. |
+| 409 | Quiz submitted before all tasks | Please finish all tasks before you take the quiz. |
+| 409 | Fourth quiz attempt | All three quiz attempts were used. Please restart the course. |
+
+The frontend sends students to the log in page when it receives exactly the 401 text, so that text must not change.
+
 ## Configuration
 
 | Setting | Where | Value |

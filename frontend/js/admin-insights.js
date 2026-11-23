@@ -27,7 +27,7 @@ if (section) {
             });
             students.replaceChildren(list);
         } catch (error) {
-            summary.textContent = error.message === "Please log in first." || error.message === "Admins only."
+            summary.textContent = error.message === "Please log in first." || error.message === "This page is only available for admins."
                 ? "Please log in with the admin account to view course insights."
                 : error.message;
         }

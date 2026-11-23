@@ -6,6 +6,7 @@ from datetime import timedelta
 from flask import Flask, redirect, request, jsonify, session
 
 from database import create_tables, get_connection, seed_data
+import error_messages as messages
 from help_answers import find_answer  # the scripted answers live in help_answers.py
 from progress import get_status, record_step, reset_course, submit_quiz, admin_insights
 
@@ -48,7 +49,7 @@ def login():
     role = (data.get("role") or "").strip()
 
     if role not in ("student", "admin"):
-        return jsonify({"error": "Please choose student or admin."}), 400
+        return jsonify({"error": messages.CHOOSE_ROLE}), 400
 
     connection = get_connection()
     try:
@@ -59,7 +60,7 @@ def login():
         connection.close()
 
     if user is None:
-        return jsonify({"error": "User not found."}), 404
+        return jsonify({"error": messages.ACCOUNT_NOT_FOUND}), 404
 
     session.clear()
     session.permanent = True
@@ -72,7 +73,7 @@ def me():
     """return the logged-in dummy user, or ask the visitor to log in first"""
     user = current_user()
     if user is None:
-        return jsonify({"error": "Please log in first."}), 401
+        return jsonify({"error": messages.LOGIN_REQUIRED}), 401
     return jsonify(user)
 
 
@@ -81,11 +82,11 @@ def progress_status(slug):
     """return percent, passed and attempts of the logged-in user for a course"""
     user = current_user()
     if user is None:
-        return jsonify({"error": "Please log in first."}), 401
+        return jsonify({"error": messages.LOGIN_REQUIRED}), 401
 
     status = get_status(user["id"], slug)
     if status is None:
-        return jsonify({"error": "Course not found."}), 404
+        return jsonify({"error": messages.COURSE_NOT_FOUND}), 404
     return jsonify(status)
 
 
@@ -94,12 +95,12 @@ def progress_save(slug):
     """save that the logged-in user reached a step of a course """
     user = current_user()
     if user is None:
-        return jsonify({"error": "Please log in first."}), 401
+        return jsonify({"error": messages.LOGIN_REQUIRED}), 401
 
     data = request.get_json(silent=True) or {}
     position = data.get("position")
     if not isinstance(position, int) or isinstance(position, bool):
-        return jsonify({"error": "Please send the step as a number."}), 400
+        return jsonify({"error": messages.STEP_NOT_A_NUMBER}), 400
 
     saved, message, code = record_step(user["id"], slug, position)
     if not saved:
@@ -112,7 +113,7 @@ def progress_reset(slug):
     """reset progress and quiz attempts of the logged-in user for a course"""
     user = current_user()
     if user is None:
-        return jsonify({"error": "Please log in first."}), 401
+        return jsonify({"error": messages.LOGIN_REQUIRED}), 401
 
     done, message, code = reset_course(user["id"], slug)
     if not done:
@@ -125,13 +126,13 @@ def admin_insights_overview(slug):
     """return the overview of all students for a course, for the admin only"""
     user = current_user()
     if user is None:
-        return jsonify({"error": "Please log in first."}), 401
+        return jsonify({"error": messages.LOGIN_REQUIRED}), 401
     if user["role"] != "admin":
-        return jsonify({"error": "Admins only."}), 403
+        return jsonify({"error": messages.ADMINS_ONLY}), 403
 
     insights = admin_insights(slug)
     if insights is None:
-        return jsonify({"error": "Course not found."}), 404
+        return jsonify({"error": messages.COURSE_NOT_FOUND}), 404
     return jsonify(insights)
 
 
@@ -140,7 +141,7 @@ def quiz_submit(slug):
     """check the quiz answers of the logged-in user and count the attempt"""
     user = current_user()
     if user is None:
-        return jsonify({"error": "Please log in first."}), 401
+        return jsonify({"error": messages.LOGIN_REQUIRED}), 401
 
     submitted = request.get_json(silent=True) or {}
     result, message, code = submit_quiz(user["id"], slug, submitted)
@@ -156,7 +157,7 @@ def help_answer():
     question = (data.get("question") or "").strip()
 
     if not question:
-        return jsonify({"Error": "Please enter a question."}), 400
+        return jsonify({"error": messages.QUESTION_REQUIRED}), 400
 
     return jsonify(find_answer(question))
 
