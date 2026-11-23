@@ -11,6 +11,8 @@ which is the main source.
 
 ## Files
 
+The files are listed by role: first the application, then its helper files, then the tests.
+
 | File | Content |
 |---|---|
 | `app.py` | Flask app: routes for login, progress, quiz, reset, admin insights and the assistant, serves the frontend and creates the database on the first start |
@@ -18,11 +20,13 @@ which is the main source.
 | `progress.py` | Rules for progress, quiz attempts, reset and the admin insights |
 | `quiz_answers.py` | The correct quiz answers and the check of a submission (the answers stay in the backend) |
 | `help_answers.py` | Prepared answers of the AI assistant |
+| `error_messages.py` | All error texts the backend sends to the frontend |
 | `requirements.txt` | Python dependencies |
 | `test_helpers.py` | Shared test setup with a temporary database |
 | `test_progress.py` | Tests for login, progress, quiz and reset |
 | `test_admin.py` | Tests for the admin insights |
 | `test_help.py` | Tests for the help endpoint |
+| `test_errors.py` | Tests for the 404 and 500 answers |
 
 ## Data model
 
@@ -55,7 +59,7 @@ The 100 % of a passed course is not saved as a step. The backend calculates it w
 
 ## Error messages
 
-All error texts live in `error_messages.py`. Every error response is JSON with the key `error`, for example `{"error": "Please log in first."}`.
+All error texts are found in `error_messages.py`. Every error response of the API is JSON with the key `error`, for example `{"error": "Please log in first."}`. Addresses outside `/api` (pages in the browser) get the pages `404.html` or `500.html` from `frontend/pages` instead.
 
 | Status | Situation | Message |
 |---|---|---|
@@ -69,9 +73,11 @@ All error texts live in `error_messages.py`. Every error response is JSON with t
 | 404 | Course not found | We could not find this course. Please go back to the course overview. |
 | 404 | Step not found | We could not find this step. Please go back to the course overview. |
 | 404 | Quiz not found | We could not find this quiz. Please go back to the course overview. |
+| 404 | Unknown address under `/api` | We could not find what you were looking for. |
 | 409 | Step saved before the earlier steps | Please finish the earlier steps first. |
 | 409 | Quiz submitted before all tasks | Please finish all tasks before you take the quiz. |
 | 409 | Fourth quiz attempt | All three quiz attempts were used. Please restart the course. |
+| 500 | Unexpected error in the backend | Something went wrong on our side. Please try again in a few minutes. |
 
 The frontend sends students to the log in page when it receives exactly the 401 text, so that text must not change.
 

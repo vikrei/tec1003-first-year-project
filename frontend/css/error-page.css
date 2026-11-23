@@ -1,0 +1,55 @@
+/* ERROR PAGES (404 and 500) */
+
+.error-page-body {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--space-5) var(--mobile-page-margin);
+
+    background-color: var(--color-background-main);
+    color: var(--color-text-light-bg);
+    font-family: var(--font-body);
+}
+
+.error-page {
+    width: 100%;
+    max-width: var(--mobile-content-max-width);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+
+    text-align: center;
+}
+
+.error-page h1,
+.error-page p {
+    margin: 0;
+}
+
+.error-logo {
+    width: auto;
+    height: var(--space-9);
+}
+
+.error-code {
+    font-family: var(--font-display);
+    font-size: var(--font-size-display);
+    line-height: var(--line-height-display);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-primary-default);
+}
+
+.error-page h1 {
+    font-size: var(--font-size-heading-1);
+    line-height: var(--line-height-heading-1);
+}
+
+.error-page .course-button {
+    margin-top: var(--space-2);
+    text-decoration: none;
+}

@@ -22,3 +22,6 @@ ANSWER_ALL_QUESTIONS = "Please answer all questions."
 ATTEMPTS_USED_UP = "All three quiz attempts were used. Please restart the course."
 
 QUESTION_REQUIRED = "Please enter a question."
+
+NOT_FOUND = "We could not find what you were looking for."
+SERVER_ERROR = "Something went wrong on our side. Please try again in a few minutes."
