@@ -176,14 +176,15 @@
 
                     <h2>Your Work</h2>
 
-                    <label class="upload-field" for="lesson-upload">
+                    <button type="button" class="upload-field" data-demo-submit>
                         <svg class="upload-icon" viewBox="0 0 40 48" aria-hidden="true" focusable="false">
                             <path d="M8 2h16l12 12v30H8z" />
                             <path d="M24 2v12h12M20 35V20m-6 6 6-6 6 6M14 40h12" />
                         </svg>
-                        <span>Upload your file or add your answer here</span>
-                        <input type="file" id="lesson-upload" accept="image/*,.pdf">
-                    </label>
+                        <span>Submit your answer for demo review</span>
+                    </button>
+                    <p class="upload-demo-note">This demo simulates feedback. No file is uploaded or analyzed.</p>
+                    <p class="upload-demo-status" data-demo-status role="status" aria-live="polite" hidden></p>
 
                 </section>
 

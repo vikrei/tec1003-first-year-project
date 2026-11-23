@@ -70,6 +70,13 @@ if (taskButtons.length) {
     const transcriptParts = Array.from(document.querySelectorAll("[data-transcript-part]"));
     const instructionsTitle = document.querySelector("[data-task-instructions-title]");
     const instructionParts = Array.from(document.querySelectorAll("[data-task-instructions-part]"));
+    const demoApprovalsKey = "pie-chart-demo-approved-tasks";
+    let approvedTasks = new Set();
+    try {
+        approvedTasks = new Set(JSON.parse(sessionStorage.getItem(demoApprovalsKey) || "[]"));
+    } catch (error) {
+        // Keep approvals for this page visit if session storage is unavailable.
+    }
     const taskContent = {
         1: {
             name: "First Steps",
@@ -129,9 +136,39 @@ if (taskButtons.length) {
 
     let currentTask = 1;
 
+    function isTaskAvailable(taskNumber) {
+        for (let task = 1; task < taskNumber; task += 1) {
+            if (!approvedTasks.has(task)) return false;
+        }
+        return true;
+    }
+
+    function updateTaskAccess() {
+        taskButtons.forEach((button) => {
+            const step = Number(button.dataset.taskStep);
+            button.disabled = step !== currentTask && !isTaskAvailable(step);
+        });
+        if (nextTaskButton) nextTaskButton.disabled = !approvedTasks.has(currentTask);
+    }
+
+    function showDemoReviewState() {
+        if (!demoSubmitButton || !demoStatus) return;
+        const label = demoSubmitButton.querySelector("span");
+        const approved = approvedTasks.has(currentTask);
+        demoSubmitButton.disabled = approved;
+        if (label) label.textContent = approved ? "Answer approved" : "Submit your answer for demo review";
+        demoStatus.hidden = !approved;
+        if (approved) demoStatus.textContent = "Demo review complete: approved. You can continue to the next task.";
+    }
+
     async function setTask(taskNumber, updateHistory = true) {
         const task = taskContent[taskNumber];
         if (!task) return;
+        if (!isTaskAvailable(taskNumber)) {
+            lessonStatus.textContent = `Complete the demo review for Task ${taskNumber - 1} before moving on.`;
+            lessonStatus.hidden = false;
+            return;
+        }
 
         try {
             await saveStep("build-pie-charts-react", taskNumber + 1);
@@ -179,9 +216,10 @@ if (taskButtons.length) {
         if (lessonTabsNavigation) lessonTabsNavigation.hidden = taskNumber === 3;
 
         if (nextTaskButton) {
-            nextTaskButton.disabled = false;
             nextTaskButton.setAttribute("aria-label", taskNumber === 3 ? "Go to the course quiz" : `Go to Task ${taskNumber + 1}`);
         }
+        updateTaskAccess();
+        showDemoReviewState();
 
         if (transcriptButton && transcript) {
             transcriptButton.setAttribute("aria-expanded", "true");
@@ -208,11 +246,45 @@ if (taskButtons.length) {
     lessonStatus.hidden = true;
     document.querySelector(".lesson-progress")?.after(lessonStatus);
 
+    const demoSubmitButton = document.querySelector("[data-demo-submit]");
+    const demoStatus = document.querySelector("[data-demo-status]");
+    demoSubmitButton?.addEventListener("click", () => {
+        if (demoSubmitButton.disabled) return;
+
+        const label = demoSubmitButton.querySelector("span");
+        demoSubmitButton.disabled = true;
+        demoSubmitButton.classList.add("is-loading");
+        demoSubmitButton.setAttribute("aria-busy", "true");
+        if (label) label.textContent = "Reviewing your answer…";
+        if (demoStatus) {
+            demoStatus.hidden = false;
+            demoStatus.textContent = "Please wait while we prepare demo feedback.";
+        }
+
+        window.setTimeout(() => {
+            demoSubmitButton.classList.remove("is-loading");
+            demoSubmitButton.removeAttribute("aria-busy");
+            approvedTasks.add(currentTask);
+            try {
+                sessionStorage.setItem(demoApprovalsKey, JSON.stringify([...approvedTasks]));
+            } catch (error) {
+                // Keep approvals in memory for this page visit.
+            }
+            demoSubmitButton.disabled = true;
+            if (label) label.textContent = "Answer approved";
+            if (demoStatus) {
+                demoStatus.textContent = "Demo review complete: approved. You can continue to the next task.";
+            }
+            updateTaskAccess();
+        }, 1100);
+    });
+
     taskButtons.forEach((button) => {
         button.addEventListener("click", () => setTask(Number(button.dataset.taskStep)));
     });
 
     nextTaskButton?.addEventListener("click", () => {
+        if (!approvedTasks.has(currentTask)) return;
         if (currentTask === 3) {
             window.location.href = "quiz.html";
             return;
@@ -238,7 +310,8 @@ if (taskButtons.length) {
                 window.location.replace("learning-flow-introduction.html?restart=required");
                 return;
             }
-            const initialTask = Math.min(requestedTask, Math.max(status.step, 1));
+            let initialTask = Math.min(requestedTask, Math.max(status.step, 1));
+            while (initialTask > 1 && !isTaskAvailable(initialTask)) initialTask -= 1;
             await setTask(initialTask, false);
         } catch (error) {
             lessonStatus.textContent = error.message;
