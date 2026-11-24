@@ -121,6 +121,11 @@ class ProgressEndpointTests(unittest.TestCase):
         """a visitor without a cookie gets a 401"""
         self.assertEqual(self.client.get(self.url).status_code, 401)
 
+    def test_login_message_stays_the_same(self):
+        """the frontend redirects to the log in page on exactly this text"""
+        response = self.client.get(self.url)
+        self.assertEqual(response.get_json()["error"], "Please log in first.")
+
     def test_save_needs_login(self):
         """saving a step without a cookie gets a 401"""
         response = self.client.post(self.url, json={"position": 1})

@@ -1,6 +1,7 @@
 """progress rules for the course portal: steps reached, percent, quiz result"""
 
 from database import get_connection
+import error_messages as messages
 from quiz_answers import check_answers, is_complete
 
 
@@ -58,7 +59,7 @@ def record_step(user_id, slug, position):
     try:
         course = get_course(connection, slug)
         if course is None:
-            return False, "Course not found.", 404
+            return False, messages.COURSE_NOT_FOUND, 404
 
         steps = connection.execute(
             "SELECT id, position FROM steps WHERE course_id = ? ORDER BY position",
@@ -66,7 +67,7 @@ def record_step(user_id, slug, position):
         ).fetchall()
         step = next((s for s in steps if s["position"] == position), None)
         if step is None:
-            return False, "Step not found.", 404
+            return False, messages.STEP_NOT_FOUND, 404
 
         reached_ids = {
             row["step_id"]
@@ -75,7 +76,7 @@ def record_step(user_id, slug, position):
             )
         }
         if any(s["id"] not in reached_ids for s in steps if s["position"] < position):
-            return False, "Please finish the earlier steps first.", 409
+            return False, messages.EARLIER_STEPS_FIRST, 409
 
         connection.execute(
             "INSERT OR IGNORE INTO progress (user_id, step_id) VALUES (?, ?)",
@@ -93,24 +94,24 @@ def submit_quiz(user_id, slug, submitted):
     try:
         course = get_course(connection, slug)
         if course is None:
-            return None, "Course not found.", 404
+            return None, messages.COURSE_NOT_FOUND, 404
 
         if not is_complete(submitted):
-            return None, "Please answer all questions.", 400
+            return None, messages.ANSWER_ALL_QUESTIONS, 400
 
         quiz_step = connection.execute(
             "SELECT id FROM steps WHERE course_id = ? ORDER BY position DESC LIMIT 1",
             (course["id"],),
         ).fetchone()
         if quiz_step is None:
-            return None, "Quiz not found.", 404
+            return None, messages.QUIZ_NOT_FOUND, 404
 
         reached_quiz = connection.execute(
             "SELECT COUNT(*) FROM progress WHERE user_id = ? AND step_id = ?",
             (user_id, quiz_step["id"]),
         ).fetchone()[0]
         if not reached_quiz:
-            return None, "Please reach the quiz first.", 409
+            return None, messages.FINISH_TASKS_FIRST, 409
 
         attempts = connection.execute(
             "SELECT COUNT(*) FROM quiz_attempts WHERE user_id = ? AND course_id = ?",
@@ -126,7 +127,7 @@ def submit_quiz(user_id, slug, submitted):
         )
 
         if not already_passed and attempts >= 3:
-            return None, "All three quiz attempts were used. Please restart the course.", 409
+            return None, messages.ATTEMPTS_USED_UP, 409
 
         result = check_answers(submitted)
         if not already_passed:
@@ -152,7 +153,7 @@ def reset_course(user_id, slug):
     try:
         course = get_course(connection, slug)
         if course is None:
-            return False, "Course not found.", 404
+            return False, messages.COURSE_NOT_FOUND, 404
 
         connection.execute(
             "DELETE FROM progress WHERE user_id = ? AND step_id IN "
