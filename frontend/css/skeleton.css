@@ -1,0 +1,30 @@
+/* SKELETON PLACEHOLDER (shown while data loads slowly) */
+
+.skeleton {
+    min-width: 12ch;
+    min-height: var(--line-height-body);
+
+    border-radius: var(--radius-default);
+
+    background: linear-gradient(
+        90deg,
+        var(--color-card-stroke) 25%,
+        var(--color-card-background) 50%,
+        var(--color-card-stroke) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+
+    color: --color-text-light-bg;
+}
+
+@keyframes skeleton-shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton {
+        animation: none;
+    }
+}
