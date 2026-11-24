@@ -1,9 +1,11 @@
 import { getAdminInsights } from "./services/admin-insights.service.js";
+import { startLoading } from "./loading.js";
 
 const section = document.querySelector("[data-admin-course-insights]");
 if (section) {
     const summary = section.querySelector("[data-admin-course-summary]");
     const students = section.querySelector("[data-admin-course-students]");
+    const stopLoading = startLoading(section);
 
     (async () => {
         try {
@@ -30,6 +32,8 @@ if (section) {
             summary.textContent = error.message === "Please log in first." || error.message === "This page is only available for admins."
                 ? "Please log in with the admin account to view course insights."
                 : error.message;
+        } finally {
+            stopLoading();
         }
     })();
 }
