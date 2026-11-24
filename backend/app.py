@@ -161,6 +161,21 @@ def help_answer():
 
     return jsonify(find_answer(question))
 
+@app.errorhandler(404)
+def not_found(error):
+    """answer an unknown address with json for the api and with a page for the browser"""
+    if request.path.startswith("/api/"):
+        return jsonify({"error": messages.NOT_FOUND}), 404
+    return app.send_static_file("pages/404.html"), 404
+
+
+@app.errorhandler(500)
+def server_error(error):
+    """answer an unexpected error with json for the api and with a page for the browser"""
+    if request.path.startswith("/api/"):
+        return jsonify({"error": messages.SERVER_ERROR}), 500
+    return app.send_static_file("pages/500.html"), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
