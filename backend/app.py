@@ -169,6 +169,12 @@ def not_found(error):
     return app.send_static_file("pages/404.html"), 404
 
 
+@app.errorhandler(405)
+def method_not_allowed(error):
+    """answer a method that is not allowed with json"""
+    return jsonify({"error": messages.METHOD_NOT_ALLOWED}), 405
+
+
 @app.errorhandler(500)
 def server_error(error):
     """answer an unexpected error with json for the api and with a page for the browser"""

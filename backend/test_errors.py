@@ -32,3 +32,9 @@ class ErrorAnswerTests(unittest.TestCase):
                 response = self.client.post("/api/help", json={"question": "progress"})
         self.assertEqual(response.status_code, 500)
         self.assertIn("error", response.get_json())
+
+    def test_wrong_method_gets_json(self):
+        """a method that is not allowed gets a 405 with the key error"""
+        response = self.client.put("/api/login")
+        self.assertEqual(response.status_code, 405)
+        self.assertIn("error", response.get_json())

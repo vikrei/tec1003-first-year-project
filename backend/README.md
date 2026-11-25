@@ -26,7 +26,7 @@ The files are listed by role: first the application, then its helper files, then
 | `test_progress.py` | Tests for login, progress, quiz and reset |
 | `test_admin.py` | Tests for the admin insights |
 | `test_help.py` | Tests for the help endpoint |
-| `test_errors.py` | Tests for the 404 and 500 answers |
+| `test_errors.py` | Tests for the 404, 405 and 500 answers |
 
 ## Data model
 
@@ -74,6 +74,7 @@ All error texts are found in `error_messages.py`. Every error response of the AP
 | 404 | Step not found | We could not find this step. Please go back to the course overview. |
 | 404 | Quiz not found | We could not find this quiz. Please go back to the course overview. |
 | 404 | Unknown address under `/api` | We could not find what you were looking for. |
+| 405 | Method not allowed, for example `PUT` on `/api/login` | This action is not allowed here. |
 | 409 | Step saved before the earlier steps | Please finish the earlier steps first. |
 | 409 | Quiz submitted before all tasks | Please finish all tasks before you take the quiz. |
 | 409 | Fourth quiz attempt | All three quiz attempts were used. Please restart the course. |

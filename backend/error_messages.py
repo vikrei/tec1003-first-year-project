@@ -25,3 +25,5 @@ QUESTION_REQUIRED = "Please enter a question."
 
 NOT_FOUND = "We could not find what you were looking for."
 SERVER_ERROR = "Something went wrong on our side. Please try again in a few minutes."
+
+METHOD_NOT_ALLOWED = "This action is not allowed here."
