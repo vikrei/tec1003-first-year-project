@@ -173,6 +173,7 @@ ai-assistant.js shows the answer and its links in the conversation
 |---|---|---|---|---|
 | POST | `/api/help` | Returns a scripted answer to a question | `200` with `answer` and `links` | `400` if the question is empty |
 | POST | `/api/login` | Mock login: choose `student` or `admin` (no password), sets a session cookie | `200` with `id`, `name` and `role` | `400` if the role is not `student` or `admin` |
+| POST | `/api/logout` | Ends the session, also fine if nobody is logged in | `200` with `logged_out` | none |
 | GET | `/api/me` | Returns the logged-in dummy user | `200` with `id`, `name` and `role` | `401` if nobody is logged in |
 | GET | `/api/progress/<slug>` | Returns the progress of the logged-in user in a course | `200` with `percent`, `passed`, `attempts` and `step` | `401` if nobody is logged in, `404` for an unknown course |
 | POST | `/api/progress/<slug>` | Saves that the user reached a step, body `{ "position": 1 }` (1 to 5) | `200` with the new progress | `400` if the step is not a number, `401`, `404` for an unknown course or step, `409` if an earlier step is missing |

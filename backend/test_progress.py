@@ -107,6 +107,20 @@ class LoginTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()["role"], "student")
 
+    def test_logout_ends_the_session(self):
+        """after the logout neither /api/me nor the admin overview answers"""
+        self.client.post("/api/login", json={"role": "admin"})
+        self.client.post("/api/logout")
+        me = self.client.get("/api/me")
+        admin = self.client.get(f"/api/admin/insights/{SLUG}")
+        self.assertEqual(me.status_code, 401)
+        self.assertEqual(admin.status_code, 401)
+
+    def test_logout_without_login_is_fine(self):
+        """a logout without a login does not fail"""
+        response = self.client.post("/api/logout")
+        self.assertEqual(response.status_code, 200)
+
 
 class ProgressEndpointTests(unittest.TestCase):
     """the progress endpoints with the Flask test client"""

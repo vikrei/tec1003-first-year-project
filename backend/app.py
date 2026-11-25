@@ -68,6 +68,13 @@ def login():
     return jsonify(dict(user))
 
 
+@app.post("/api/logout")
+def logout():
+    """end the session of the dummy user, it is fine if nobody is logged in"""
+    session.clear()
+    return jsonify({"logged_out": True})
+
+
 @app.get("/api/me")
 def me():
     """return the logged-in dummy user, or ask the visitor to log in first"""
