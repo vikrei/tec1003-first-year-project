@@ -7,3 +7,7 @@ export function login(role) {
 export function getCurrentUser() {
     return request("/me");
 }
+
+export function logout() {
+    return request("/logout", { method: "POST" });
+}

@@ -26,7 +26,7 @@ if (profileMenuButton) {
     const links = isAdmin
         ? [
               { href: "admin-profile.html", label: "Profile & Settings", icon: icons.settings },
-              { href: "index.html", label: "Log out", icon: icons.logout },
+              { href: "index.html", label: "Log out", icon: icons.logout, isLogout: true },
           ]
         : [
               { href: "student-dashboard.html", label: "Home", icon: icons.home },
@@ -34,7 +34,7 @@ if (profileMenuButton) {
               { href: "courses.html", label: "All Courses", icon: icons.courses },
               { href: "inbox.html", label: "Inbox", icon: icons.inbox },
               { href: "profile.html", label: "Profile & Settings", icon: icons.settings },
-              { href: "index.html", label: "Log out", icon: icons.logout },
+              { href: "index.html", label: "Log out", icon: icons.logout, isLogout: true },
         ];
     
     // name of the current page, e.g. "courses.html"
@@ -56,7 +56,7 @@ if (profileMenuButton) {
                         // Mark the link that points to the page the user is on
                         const current = link.href === currentPage ? ' aria-current="page"' : "";
                         return `
-                            <a href="${link.href}" role="menuitem"${current}>
+                            <a href="${link.href}" role="menuitem"${current}${link.isLogout ? " data-logout" : ""}>
                                 ${link.icon}
                                 <span>${link.label}</span>
                             </a>
@@ -115,6 +115,21 @@ if (profileMenuButton) {
             event.preventDefault();
             menuItems[nextIndex].focus();
         }
+    });
+
+    document.addEventListener("click", async (event) => {
+        const logoutLink = event.target.closest("[data-logout]");
+        if (!logoutLink) return;
+
+        // end the session in the backend first, then go to the start page
+        event.preventDefault();
+        try {
+            const { logout } = await import("./services/auth.service.js");
+            await logout();
+        } catch (error) {
+            // leave the page anyway, the login starts a fresh session
+        }
+        window.location.href = logoutLink.href || "index.html";
     });
 
     document.addEventListener("click", (event) => {
