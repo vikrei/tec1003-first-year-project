@@ -251,7 +251,6 @@
 
 .student-header-navigation,
 .admin-header-navigation,
-.profile-menu-label,
 .dashboard-card-image,
 .dashboard-card-details,
 .dashboard-card-action,
@@ -675,6 +674,17 @@
     color: var(--color-text-light-bg);
 }
 .course-card-footer a:hover { background: var(--color-secondary-hover); }
+.course-card-footer .course-coming-soon {
+    min-height: var(--control-height);
+    padding: var(--space-2) var(--space-4);
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--color-disabled-stroke);
+    border-radius: var(--radius-default);
+    background: var(--color-disabled-default);
+    color: var(--color-text-secondary-disabled);
+    font-size: var(--font-size-caption);
+}
 .course-more {
     min-height: var(--control-height);
     display: flex;
@@ -738,6 +748,16 @@
     color: var(--color-text-dark-bg);
 }
 .suggested-read-more:hover { background: var(--color-primary-hover); }
+.suggested-coming-soon {
+    min-height: var(--control-height);
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--color-disabled-stroke);
+    border-radius: var(--radius-default);
+    background: var(--color-disabled-default);
+    color: var(--color-text-secondary-disabled);
+    font-size: var(--font-size-caption);
+}
 .suggested-course-card h3 { font-size: var(--font-size-heading-3); }
 
 /* =========================
@@ -976,13 +996,13 @@
     left: 0;
     z-index: 100;
     width: 100%;
-    min-height: var(--space-9);
+    min-height: var(--mobile-header-height);
     padding: var(--space-3) var(--mobile-page-margin);
     background-color: var(--color-secondary-default);
 }
 
 body {
-    padding-top: var(--space-9);
+    padding-top: var(--mobile-header-height);
 }
 
 .profile-avatar {
@@ -1093,11 +1113,11 @@ main h1 {
 
 @media (min-width: 700px) {
     .home-page {
-        padding-top: var(--space-9);
+        padding-top: var(--mobile-header-height);
     }
 
     .home-page .site-header {
-        min-height: var(--space-9);
+        min-height: var(--mobile-header-height);
         padding: var(--space-3) var(--space-6);
         background: var(--color-secondary-default);
     }
@@ -1261,7 +1281,7 @@ main h1 {
     }
 
     .login-page-body .site-header {
-        min-height: var(--space-9);
+        min-height: var(--desktop-header-height);
         padding: var(--space-3) var(--space-6);
         background: var(--color-secondary-default);
     }
@@ -1348,7 +1368,7 @@ main h1 {
     }
 
     .login-page-body .site-header {
-        min-height: var(--space-9);
+        min-height: var(--desktop-header-height);
         padding: var(--space-3) var(--space-6);
     }
 
@@ -1364,7 +1384,7 @@ main h1 {
     body { padding-top: var(--desktop-header-height); }
 
     .home-page { padding-top: var(--desktop-header-height); }
-    .login-page-body { padding-top: var(--space-9); }
+    .login-page-body { padding-top: var(--desktop-header-height); }
 
     .site-header .logo > img:first-child {
         height: var(--desktop-header-logo-height);
@@ -1389,6 +1409,8 @@ main h1 {
     .admin-page .site-header .profile-menu-button {
         width: var(--desktop-header-avatar-size);
         height: var(--desktop-header-avatar-size);
+        flex-basis: var(--desktop-header-avatar-size);
+        display: block;
     }
 }
 
@@ -1438,6 +1460,8 @@ main h1 {
         position: relative;
         width: var(--desktop-header-avatar-size);
         height: var(--desktop-header-avatar-size);
+        flex-basis: var(--desktop-header-avatar-size);
+        display: block;
         overflow: visible;
         border-radius: 50%;
     }
@@ -1574,11 +1598,15 @@ main h1 {
     }
 
     .student-dashboard-body .dashboard-card-action {
+        width: min(85%, 42rem);
         min-height: var(--space-8);
         padding: var(--space-2) var(--space-3);
         display: flex;
         align-items: center;
         justify-content: center;
+        align-self: center;
+        flex: 0 0 auto;
+        margin-inline: auto;
         border-radius: var(--radius-default);
         background: var(--color-secondary-default);
         color: var(--color-text-light-bg);
@@ -1852,8 +1880,43 @@ main h1 {
     background-color: var(--color-ghost-default);
     color: var(--color-sub-caption);
     text-align: center;
+    font-family: inherit;
     font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
     cursor: pointer;
+}
+
+.upload-field:disabled {
+    cursor: wait;
+    opacity: 0.75;
+}
+
+.upload-field.is-loading::after {
+    width: var(--space-5);
+    height: var(--space-5);
+    content: "";
+    border: 3px solid var(--color-divider);
+    border-top-color: var(--color-primary-default);
+    border-radius: 50%;
+    animation: demo-review-spin 700ms linear infinite;
+}
+
+@keyframes demo-review-spin {
+    to { transform: rotate(360deg); }
+}
+
+.upload-demo-note,
+.upload-demo-status {
+    color: var(--color-sub-caption);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+}
+
+.upload-demo-status:not([hidden]) {
+    padding: var(--space-3);
+    border-radius: var(--radius-default);
+    background: var(--color-secondary-default);
+    color: var(--color-text-light-bg);
 }
 
 .your-work {
@@ -1952,6 +2015,11 @@ main h1 {
 .lesson-stepper-controls .step-number.active {
     background-color: var(--color-primary-focus);
     color: var(--color-text-light-bg);
+}
+
+.lesson-stepper-controls .step-number:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
 }
 
 .lesson-stepper-controls > span:not(.step-number) {
@@ -3319,6 +3387,11 @@ main h1 {
         flex: 1;
         justify-content: center;
         background: var(--color-secondary-default);
+    }
+
+    .courses-page .course-card-footer .course-coming-soon {
+        flex: 1;
+        justify-content: center;
     }
 
     .courses-page .course-card-footer a:hover {

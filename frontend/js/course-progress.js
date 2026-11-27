@@ -1,7 +1,16 @@
 import { getProgress, resetCourse, saveStep } from "./services/course-progress.service.js";
 
 const COURSE = "build-pie-charts-react";
+const DEMO_APPROVALS_KEY = "pie-chart-demo-approved-tasks";
 const progressClasses = ["progress-one-percent", "progress-twenty-five-percent", "progress-fifty-percent", "progress-seventy-five-percent", "progress-ninety-percent", "progress-complete"];
+
+function clearDemoApprovals() {
+    try {
+        sessionStorage.removeItem(DEMO_APPROVALS_KEY);
+    } catch (error) {
+        // The backend progress reset still works when browser storage is unavailable.
+    }
+}
 
 function resumeUrl(status) {
     if (status.passed) return "course-certificate.html";
@@ -48,12 +57,26 @@ function showProgress(status) {
         element.hidden = !status.passed;
     });
 
+    document.querySelectorAll("[data-passed-course]").forEach((element) => {
+        element.hidden = !status.passed;
+    });
+
     document.querySelectorAll("[data-dashboard-progress-value]").forEach((element) => {
         element.textContent = `${percent}% complete`;
     });
 
     document.querySelectorAll("[data-dashboard-course-count]").forEach((element) => {
         element.textContent = status.step > 0 ? "1 started" : "0 started";
+    });
+
+    document.querySelectorAll("[data-dashboard-certificate-count]").forEach((element) => {
+        element.textContent = status.passed ? "1 earned" : "0 earned";
+    });
+
+    document.querySelectorAll("[data-dashboard-certificate-details]").forEach((element) => {
+        element.textContent = status.passed
+            ? "Build Pie Charts with React"
+            : "Complete Build Pie Charts with React to earn a certificate.";
     });
 
     document.querySelectorAll("[data-course-resume]").forEach((link) => {
@@ -103,6 +126,7 @@ if (intro) {
         try {
             if (pageUrl.searchParams.get("restart") === "1") {
                 await resetCourse(COURSE);
+                clearDemoApprovals();
                 pageUrl.searchParams.delete("restart");
                 window.history.replaceState({}, "", pageUrl);
                 if (statusMessage) {
@@ -148,6 +172,7 @@ reviseButton?.addEventListener("click", async () => {
     reviseButton.disabled = true;
     try {
         await resetCourse(COURSE);
+        clearDemoApprovals();
         window.location.href = "learning-flow-introduction.html";
     } catch (error) {
         reviseButton.disabled = false;

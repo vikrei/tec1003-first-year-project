@@ -2,7 +2,19 @@ import { getProgress, saveStep } from "./services/course-progress.service.js";
 import { submitQuiz } from "./services/quiz.service.js";
 
 const form = document.querySelector("#course-quiz");
-if (form) {
+let taskThreeApproved = false;
+try {
+    taskThreeApproved = JSON.parse(sessionStorage.getItem("pie-chart-demo-approved-tasks") || "[]").includes(3);
+} catch (error) {
+    taskThreeApproved = false;
+}
+
+if (form && !taskThreeApproved) {
+    window.location.replace("lesson.html?task=3");
+    form.hidden = true;
+}
+
+if (form && taskThreeApproved) {
     const COURSE = "build-pie-charts-react";
     const maxAttempts = 3;
     const questionGroups = Array.from(form.querySelectorAll(".quiz-question"));

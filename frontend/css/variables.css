@@ -78,7 +78,8 @@
     --mobile-content-max-width: 520px;
     --desktop-content-max-width: 1024px;
     --desktop-header-width: 1440px;
-    --desktop-header-height: var(--space-9);
+    --mobile-header-height: calc(var(--space-9) + var(--space-5));
+    --desktop-header-height: calc(var(--space-9) + var(--space-5));
     --desktop-header-avatar-size: var(--space-7);
     --desktop-profile-image-size: calc(var(--space-9) + var(--space-4));
     --desktop-header-toggle-width: var(--space-7);
